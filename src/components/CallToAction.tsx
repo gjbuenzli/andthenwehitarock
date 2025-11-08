@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, ShoppingCart, Download, Gift } from 'lucide-react';
+import { ExternalLink, ShoppingCart, Download, Gift, Headphones } from 'lucide-react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 export const CallToAction = () => {
-  const { paperbackUrl, kindleUrl } = useAmazonLinks();
+  const { paperbackUrl, kindleUrl, audiobookUrl } = useAmazonLinks();
   
   return <section className="py-20 bg-gradient-ocean text-primary-foreground">
       <div className="container mx-auto px-4">
@@ -17,15 +17,15 @@ export const CallToAction = () => {
           </div>
 
           {/* Purchase Options */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+
             {/* Paperback Option */}
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
               <div className="text-center">
                 <ShoppingCart className="w-12 h-12 mx-auto mb-4 text-accent" />
                 <h3 className="text-2xl font-bold mb-3">Paperback Edition</h3>
                 <p className="opacity-90 mb-6">
-                  Perfect for the beach, boat, or cozy reading nook. 
+                  Perfect for the beach, boat, or cozy reading nook.
                   Beautiful physical copy to add to your adventure library.
                 </p>
                 <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(paperbackUrl, '_blank')}>
@@ -42,7 +42,7 @@ export const CallToAction = () => {
                 <Download className="w-12 h-12 mx-auto mb-4 text-accent" />
                 <h3 className="text-2xl font-bold mb-3">Kindle Edition</h3>
                 <p className="opacity-90 mb-6">
-                  Start reading instantly! Perfect for travel, 
+                  Start reading instantly! Perfect for travel,
                   adjustable text size, and available anywhere you go.
                 </p>
                 <Button variant="wave" size="xl" className="w-full group mb-4" onClick={() => window.open(kindleUrl, '_blank')}>
@@ -51,6 +51,23 @@ export const CallToAction = () => {
                   <ExternalLink className="w-4 h-4" />
                 </Button>
                 <img src="/lovable-uploads/edddcd8b-8f46-41d2-9124-fb5da11b9587.png" alt="Kindle Unlimited" className="w-full h-8 object-contain opacity-90" />
+              </div>
+            </div>
+
+            {/* Audiobook Option */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+              <div className="text-center">
+                <Headphones className="w-12 h-12 mx-auto mb-4 text-accent" />
+                <h3 className="text-2xl font-bold mb-3">Audiobook Edition</h3>
+                <p className="opacity-90 mb-6">
+                  Listen while sailing, driving, or relaxing.
+                  Enjoy the adventure narrated with humor and heart.
+                </p>
+                <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(audiobookUrl, '_blank')}>
+                  <Headphones className="w-5 h-5 group-hover:animate-bounce" />
+                  Get Audiobook
+                  <ExternalLink className="w-4 h-4" />
+                </Button>
               </div>
             </div>
           </div>
@@ -72,6 +89,10 @@ export const CallToAction = () => {
                 <Button variant="outline" size="lg" className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent" onClick={() => window.open(kindleUrl, '_blank')}>
                   <Gift className="w-5 h-5" />
                   Gift Kindle
+                </Button>
+                <Button variant="outline" size="lg" className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent" onClick={() => window.open(audiobookUrl, '_blank')}>
+                  <Gift className="w-5 h-5" />
+                  Gift Audiobook
                 </Button>
               </div>
             </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, ShoppingCart, Download, Anchor } from 'lucide-react';
+import { ExternalLink, ShoppingCart, Download, Anchor, Headphones } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import oceanHero from '@/assets/ocean-hero.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 export const BookHero = () => {
-  const { paperbackUrl, kindleUrl } = useAmazonLinks();
+  const { paperbackUrl, kindleUrl, audiobookUrl } = useAmazonLinks();
   
   return <section className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat" style={{
     backgroundImage: `url(${oceanHero})`
@@ -42,7 +42,7 @@ export const BookHero = () => {
                 Buy Paperback
                 <ExternalLink className="w-4 h-4" />
               </Button>
-              
+
               <div className="flex flex-col items-center gap-2">
                 <Button variant="wave" size="xl" className="group" onClick={() => window.open(kindleUrl, '_blank')}>
                   <Download className="w-5 h-5 group-hover:animate-bounce" />
@@ -51,6 +51,12 @@ export const BookHero = () => {
                 </Button>
                 <img src="/lovable-uploads/ku.png" alt="Kindle Unlimited" className="w-full h-6 object-contain opacity-90" />
               </div>
+
+              <Button variant="sunset" size="xl" className="group" onClick={() => window.open(audiobookUrl, '_blank')}>
+                <Headphones className="w-5 h-5 group-hover:animate-bounce" />
+                Audiobook
+                <ExternalLink className="w-4 h-4" />
+              </Button>
             </div>
 
             {/* Book Details */}
