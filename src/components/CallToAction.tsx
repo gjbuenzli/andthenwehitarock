@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, ShoppingCart, Download, Gift, Headphones } from 'lucide-react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 export const CallToAction = () => {
-  const { paperbackUrl, kindleUrl, audiobookUrl } = useAmazonLinks();
+  const links = useAmazonLinks();
   
   return <section className="py-20 bg-gradient-ocean text-primary-foreground">
       <div className="container mx-auto px-4">
@@ -28,11 +28,18 @@ export const CallToAction = () => {
                   Perfect for the beach, boat, or cozy reading nook.
                   Beautiful physical copy to add to your adventure library.
                 </p>
-                <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(paperbackUrl, '_blank')}>
-                  <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
-                  Order Paperback
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
+                <div className="space-y-3">
+                  <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(links.amazon.paperbackUrl, '_blank')}>
+                    <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
+                    Amazon
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="xl" className="w-full group border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" onClick={() => window.open(links.barnesAndNoble.paperbackUrl, '_blank')}>
+                    <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
+                    Barnes & Noble
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </div>
 
@@ -40,14 +47,14 @@ export const CallToAction = () => {
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
               <div className="text-center">
                 <Download className="w-12 h-12 mx-auto mb-4 text-accent" />
-                <h3 className="text-2xl font-bold mb-3">Kindle Edition</h3>
+                <h3 className="text-2xl font-bold mb-3">E-Book Edition</h3>
                 <p className="opacity-90 mb-6">
                   Start reading instantly! Perfect for travel,
                   adjustable text size, and available anywhere you go.
                 </p>
-                <Button variant="wave" size="xl" className="w-full group mb-4" onClick={() => window.open(kindleUrl, '_blank')}>
+                <Button variant="wave" size="xl" className="w-full group mb-4" onClick={() => window.open(links.amazon.kindleUrl, '_blank')}>
                   <Download className="w-5 h-5 group-hover:animate-bounce" />
-                  Get Kindle Edition
+                  Kindle
                   <ExternalLink className="w-4 h-4" />
                 </Button>
                 <img src="/lovable-uploads/edddcd8b-8f46-41d2-9124-fb5da11b9587.png" alt="Kindle Unlimited" className="w-full h-8 object-contain opacity-90" />
@@ -63,37 +70,18 @@ export const CallToAction = () => {
                   Listen while sailing, driving, or relaxing.
                   Enjoy the adventure narrated with humor and heart.
                 </p>
-                <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(audiobookUrl, '_blank')}>
-                  <Headphones className="w-5 h-5 group-hover:animate-bounce" />
-                  Get Audiobook
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Gift Section */}
-          <div className="bg-gradient-sunset rounded-xl p-8 text-accent-foreground">
-            <div className="text-center">
-              <Gift className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold mb-4">Perfect Gift for Adventurers</h3>
-              <p className="text-lg opacity-90 mb-6">
-                Know someone who loves sailing, adventure stories, or just needs a good laugh? 
-                This book makes the perfect gift for dreamers and adventurers of all ages.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="outline" size="lg" className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent" onClick={() => window.open(paperbackUrl, '_blank')}>
-                  <Gift className="w-5 h-5" />
-                  Gift Paperback
-                </Button>
-                <Button variant="outline" size="lg" className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent" onClick={() => window.open(kindleUrl, '_blank')}>
-                  <Gift className="w-5 h-5" />
-                  Gift Kindle
-                </Button>
-                <Button variant="outline" size="lg" className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent" onClick={() => window.open(audiobookUrl, '_blank')}>
-                  <Gift className="w-5 h-5" />
-                  Gift Audiobook
-                </Button>
+                <div className="space-y-3">
+                  <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(links.amazon.audiobookUrl, '_blank')}>
+                    <Headphones className="w-5 h-5 group-hover:animate-bounce" />
+                    Audible
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="xl" className="w-full group border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" onClick={() => window.open(links.barnesAndNoble.audiobookUrl, '_blank')}>
+                    <Headphones className="w-5 h-5 group-hover:animate-bounce" />
+                    Barnes & Noble
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -108,10 +96,10 @@ export const CallToAction = () => {
                   <span className="absolute left-0 top-0 overflow-hidden w-[50%] text-yellow-400">⭐</span>
                 </span>
               </div>
-              <div className="text-sm">4.2/5 • 2329 ratings</div>
+              <div className="text-sm">4.2/5 • 4543 ratings</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">25,000+</div>
+              <div className="text-2xl font-bold">45,000+</div>
               <div className="text-sm">Happy Readers</div>
             </div>
             <div className="text-center">

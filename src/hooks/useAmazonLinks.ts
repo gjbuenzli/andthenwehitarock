@@ -15,6 +15,16 @@ export const useAmazonLinks = () => {
   }, []);
 
   return {
+    amazon: {
+      paperbackUrl: `https://amzn.to/${paperbackCode}`,
+      kindleUrl: `https://amzn.to/${kindleCode}`,
+      audiobookUrl: `https://amzn.to/${audiobookCode}`
+    },
+    barnesAndNoble: {
+      paperbackUrl: 'https://www.barnesandnoble.com/w/and-then-we-hit-a-rock-greg-buenzli/1146629184?ean=9798218789398',
+      audiobookUrl: 'https://www.barnesandnoble.com/w/and-then-we-hit-a-rock-greg-buenzli/1148249612?ean=2940203322081'
+    },
+    // Legacy support - keep old format for backward compatibility
     paperbackUrl: `https://amzn.to/${paperbackCode}`,
     kindleUrl: `https://amzn.to/${kindleCode}`,
     audiobookUrl: `https://amzn.to/${audiobookCode}`
