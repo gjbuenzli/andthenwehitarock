@@ -5,8 +5,25 @@ import { ExternalLink, ShoppingCart, Download, Headphones, Waves } from 'lucide-
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 
+// Declare gtag for TypeScript
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export const BookHero = () => {
   const links = useAmazonLinks();
+
+  const trackPurchaseClick = (retailer: string, format: string) => {
+    if (window.gtag) {
+      window.gtag('event', 'purchase_button_click', {
+        'retailer': retailer,
+        'format': format,
+        'location': 'hero_section'
+      });
+    }
+  };
 
   return <section className="relative min-h-screen flex items-center py-12 bg-gradient-to-br from-sky-100 via-amber-50 to-blue-100 overflow-hidden">
       {/* Decorative wave elements */}
@@ -98,7 +115,10 @@ export const BookHero = () => {
                       <Button
                         size="default"
                         className="w-full bg-gradient-to-r from-[#FF9900] to-[#FF8800] hover:from-[#FF8800] hover:to-[#FF7700] text-white font-bold shadow-lg hover:shadow-xl transition-all"
-                        onClick={() => window.open(links.amazon.paperbackUrl, '_blank')}
+                        onClick={() => {
+                          trackPurchaseClick('Amazon', 'Paperback');
+                          window.open(links.amazon.paperbackUrl, '_blank');
+                        }}
                       >
                         Amazon
                         <ExternalLink className="w-4 h-4" />
@@ -107,7 +127,10 @@ export const BookHero = () => {
                         size="default"
                         variant="outline"
                         className="w-full border-2 border-[#00693E] text-[#00693E] hover:bg-[#00693E] hover:text-white font-bold shadow hover:shadow-lg transition-all"
-                        onClick={() => window.open(links.barnesAndNoble.paperbackUrl, '_blank')}
+                        onClick={() => {
+                          trackPurchaseClick('Barnes & Noble', 'Paperback');
+                          window.open(links.barnesAndNoble.paperbackUrl, '_blank');
+                        }}
                       >
                         B&N
                         <ExternalLink className="w-4 h-4" />
@@ -131,7 +154,10 @@ export const BookHero = () => {
                       <Button
                         size="default"
                         className="w-full bg-gradient-to-r from-[#FF9900] to-[#FF8800] hover:from-[#FF8800] hover:to-[#FF7700] text-white font-bold shadow-lg hover:shadow-xl transition-all"
-                        onClick={() => window.open(links.amazon.kindleUrl, '_blank')}
+                        onClick={() => {
+                          trackPurchaseClick('Amazon', 'Kindle');
+                          window.open(links.amazon.kindleUrl, '_blank');
+                        }}
                       >
                         Kindle
                         <ExternalLink className="w-4 h-4" />
@@ -157,7 +183,10 @@ export const BookHero = () => {
                       <Button
                         size="default"
                         className="w-full bg-gradient-to-r from-[#FF9900] to-[#FF8800] hover:from-[#FF8800] hover:to-[#FF7700] text-white font-bold shadow-lg hover:shadow-xl transition-all"
-                        onClick={() => window.open(links.amazon.audiobookUrl, '_blank')}
+                        onClick={() => {
+                          trackPurchaseClick('Amazon', 'Audible');
+                          window.open(links.amazon.audiobookUrl, '_blank');
+                        }}
                       >
                         Audible
                         <ExternalLink className="w-4 h-4" />
@@ -166,7 +195,10 @@ export const BookHero = () => {
                         size="default"
                         variant="outline"
                         className="w-full border-2 border-[#00693E] text-[#00693E] hover:bg-[#00693E] hover:text-white font-bold shadow hover:shadow-lg transition-all"
-                        onClick={() => window.open(links.barnesAndNoble.audiobookUrl, '_blank')}
+                        onClick={() => {
+                          trackPurchaseClick('Barnes & Noble', 'Audiobook');
+                          window.open(links.barnesAndNoble.audiobookUrl, '_blank');
+                        }}
                       >
                         B&N
                         <ExternalLink className="w-4 h-4" />

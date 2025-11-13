@@ -2,9 +2,27 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, ShoppingCart, Download, Gift, Headphones } from 'lucide-react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
+
+// Declare gtag for TypeScript
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export const CallToAction = () => {
   const links = useAmazonLinks();
-  
+
+  const trackPurchaseClick = (retailer: string, format: string) => {
+    if (window.gtag) {
+      window.gtag('event', 'purchase_button_click', {
+        'retailer': retailer,
+        'format': format,
+        'location': 'cta_section'
+      });
+    }
+  };
+
   return <section className="py-20 bg-gradient-ocean text-primary-foreground">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -29,12 +47,18 @@ export const CallToAction = () => {
                   Beautiful physical copy to add to your adventure library.
                 </p>
                 <div className="space-y-3">
-                  <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(links.amazon.paperbackUrl, '_blank')}>
+                  <Button variant="sunset" size="xl" className="w-full group" onClick={() => {
+                    trackPurchaseClick('Amazon', 'Paperback');
+                    window.open(links.amazon.paperbackUrl, '_blank');
+                  }}>
                     <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
                     Amazon
                     <ExternalLink className="w-4 h-4" />
                   </Button>
-                  <Button variant="outline" size="xl" className="w-full group border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 hover:border-white" onClick={() => window.open(links.barnesAndNoble.paperbackUrl, '_blank')}>
+                  <Button variant="outline" size="xl" className="w-full group border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 hover:border-white" onClick={() => {
+                    trackPurchaseClick('Barnes & Noble', 'Paperback');
+                    window.open(links.barnesAndNoble.paperbackUrl, '_blank');
+                  }}>
                     <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
                     B&N
                     <ExternalLink className="w-4 h-4" />
@@ -52,7 +76,10 @@ export const CallToAction = () => {
                   Start reading instantly! Perfect for travel,
                   adjustable text size, and available anywhere you go.
                 </p>
-                <Button variant="wave" size="xl" className="w-full group" onClick={() => window.open(links.amazon.kindleUrl, '_blank')}>
+                <Button variant="wave" size="xl" className="w-full group" onClick={() => {
+                  trackPurchaseClick('Amazon', 'Kindle');
+                  window.open(links.amazon.kindleUrl, '_blank');
+                }}>
                   <Download className="w-5 h-5 group-hover:animate-bounce" />
                   Kindle
                   <ExternalLink className="w-4 h-4" />
@@ -75,12 +102,18 @@ export const CallToAction = () => {
                   Enjoy the adventure narrated with humor and heart.
                 </p>
                 <div className="space-y-3">
-                  <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(links.amazon.audiobookUrl, '_blank')}>
+                  <Button variant="sunset" size="xl" className="w-full group" onClick={() => {
+                    trackPurchaseClick('Amazon', 'Audible');
+                    window.open(links.amazon.audiobookUrl, '_blank');
+                  }}>
                     <Headphones className="w-5 h-5 group-hover:animate-bounce" />
                     Audible
                     <ExternalLink className="w-4 h-4" />
                   </Button>
-                  <Button variant="outline" size="xl" className="w-full group border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 hover:border-white" onClick={() => window.open(links.barnesAndNoble.audiobookUrl, '_blank')}>
+                  <Button variant="outline" size="xl" className="w-full group border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 hover:border-white" onClick={() => {
+                    trackPurchaseClick('Barnes & Noble', 'Audiobook');
+                    window.open(links.barnesAndNoble.audiobookUrl, '_blank');
+                  }}>
                     <Headphones className="w-5 h-5 group-hover:animate-bounce" />
                     B&N
                     <ExternalLink className="w-4 h-4" />
