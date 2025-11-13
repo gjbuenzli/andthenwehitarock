@@ -29,6 +29,11 @@ export const CallToAction = () => {
                   Beautiful physical copy to add to your adventure library.
                 </p>
                 <div className="space-y-3">
+                  <Button variant="wave" size="xl" className="w-full group" onClick={() => window.open('https://shop.ingramspark.com/b/084?params=UPwlzTdA5DAzKf6PG1g2AP1kSjgpkECHb4OLNkCpGHL', '_blank')}>
+                    <Gift className="w-5 h-5 group-hover:animate-bounce" />
+                    Direct - Save 20%
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
                   <Button variant="sunset" size="xl" className="w-full group" onClick={() => window.open(links.amazon.paperbackUrl, '_blank')}>
                     <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
                     Amazon

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ExternalLink, ShoppingCart, Download, Headphones, Waves } from 'lucide-react';
+import { ExternalLink, ShoppingCart, Download, Headphones, Waves, Gift } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 
@@ -95,6 +95,15 @@ export const BookHero = () => {
                       <p className="text-sm text-slate-600 font-medium">Physical book</p>
                     </div>
                     <div className="space-y-2">
+                      <Button
+                        size="default"
+                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold shadow-lg hover:shadow-xl transition-all"
+                        onClick={() => window.open('https://shop.ingramspark.com/b/084?params=UPwlzTdA5DAzKf6PG1g2AP1kSjgpkECHb4OLNkCpGHL', '_blank')}
+                      >
+                        <Gift className="w-4 h-4" />
+                        Direct (Save 20%)
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
                       <Button
                         size="default"
                         className="w-full bg-gradient-to-r from-[#FF9900] to-[#FF8800] hover:from-[#FF8800] hover:to-[#FF7700] text-white font-bold shadow-lg hover:shadow-xl transition-all"
