@@ -34,9 +34,9 @@ export const CallToAction = () => {
                     Amazon
                     <ExternalLink className="w-4 h-4" />
                   </Button>
-                  <Button variant="outline" size="xl" className="w-full group border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" onClick={() => window.open(links.barnesAndNoble.paperbackUrl, '_blank')}>
+                  <Button variant="outline" size="xl" className="w-full group border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 hover:border-white" onClick={() => window.open(links.barnesAndNoble.paperbackUrl, '_blank')}>
                     <ShoppingCart className="w-5 h-5 group-hover:animate-bounce" />
-                    Barnes & Noble
+                    B&N
                     <ExternalLink className="w-4 h-4" />
                   </Button>
                 </div>
@@ -52,12 +52,16 @@ export const CallToAction = () => {
                   Start reading instantly! Perfect for travel,
                   adjustable text size, and available anywhere you go.
                 </p>
-                <Button variant="wave" size="xl" className="w-full group mb-4" onClick={() => window.open(links.amazon.kindleUrl, '_blank')}>
+                <Button variant="wave" size="xl" className="w-full group" onClick={() => window.open(links.amazon.kindleUrl, '_blank')}>
                   <Download className="w-5 h-5 group-hover:animate-bounce" />
                   Kindle
                   <ExternalLink className="w-4 h-4" />
                 </Button>
-                <img src="/lovable-uploads/edddcd8b-8f46-41d2-9124-fb5da11b9587.png" alt="Kindle Unlimited" className="w-full h-8 object-contain opacity-90" />
+                <div className="flex justify-center mt-3">
+                  <div className="bg-white px-3 py-1 rounded-lg border border-gray-200">
+                    <img src="/lovable-uploads/ku.png" alt="Kindle Unlimited" className="h-5 object-contain" />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -76,9 +80,9 @@ export const CallToAction = () => {
                     Audible
                     <ExternalLink className="w-4 h-4" />
                   </Button>
-                  <Button variant="outline" size="xl" className="w-full group border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" onClick={() => window.open(links.barnesAndNoble.audiobookUrl, '_blank')}>
+                  <Button variant="outline" size="xl" className="w-full group border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 hover:border-white" onClick={() => window.open(links.barnesAndNoble.audiobookUrl, '_blank')}>
                     <Headphones className="w-5 h-5 group-hover:animate-bounce" />
-                    Barnes & Noble
+                    B&N
                     <ExternalLink className="w-4 h-4" />
                   </Button>
                 </div>
