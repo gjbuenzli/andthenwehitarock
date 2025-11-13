@@ -16,12 +16,16 @@ export const BookHero = () => {
   const links = useAmazonLinks();
 
   const trackPurchaseClick = (retailer: string, format: string) => {
+    console.log('🎯 Purchase button clicked:', { retailer, format, location: 'hero_section' });
     if (window.gtag) {
       window.gtag('event', 'purchase_button_click', {
         'retailer': retailer,
         'format': format,
         'location': 'hero_section'
       });
+      console.log('✅ Event sent to Google Analytics');
+    } else {
+      console.warn('⚠️ Google Analytics (gtag) not found');
     }
   };
 
