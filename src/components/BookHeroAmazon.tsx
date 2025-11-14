@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Star } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackConversion } from '@/hooks/useABTest';
@@ -47,7 +47,7 @@ export const BookHeroAmazon = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           {/* Main Product Layout - 3 columns like Amazon */}
-          <div className="grid lg:grid-cols-[220px,1fr,320px] gap-6">
+          <div className="grid lg:grid-cols-[300px,1fr,320px] gap-6">
 
             {/* Left Column - Book Cover Only */}
             <div className="hidden lg:block">
@@ -92,11 +92,12 @@ export const BookHeroAmazon = () => {
               {/* Rating */}
               <div className="flex items-center gap-3 pb-3 border-b border-slate-200">
                 <div className="flex items-center gap-1">
-                  <div className="flex text-orange-400">
-                    {[1, 2, 3, 4].map(i => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                    <Star className="w-4 h-4 fill-current opacity-50" />
+                  <div className="flex text-orange-400 text-sm">
+                    <span>⭐⭐⭐⭐</span>
+                    <span className="relative">
+                      <span className="text-gray-300">☆</span>
+                      <span className="absolute left-0 top-0 overflow-hidden w-[40%]">⭐</span>
+                    </span>
                   </div>
                   <span className="text-blue-600 ml-2 hover:text-orange-600 cursor-pointer text-sm">
                     4.2 out of 5 stars
