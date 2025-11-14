@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReviewHeader } from '@/components/ReviewHeader';
 import { BookHeroAmazon } from '@/components/BookHeroAmazon';
 import { AboutBook } from '@/components/AboutBook';
 import { ReviewsCarousel } from '@/components/ReviewsCarousel';
@@ -23,6 +24,7 @@ import { CallToAction } from '@/components/CallToAction';
 const IndexC = () => {
   return (
     <div className="min-h-screen bg-white">
+      <ReviewHeader />
       <BookHeroAmazon />
       <ReviewsCarousel />
       <AboutBook />
