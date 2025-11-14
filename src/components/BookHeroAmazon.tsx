@@ -56,21 +56,77 @@ export const BookHeroAmazon = () => {
           </div>
 
           {/* Main Product Layout */}
-          <div className="grid md:grid-cols-[400px,1fr] gap-8 lg:gap-12">
+          <div className="grid lg:grid-cols-[1fr,350px] gap-8 lg:gap-12">
 
-            {/* Left Column - Book Cover */}
-            <div className="flex justify-center md:justify-start">
-              <div className="sticky top-8">
+            {/* Left Column - Cover and Description */}
+            <div className="space-y-6">
+              {/* Book Cover */}
+              <div className="flex justify-center lg:justify-start">
                 <img
                   src={bookCover}
                   alt="And Then We Hit a Rock - Book Cover"
                   className="w-full max-w-sm h-auto border border-slate-200 shadow-lg"
                 />
               </div>
+
+              {/* Description - Shows below cover on all screen sizes */}
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 mb-3">About this book</h2>
+                <div className="text-slate-700 leading-relaxed space-y-3 text-sm">
+                  <p>
+                    Did you know that the remora fish will try to swim up a whale shark's butt when they poop? The crew of Twig didn't. It turns out there was an awful lot the family of five didn't know when they decided to move aboard and set off for adventure on the high seas.
+                  </p>
+                  <p>
+                    After decades of dreaming, and planning, the explorers finally sailed off into the sunset. Yes, they found the palm trees and coconuts they had longed for, but they also glimpsed the other side of paradise. They ran from waterspouts, dodged hurricanes, got (sort of) robbed by pirates, and played chicken with naval warships. They found themselves making emergency calls to the Coast Guard in the dead of night and learning the exact purpose of a nut jiggler during a late-night beach bonfire.
+                  </p>
+                  <p>
+                    Join as the inevitable is pondered after a meal of coffee and chili on a night watch in "What if I have to go poo?". Commiserate the anxiety of the hurricane season and practice dodging rogue unmanned boats during a midnight tropical storm. Laugh at the captain's intimate misfortunes with marine toilets, sense what a pirate smells like, and discover how not to get crabs in this page-turning journey of the East Coast. You are invited to follow along with the frustration and joy of a life newly discovered afloat a 46-foot catamaran.
+                  </p>
+                  <p className="font-semibold">
+                    Remember: If everything had gone exactly as planned….it wouldn't have been much of an adventure.
+                  </p>
+                </div>
+
+                {/* Chapter Listing */}
+                <details className="mt-6">
+                  <summary className="cursor-pointer font-bold text-slate-900 hover:text-blue-600 select-none">
+                    📖 View Chapter Listing
+                  </summary>
+                  <div className="mt-4 text-sm text-slate-700 space-y-3 pl-4">
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-1">Part 1: Damn you Lisa</h3>
+                      <p className="text-xs leading-relaxed">Cocktails and Dreams • The hand of God • Down to the Banana Republics • Panama vs Twig • Christmas Blows • Georgia on my mind • Love and a sailboat</p>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-1">Part 2: Afloat</h3>
+                      <p className="text-xs leading-relaxed">All Aboard! • There's Vodka in the Boy's Bathroom • Afloat • Hazmat • Things that go bump in the night • Don't Ignore the Bright Red Light • Caulk the Wagon • Perfect Strangers</p>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-1">Part 3: The Bahamas</h3>
+                      <p className="text-xs leading-relaxed">42 Flushes • The Nut Jiggler • Watch your six • You smell like a pirate • I wet the bed • Twist and Spout • Weather or not</p>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-1">Part 4: The East Coast</h3>
+                      <p className="text-xs leading-relaxed">What if I have to go Poo? • Dr Jekyll's Island • You say Savannah, I say Banana • Pepperoni is not a fruit • House of Warship • Feeling Crabby • Tot • There's Always Room For Jello • Oh Ophelia</p>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-1">Part 5: Due South</h3>
+                      <p className="text-xs leading-relaxed">Boat Chill Factor • I lack depth • Wednesday • Anchor(s) Away • Cinderella Lost Her Slipper • Suck it Murphy • And Then We Hit a Rock • What the Fog?!</p>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-1">Epilogue</h3>
+                      <p className="text-xs leading-relaxed">There's no place like home • Come Monday (Tribute to Jimmy Buffett)</p>
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900">Glossary of Ridiculous Nautical Jargon</h3>
+                    </div>
+                  </div>
+                </details>
+              </div>
             </div>
 
-            {/* Right Column - Product Details */}
-            <div className="space-y-4">
+            {/* Right Column - Product Details & Purchase Options */}
+            <div className="space-y-4 lg:sticky lg:top-8 lg:self-start">
               {/* Title */}
               <div>
                 <h1 className="text-3xl font-normal text-slate-900 mb-2">
@@ -105,36 +161,12 @@ export const BookHeroAmazon = () => {
               </div>
 
               {/* Formats Available */}
-              <div className="py-3">
+              <div className="py-3 border-b border-slate-200">
                 <div className="text-sm text-slate-600 mb-3">Available in:</div>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm">Kindle</span>
                   <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm">Paperback</span>
                   <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm">Audiobook</span>
-                </div>
-              </div>
-
-              {/* Description */}
-              <div className="py-4">
-                <h2 className="text-lg font-bold text-slate-900 mb-3">About this book</h2>
-                <div className="text-slate-700 leading-relaxed space-y-3">
-                  <p>
-                    "If you listen to Jimmy Buffett long enough, eventually you buy a boat."
-                  </p>
-                  <p>
-                    Join this ordinary family of five as they embark on an extraordinary adventure,
-                    leaving behind the comfort of normal life to sail the open seas with a dog and a cat.
-                    From hilarious mishaps to unexpected challenges, this true story captures the joy,
-                    chaos, and unforgettable moments of living aboard a sailboat.
-                  </p>
-                  <p>
-                    Whether you're a sailing enthusiast, adventure lover, or just looking for a
-                    good laugh, this honest and heartwarming tale proves that the best stories
-                    happen when everything doesn't go according to plan.
-                  </p>
-                  <p className="font-semibold text-slate-900">
-                    With over 45,000 happy readers, this sailing saga has captured hearts around the world.
-                  </p>
                 </div>
               </div>
 
