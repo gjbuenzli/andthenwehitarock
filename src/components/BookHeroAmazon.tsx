@@ -55,21 +55,75 @@ export const BookHeroAmazon = () => {
             <span>Sailing</span>
           </div>
 
-          {/* Main Product Layout */}
-          <div className="grid lg:grid-cols-[1fr,350px] gap-8 lg:gap-12">
+          {/* Main Product Layout - 3 columns like Amazon */}
+          <div className="grid lg:grid-cols-[220px,1fr,320px] gap-6">
 
-            {/* Left Column - Cover and Description */}
-            <div className="space-y-6">
-              {/* Book Cover */}
-              <div className="flex justify-center lg:justify-start">
+            {/* Left Column - Book Cover Only */}
+            <div className="hidden lg:block">
+              <img
+                src={bookCover}
+                alt="And Then We Hit a Rock - Book Cover"
+                className="w-full h-auto border border-slate-200 shadow-md sticky top-8"
+              />
+            </div>
+
+            {/* Middle Column - All Product Details */}
+            <div className="space-y-4">
+              {/* Mobile book cover - shows on small screens */}
+              <div className="lg:hidden flex justify-center mb-4">
                 <img
                   src={bookCover}
                   alt="And Then We Hit a Rock - Book Cover"
-                  className="w-full max-w-sm h-auto border border-slate-200 shadow-lg"
+                  className="w-full max-w-xs h-auto border border-slate-200 shadow-md"
                 />
               </div>
 
-              {/* Description - Shows below cover on all screen sizes */}
+              {/* Title */}
+              <div>
+                <h1 className="text-2xl lg:text-3xl font-normal text-slate-900 mb-2">
+                  And Then We Hit a Rock: A family of 5, a dog, and a cat move onto a sailboat
+                </h1>
+                <p className="text-base lg:text-lg text-slate-700">Hilarious true story!</p>
+              </div>
+
+              {/* Author */}
+              <div className="text-sm">
+                <span className="text-slate-600">by </span>
+                <a href="#" className="text-blue-600 hover:text-orange-600 hover:underline">Greg Buenzli</a>
+                <span className="text-slate-600"> (Author)</span>
+              </div>
+
+              {/* Format */}
+              <div className="text-sm text-slate-600">
+                Format: <span className="font-semibold text-slate-900">Kindle Edition</span>
+              </div>
+
+              {/* Rating */}
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-200">
+                <div className="flex items-center gap-1">
+                  <div className="flex text-orange-400">
+                    {[1, 2, 3, 4].map(i => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                    <Star className="w-4 h-4 fill-current opacity-50" />
+                  </div>
+                  <span className="text-blue-600 ml-2 hover:text-orange-600 cursor-pointer text-sm">
+                    4.2 out of 5 stars
+                  </span>
+                </div>
+                <a href="#reviews" className="text-blue-600 hover:text-orange-600 hover:underline text-sm">
+                  4,543 ratings
+                </a>
+              </div>
+
+              {/* Brief info */}
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-3">
+                <div className="text-sm text-slate-700">
+                  <span className="font-semibold">📚 Over 45,000 readers</span> have enjoyed this hilarious sailing adventure
+                </div>
+              </div>
+
+              {/* Description */}
               <div>
                 <h2 className="text-lg font-bold text-slate-900 mb-3">About this book</h2>
                 <div className="text-slate-700 leading-relaxed space-y-3 text-sm">
@@ -125,54 +179,21 @@ export const BookHeroAmazon = () => {
               </div>
             </div>
 
-            {/* Right Column - Product Details & Purchase Options */}
-            <div className="space-y-4 lg:sticky lg:top-8 lg:self-start">
-              {/* Title */}
-              <div>
-                <h1 className="text-3xl font-normal text-slate-900 mb-2">
-                  And Then We Hit a Rock: A family of 5, a dog, and a cat move onto a sailboat
-                </h1>
-                <p className="text-lg text-slate-700">Hilarious true story of adventure on the high seas!</p>
-              </div>
-
-              {/* Author */}
-              <div className="text-base">
-                <span className="text-slate-600">by </span>
-                <a href="#" className="text-blue-600 hover:text-orange-600 hover:underline">Greg Buenzli</a>
-              </div>
-
-              {/* Rating */}
-              <div className="flex items-center gap-3 py-2 border-b border-slate-200">
-                <div className="flex items-center gap-1">
-                  <div className="flex text-orange-400">
-                    {[1, 2, 3, 4].map(i => (
-                      <Star key={i} className="w-5 h-5 fill-current" />
-                    ))}
-                    <Star className="w-5 h-5 fill-current opacity-50" />
+            {/* Right Column - Purchase Options Box Only */}
+            <div className="lg:sticky lg:top-8 lg:self-start">
+              <div className="border border-slate-300 rounded-lg p-4 bg-white space-y-4 shadow-sm">
+                <div className="space-y-3">
+                  <div className="text-sm">
+                    <div className="font-semibold text-slate-900">Available in:</div>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Kindle</span>
+                      <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Paperback</span>
+                      <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Audiobook</span>
+                    </div>
                   </div>
-                  <span className="text-blue-600 ml-2 hover:text-orange-600 cursor-pointer">
-                    4.2 out of 5 stars
-                  </span>
                 </div>
-                <span className="text-slate-400">|</span>
-                <a href="#reviews" className="text-blue-600 hover:text-orange-600 hover:underline">
-                  4,543 ratings
-                </a>
-              </div>
 
-              {/* Formats Available */}
-              <div className="py-3 border-b border-slate-200">
-                <div className="text-sm text-slate-600 mb-3">Available in:</div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm">Kindle</span>
-                  <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm">Paperback</span>
-                  <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm">Audiobook</span>
-                </div>
-              </div>
-
-              {/* Buy Box - Amazon Style */}
-              <div className="border border-slate-300 rounded-lg p-6 bg-slate-50 space-y-4">
-                <h3 className="text-lg font-bold text-slate-900">Choose your format:</h3>
+                <div className="border-t border-slate-200 pt-4 space-y-3">
 
                 {/* Kindle Option */}
                 <div className="border-b border-slate-200 pb-4">
