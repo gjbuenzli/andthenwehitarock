@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { ExternalLink, ShoppingCart, Download, Headphones, Waves } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
+import { trackConversion } from '@/hooks/useABTest';
 
 // Declare gtag for TypeScript
 declare global {
@@ -17,6 +18,8 @@ export const BookHero = () => {
 
   const trackPurchaseClick = (retailer: string, format: string) => {
     console.log('🎯 Purchase button clicked:', { retailer, format, location: 'hero_section' });
+
+    // Track standard purchase button click event
     if (window.gtag) {
       window.gtag('event', 'purchase_button_click', {
         'retailer': retailer,
@@ -27,6 +30,13 @@ export const BookHero = () => {
     } else {
       console.warn('⚠️ Google Analytics (gtag) not found');
     }
+
+    // Track A/B test conversion
+    trackConversion('purchase_button_click', {
+      retailer,
+      format,
+      location: 'hero_section'
+    });
   };
 
   return <section className="relative min-h-screen flex items-center py-12 bg-gradient-to-br from-sky-100 via-amber-50 to-blue-100 overflow-hidden">

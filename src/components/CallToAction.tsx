@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, ShoppingCart, Download, Gift, Headphones } from 'lucide-react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
+import { trackConversion } from '@/hooks/useABTest';
 
 // Declare gtag for TypeScript
 declare global {
@@ -15,6 +16,8 @@ export const CallToAction = () => {
 
   const trackPurchaseClick = (retailer: string, format: string) => {
     console.log('🎯 Purchase button clicked:', { retailer, format, location: 'cta_section' });
+
+    // Track standard purchase button click event
     if (window.gtag) {
       window.gtag('event', 'purchase_button_click', {
         'retailer': retailer,
@@ -25,6 +28,13 @@ export const CallToAction = () => {
     } else {
       console.warn('⚠️ Google Analytics (gtag) not found');
     }
+
+    // Track A/B test conversion
+    trackConversion('purchase_button_click', {
+      retailer,
+      format,
+      location: 'cta_section'
+    });
   };
 
   return <section className="py-20 bg-gradient-ocean text-primary-foreground">
