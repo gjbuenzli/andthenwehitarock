@@ -277,10 +277,19 @@ export const BookHeroAmazon = () => {
 
               {/* Social Proof */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
-                <div className="flex items-center gap-2 text-blue-900">
+                <div className="flex items-center gap-2 text-blue-900 flex-wrap">
                   <span className="font-semibold">📚 Over 45,000 readers</span>
                   <span className="text-blue-600">•</span>
-                  <span className="font-semibold">⭐ 4.2/5 stars</span>
+                  <div className="flex items-center gap-1">
+                    <div className="flex text-amber-400 text-base">
+                      <span>⭐⭐⭐⭐</span>
+                      <span className="relative">
+                        <span className="text-gray-300">☆</span>
+                        <span className="absolute left-0 top-0 overflow-hidden w-[50%]">⭐</span>
+                      </span>
+                    </div>
+                    <span className="font-semibold">4.2/5</span>
+                  </div>
                   <span className="text-blue-600">•</span>
                   <span className="font-semibold">🚢 One epic journey</span>
                 </div>
