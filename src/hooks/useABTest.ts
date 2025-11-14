@@ -88,8 +88,8 @@ function getOrAssignVariant(): string {
     return newVariant;
   } catch (error) {
     // Fallback if localStorage is completely unavailable
-    console.error('⚠️ Error accessing localStorage, using fallback variant');
-    return abTestConfig.variants[0].id;
+    console.error('⚠️ Error accessing localStorage, using fallback variant U');
+    return 'U';
   }
 }
 
@@ -159,12 +159,12 @@ export function useABTest() {
  * Track conversion (button click) with variant info
  */
 export function trackConversion(conversionType: string, metadata?: Record<string, any>) {
-  let variant = 'unknown';
+  let variant = 'U';
 
   try {
-    variant = localStorage.getItem(STORAGE_KEY) || 'unknown';
+    variant = localStorage.getItem(STORAGE_KEY) || 'U';
   } catch (e) {
-    console.warn('⚠️ localStorage not available, variant will be "unknown"');
+    console.warn('⚠️ localStorage not available, variant will be "U"');
   }
 
   if (window.gtag) {

@@ -34,9 +34,14 @@ const Index = () => {
       return <IndexB />;
     case 'C':
       return <IndexC />;
+    case 'U':
+      // Variant U = Users with localStorage disabled/unavailable
+      // Show them Variant A but tracking will record as "U" to keep data clean
+      console.log('🎯 A/B Test: User with localStorage issues, showing Variant A (tracked as U)');
+      return <IndexA />;
     default:
       // Fallback to variant A if something goes wrong
-      console.warn(`Unknown variant: ${variant}, falling back to A`);
+      console.warn(`Unknown variant: ${variant}, falling back to A for display`);
       return <IndexA />;
   }
 };
