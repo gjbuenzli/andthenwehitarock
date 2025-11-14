@@ -91,15 +91,15 @@ export const BookHeroAmazon = () => {
 
               {/* Rating */}
               <div className="flex items-center gap-3 pb-3 border-b border-slate-200">
-                <div className="flex items-center gap-1">
-                  <div className="flex text-orange-400 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="flex text-amber-400 text-xl">
                     <span>⭐⭐⭐⭐</span>
                     <span className="relative">
                       <span className="text-gray-300">☆</span>
-                      <span className="absolute left-0 top-0 overflow-hidden w-[40%]">⭐</span>
+                      <span className="absolute left-0 top-0 overflow-hidden w-[50%]">⭐</span>
                     </span>
                   </div>
-                  <span className="text-blue-600 ml-2 hover:text-orange-600 cursor-pointer text-sm">
+                  <span className="text-blue-600 ml-1 hover:text-orange-600 cursor-pointer text-sm">
                     4.2 out of 5 stars
                   </span>
                 </div>

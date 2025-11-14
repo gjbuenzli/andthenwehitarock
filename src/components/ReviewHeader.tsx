@@ -12,7 +12,9 @@ export const ReviewHeader = () => {
           <blockquote className="text-white text-lg md:text-xl lg:text-2xl font-medium italic">
             "This is the funniest book I have ever read! I laughed so hard I had to put the book down"
           </blockquote>
-          <span className="text-xl md:text-2xl">⭐⭐⭐⭐⭐</span>
+          <div className="flex text-amber-400 text-xl md:text-2xl">
+            <span>⭐⭐⭐⭐⭐</span>
+          </div>
         </div>
       </div>
     </div>
