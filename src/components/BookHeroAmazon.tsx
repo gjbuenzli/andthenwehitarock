@@ -92,13 +92,13 @@ export const BookHeroAmazon = () => {
                       <span className="absolute left-0 top-0 overflow-hidden w-[50%]">⭐</span>
                     </span>
                   </div>
-                  <span className="text-blue-600 ml-1 hover:text-orange-600 cursor-pointer text-sm">
+                  <span className="text-slate-700 ml-1 text-sm">
                     4.2 out of 5 stars
                   </span>
                 </div>
-                <a href="#reviews" className="text-blue-600 hover:text-orange-600 hover:underline text-sm">
+                <span className="text-slate-700 text-sm">
                   4,581 ratings
-                </a>
+                </span>
               </div>
 
               {/* Brief info */}
