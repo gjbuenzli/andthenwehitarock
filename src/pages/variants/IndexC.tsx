@@ -1,28 +1,32 @@
 import React from 'react';
-import { BookHero } from '@/components/BookHero';
+import { BookHeroAmazon } from '@/components/BookHeroAmazon';
 import { AboutBook } from '@/components/AboutBook';
 import { ReviewsCarousel } from '@/components/ReviewsCarousel';
 import { CallToAction } from '@/components/CallToAction';
 
 /**
- * Variant C: Another Alternative Layout
+ * Variant C: Amazon-Style Layout (Baseline)
  *
- * TODO: Customize this layout to test different approaches.
- * Ideas:
+ * This variant currently matches Variant B (Amazon-style layout).
+ * Ready for customization to test different approaches.
+ *
+ * Current structure:
+ * - Amazon-style book listing page (3-column layout)
+ * - Reviews section for social proof
+ * - About and CTA sections below
+ *
+ * Next customization options:
  * - Different section ordering
- * - Minimal layout (just hero + CTA)
- * - Story-focused (About first, then Hero)
- *
- * For now, this starts with CallToAction to test if immediate purchase
- * prompt improves conversion (bold strategy).
+ * - Modified hero content
+ * - Alternative purchase flow
  */
 const IndexC = () => {
   return (
-    <div className="min-h-screen">
-      <CallToAction />
-      <BookHero />
-      <AboutBook />
+    <div className="min-h-screen bg-white">
+      <BookHeroAmazon />
       <ReviewsCarousel />
+      <AboutBook />
+      <CallToAction />
     </div>
   );
 };
