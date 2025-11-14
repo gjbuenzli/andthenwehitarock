@@ -181,106 +181,104 @@ export const BookHeroAmazon = () => {
 
             {/* Right Column - Purchase Options Box Only */}
             <div className="lg:sticky lg:top-8 lg:self-start">
-              <div className="border border-slate-300 rounded-lg p-4 bg-white space-y-4 shadow-sm">
-                <div className="space-y-3">
-                  <div className="text-sm">
-                    <div className="font-semibold text-slate-900">Available in:</div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Kindle</span>
-                      <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Paperback</span>
-                      <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Audiobook</span>
-                    </div>
+              <div className="border border-slate-300 rounded-lg p-4 bg-white shadow-sm">
+                <div className="text-sm mb-4">
+                  <div className="font-semibold text-slate-900">Available in:</div>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Kindle</span>
+                    <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Paperback</span>
+                    <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs">Audiobook</span>
                   </div>
                 </div>
 
-                <div className="border-t border-slate-200 pt-4 space-y-3">
-
-                {/* Kindle Option */}
-                <div className="border-b border-slate-200 pb-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <div className="font-semibold text-slate-900">Kindle eBook</div>
-                      <div className="text-sm text-slate-600">Instant download • Read on any device</div>
-                      <div className="mt-1 bg-yellow-100 border border-yellow-300 px-2 py-0.5 inline-block rounded text-xs">
-                        Available on Kindle Unlimited
+                <div className="border-t border-slate-200 pt-4 space-y-4">
+                  {/* Kindle Option */}
+                  <div className="border-b border-slate-200 pb-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <div className="font-semibold text-slate-900">Kindle eBook</div>
+                        <div className="text-sm text-slate-600">Instant download • Read on any device</div>
+                        <div className="mt-1 bg-yellow-100 border border-yellow-300 px-2 py-0.5 inline-block rounded text-xs">
+                          Available on Kindle Unlimited
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <Button
-                    className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
-                    onClick={() => {
-                      trackPurchaseClick('Amazon', 'Kindle');
-                      window.open(links.amazon.kindleUrl, '_blank');
-                    }}
-                  >
-                    Buy Kindle Edition
-                    <ExternalLink className="w-4 h-4" />
-                  </Button>
-                </div>
-
-                {/* Paperback Option */}
-                <div className="border-b border-slate-200 pb-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <div className="font-semibold text-slate-900">Paperback</div>
-                      <div className="text-sm text-slate-600">Physical book • Free delivery options</div>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
                     <Button
                       className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
                       onClick={() => {
-                        trackPurchaseClick('Amazon', 'Paperback');
-                        window.open(links.amazon.paperbackUrl, '_blank');
+                        trackPurchaseClick('Amazon', 'Kindle');
+                        window.open(links.amazon.kindleUrl, '_blank');
                       }}
                     >
-                      Buy Paperback (Amazon)
-                      <ExternalLink className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
-                      onClick={() => {
-                        trackPurchaseClick('Barnes & Noble', 'Paperback');
-                        window.open(links.barnesAndNoble.paperbackUrl, '_blank');
-                      }}
-                    >
-                      Buy Paperback (Barnes & Noble)
+                      Buy Kindle Edition
                       <ExternalLink className="w-4 h-4" />
                     </Button>
                   </div>
-                </div>
 
-                {/* Audiobook Option */}
-                <div>
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <div className="font-semibold text-slate-900">Audiobook</div>
-                      <div className="text-sm text-slate-600">Listen anywhere • Professional narration</div>
+                  {/* Paperback Option */}
+                  <div className="border-b border-slate-200 pb-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <div className="font-semibold text-slate-900">Paperback</div>
+                        <div className="text-sm text-slate-600">Physical book • Free delivery options</div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Button
+                        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
+                        onClick={() => {
+                          trackPurchaseClick('Amazon', 'Paperback');
+                          window.open(links.amazon.paperbackUrl, '_blank');
+                        }}
+                      >
+                        Buy Paperback (Amazon)
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
+                        onClick={() => {
+                          trackPurchaseClick('Barnes & Noble', 'Paperback');
+                          window.open(links.barnesAndNoble.paperbackUrl, '_blank');
+                        }}
+                      >
+                        Buy Paperback (Barnes & Noble)
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Button
-                      className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
-                      onClick={() => {
-                        trackPurchaseClick('Amazon', 'Audible');
-                        window.open(links.amazon.audiobookUrl, '_blank');
-                      }}
-                    >
-                      Buy on Audible
-                      <ExternalLink className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
-                      onClick={() => {
-                        trackPurchaseClick('Barnes & Noble', 'Audiobook');
-                        window.open(links.barnesAndNoble.audiobookUrl, '_blank');
-                      }}
-                    >
-                      Buy on B&N Audiobooks
-                      <ExternalLink className="w-4 h-4" />
-                    </Button>
+
+                  {/* Audiobook Option */}
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <div className="font-semibold text-slate-900">Audiobook</div>
+                        <div className="text-sm text-slate-600">Listen anywhere • Professional narration</div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Button
+                        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
+                        onClick={() => {
+                          trackPurchaseClick('Amazon', 'Audible');
+                          window.open(links.amazon.audiobookUrl, '_blank');
+                        }}
+                      >
+                        Buy on Audible
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
+                        onClick={() => {
+                          trackPurchaseClick('Barnes & Noble', 'Audiobook');
+                          window.open(links.barnesAndNoble.audiobookUrl, '_blank');
+                        }}
+                      >
+                        Buy on B&N Audiobooks
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
