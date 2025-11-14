@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Star, ChevronRight } from 'lucide-react';
+import { ExternalLink, Star } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackConversion } from '@/hooks/useABTest';
@@ -46,15 +46,6 @@ export const BookHeroAmazon = () => {
     <section className="bg-white py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Breadcrumb */}
-          <div className="text-sm text-slate-600 mb-4 flex items-center gap-2">
-            <a href="#" className="hover:text-orange-600 hover:underline">Books</a>
-            <ChevronRight className="w-4 h-4" />
-            <a href="#" className="hover:text-orange-600 hover:underline">Travel</a>
-            <ChevronRight className="w-4 h-4" />
-            <span>Sailing</span>
-          </div>
-
           {/* Main Product Layout - 3 columns like Amazon */}
           <div className="grid lg:grid-cols-[220px,1fr,320px] gap-6">
 
