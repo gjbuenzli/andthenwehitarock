@@ -78,15 +78,8 @@ export const BookHeroAmazon = () => {
               </div>
 
               {/* Author */}
-              <div className="text-sm">
-                <span className="text-slate-600">by </span>
-                <a href="#" className="text-blue-600 hover:text-orange-600 hover:underline">Greg Buenzli</a>
-                <span className="text-slate-600"> (Author)</span>
-              </div>
-
-              {/* Format */}
               <div className="text-sm text-slate-600">
-                Format: <span className="font-semibold text-slate-900">Kindle Edition</span>
+                by <span className="text-slate-900 font-medium">Greg Buenzli</span> (Author)
               </div>
 
               {/* Rating */}
