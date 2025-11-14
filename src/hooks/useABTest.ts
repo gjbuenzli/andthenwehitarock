@@ -51,32 +51,46 @@ function assignRandomVariant(): string {
  * Get or assign variant for this user
  */
 function getOrAssignVariant(): string {
-  // Check URL override first
-  const urlVariant = getUrlVariant();
-  if (urlVariant) {
-    console.log('🎯 A/B Test: Variant forced via URL:', urlVariant);
-    // Store it so they keep seeing this variant
-    localStorage.setItem(STORAGE_KEY, urlVariant);
-    return urlVariant;
-  }
-
-  // Check if user already has a variant assigned
-  const storedVariant = localStorage.getItem(STORAGE_KEY);
-  if (storedVariant) {
-    // Validate stored variant still exists in config
-    const isValid = abTestConfig.variants.some(v => v.id === storedVariant);
-    if (isValid) {
-      console.log('🎯 A/B Test: Returning user with variant:', storedVariant);
-      return storedVariant;
+  try {
+    // Check URL override first
+    const urlVariant = getUrlVariant();
+    if (urlVariant) {
+      console.log('🎯 A/B Test: Variant forced via URL:', urlVariant);
+      // Store it so they keep seeing this variant
+      try {
+        localStorage.setItem(STORAGE_KEY, urlVariant);
+      } catch (e) {
+        console.warn('⚠️ Could not save variant to localStorage');
+      }
+      return urlVariant;
     }
+
+    // Check if user already has a variant assigned
+    const storedVariant = localStorage.getItem(STORAGE_KEY);
+    if (storedVariant) {
+      // Validate stored variant still exists in config
+      const isValid = abTestConfig.variants.some(v => v.id === storedVariant);
+      if (isValid) {
+        console.log('🎯 A/B Test: Returning user with variant:', storedVariant);
+        return storedVariant;
+      }
+    }
+
+    // New user - assign random variant
+    const newVariant = assignRandomVariant();
+    try {
+      localStorage.setItem(STORAGE_KEY, newVariant);
+    } catch (e) {
+      console.warn('⚠️ Could not save variant to localStorage');
+    }
+    console.log('🎯 A/B Test: New user assigned to variant:', newVariant);
+
+    return newVariant;
+  } catch (error) {
+    // Fallback if localStorage is completely unavailable
+    console.error('⚠️ Error accessing localStorage, using fallback variant');
+    return abTestConfig.variants[0].id;
   }
-
-  // New user - assign random variant
-  const newVariant = assignRandomVariant();
-  localStorage.setItem(STORAGE_KEY, newVariant);
-  console.log('🎯 A/B Test: New user assigned to variant:', newVariant);
-
-  return newVariant;
 }
 
 /**
@@ -117,7 +131,13 @@ export function useABTest() {
       return;
     }
 
-    const hadStoredVariant = localStorage.getItem(STORAGE_KEY) !== null;
+    let hadStoredVariant = false;
+    try {
+      hadStoredVariant = localStorage.getItem(STORAGE_KEY) !== null;
+    } catch (e) {
+      console.warn('⚠️ Could not check localStorage for variant');
+    }
+
     const assignedVariant = getOrAssignVariant();
     const isNewAssignment = !hadStoredVariant;
 
@@ -139,7 +159,13 @@ export function useABTest() {
  * Track conversion (button click) with variant info
  */
 export function trackConversion(conversionType: string, metadata?: Record<string, any>) {
-  const variant = localStorage.getItem(STORAGE_KEY) || 'unknown';
+  let variant = 'unknown';
+
+  try {
+    variant = localStorage.getItem(STORAGE_KEY) || 'unknown';
+  } catch (e) {
+    console.warn('⚠️ localStorage not available, variant will be "unknown"');
+  }
 
   if (window.gtag) {
     window.gtag('event', 'ab_test_conversion', {
