@@ -112,7 +112,7 @@ export const BookHeroAmazon = () => {
                   </span>
                 </div>
                 <a href="#reviews" className="text-blue-600 hover:text-orange-600 hover:underline text-sm">
-                  4,543 ratings
+                  4,581 ratings
                 </a>
               </div>
 

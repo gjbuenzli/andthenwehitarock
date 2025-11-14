@@ -103,7 +103,7 @@ export const BookHero = () => {
                     <span className="text-slate-800 font-bold text-lg">4.2/5</span>
                   </div>
                   <div className="h-6 w-px bg-blue-300"></div>
-                  <span className="text-slate-700 font-semibold">4,543 ratings</span>
+                  <span className="text-slate-700 font-semibold">4,581 ratings</span>
                   <div className="h-6 w-px bg-blue-300"></div>
                   <span className="text-slate-800 font-bold">45,000+ readers</span>
                 </div>
