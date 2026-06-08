@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, ShoppingCart, Download, Gift, Headphones } from 'lucide-react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
-import { trackConversion } from '@/hooks/useABTest';
 
 // Declare gtag + Meta pixel (fbq) for TypeScript
 declare global {
@@ -43,13 +42,6 @@ export const CallToAction = () => {
       });
       console.log('✅ Event sent to Meta pixel');
     }
-
-    // Track A/B test conversion
-    trackConversion('purchase_button_click', {
-      retailer,
-      format,
-      location: 'cta_section'
-    });
   };
 
   return <section className="py-20 bg-gradient-ocean text-primary-foreground">

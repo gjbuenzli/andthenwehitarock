@@ -4,7 +4,6 @@ import { Card } from '@/components/ui/card';
 import { ExternalLink, ShoppingCart, Download, Headphones, Waves } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
-import { trackConversion } from '@/hooks/useABTest';
 
 // Declare gtag + Meta pixel (fbq) for TypeScript
 declare global {
@@ -45,13 +44,6 @@ export const BookHero = () => {
       });
       console.log('✅ Event sent to Meta pixel');
     }
-
-    // Track A/B test conversion
-    trackConversion('purchase_button_click', {
-      retailer,
-      format,
-      location: 'hero_section'
-    });
   };
 
   return <section className="relative min-h-screen flex items-center py-12 bg-gradient-to-br from-sky-100 via-amber-50 to-blue-100 overflow-hidden">

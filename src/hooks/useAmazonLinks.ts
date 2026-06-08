@@ -2,7 +2,11 @@ import { useMemo } from 'react';
 
 export const useAmazonLinks = () => {
   const { paperbackCode, kindleCode, audiobookCode } = useMemo(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    // `window` is undefined during the static prerender (Node) pass — fall back
+    // to the default short codes there; the real query string is read on the
+    // client at hydration, so ?pb=/?kn=/?ab= overrides still work for ads.
+    const search = typeof window !== 'undefined' ? window.location.search : '';
+    const urlParams = new URLSearchParams(search);
     const pb = urlParams.get('pb');
     const kn = urlParams.get('kn');
     const ab = urlParams.get('ab');

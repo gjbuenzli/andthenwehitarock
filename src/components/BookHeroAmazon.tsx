@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
-import { trackConversion } from '@/hooks/useABTest';
 
 // Declare gtag + Meta pixel (fbq) for TypeScript
 declare global {
@@ -48,13 +47,6 @@ export const BookHeroAmazon = () => {
       });
       console.log('✅ Event sent to Meta pixel');
     }
-
-    // Track A/B test conversion
-    trackConversion('purchase_button_click', {
-      retailer,
-      format,
-      location: 'amazon_hero_section'
-    });
   };
 
   return (
