@@ -120,37 +120,32 @@ function trackVariantAssignment(variant: string, isNewAssignment: boolean) {
  * Hook to get current A/B test variant
  */
 export function useABTest() {
-  const [variant, setVariant] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
+  // Resolve the variant SYNCHRONOUSLY on first render — URL param, localStorage,
+  // and Math.random are all available at render time in this client-only SPA.
+  // Doing it in a useEffect (the old way) forced a "Loading…" spinner for a
+  // render cycle before any content showed — a real conversion killer for ad
+  // traffic. No spinner now: content paints immediately.
+  const [resolved] = useState(() => {
     if (!abTestConfig.enabled) {
-      // A/B testing disabled - use default variant
-      setVariant(abTestConfig.variants[0].id);
-      setIsLoading(false);
-      return;
+      return { variant: abTestConfig.variants[0].id, isNewAssignment: false };
     }
-
     let hadStoredVariant = false;
     try {
       hadStoredVariant = localStorage.getItem(STORAGE_KEY) !== null;
-    } catch (e) {
-      console.warn('⚠️ Could not check localStorage for variant');
+    } catch {
+      // localStorage unavailable — treat as a fresh assignment.
     }
+    return { variant: getOrAssignVariant(), isNewAssignment: !hadStoredVariant };
+  });
 
-    const assignedVariant = getOrAssignVariant();
-    const isNewAssignment = !hadStoredVariant;
-
-    setVariant(assignedVariant);
-    setIsLoading(false);
-
-    // Track in Google Analytics
-    trackVariantAssignment(assignedVariant, isNewAssignment);
-  }, []);
+  // GA tracking is a side effect — fire once after mount; it doesn't block paint.
+  useEffect(() => {
+    trackVariantAssignment(resolved.variant, resolved.isNewAssignment);
+  }, [resolved.variant, resolved.isNewAssignment]);
 
   return {
-    variant,
-    isLoading,
+    variant: resolved.variant,
+    isLoading: false,
     config: abTestConfig
   };
 }

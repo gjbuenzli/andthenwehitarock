@@ -4,10 +4,11 @@ import { ExternalLink, ShoppingCart, Download, Gift, Headphones } from 'lucide-r
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackConversion } from '@/hooks/useABTest';
 
-// Declare gtag for TypeScript
+// Declare gtag + Meta pixel (fbq) for TypeScript
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
+    fbq?: (...args: any[]) => void;
   }
 }
 
@@ -27,6 +28,20 @@ export const CallToAction = () => {
       console.log('✅ Event sent to Google Analytics');
     } else {
       console.warn('⚠️ Google Analytics (gtag) not found');
+    }
+
+    // Track Meta pixel custom conversion — the high-intent "clicked a buy
+    // button" signal a Meta campaign optimizes toward (the pixel only sees
+    // PageView otherwise). Fires for ANY retailer (Amazon, B&N, …) with the
+    // retailer + format as params, so in Meta Events Manager you can build a
+    // custom conversion for all buy-intent, or filter to one retailer/format.
+    if (window.fbq) {
+      window.fbq('trackCustom', 'PurchaseClick', {
+        retailer,
+        format,
+        location: 'cta_section'
+      });
+      console.log('✅ Event sent to Meta pixel');
     }
 
     // Track A/B test conversion
