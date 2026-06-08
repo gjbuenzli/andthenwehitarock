@@ -3,14 +3,10 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
+import { trackPurchaseClick, type CtaRank } from '@/lib/track';
+import { PRIMARY_CTA, SECONDARY, MORE, type BuyOption } from '@/config/buyOptions';
 
-// Declare gtag + Meta pixel (fbq) for TypeScript
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-    fbq?: (...args: any[]) => void;
-  }
-}
+const LOCATION = 'amazon_hero_section';
 
 /**
  * Amazon-style Book Hero Section
@@ -19,34 +15,9 @@ declare global {
 export const BookHeroAmazon = () => {
   const links = useAmazonLinks();
 
-  const trackPurchaseClick = (retailer: string, format: string) => {
-    console.log('🎯 Purchase button clicked:', { retailer, format, location: 'amazon_hero_section' });
-
-    // Track standard purchase button click event
-    if (window.gtag) {
-      window.gtag('event', 'purchase_button_click', {
-        'retailer': retailer,
-        'format': format,
-        'location': 'amazon_hero_section'
-      });
-      console.log('✅ Event sent to Google Analytics');
-    } else {
-      console.warn('⚠️ Google Analytics (gtag) not found');
-    }
-
-    // Track Meta pixel custom conversion — the high-intent "clicked a buy
-    // button" signal a Meta campaign optimizes toward (the pixel only sees
-    // PageView otherwise). Fires for ANY retailer (Amazon, B&N, …) with the
-    // retailer + format as params, so in Meta Events Manager you can build a
-    // custom conversion for all buy-intent, or filter to one retailer/format.
-    if (window.fbq) {
-      window.fbq('trackCustom', 'PurchaseClick', {
-        retailer,
-        format,
-        location: 'amazon_hero_section'
-      });
-      console.log('✅ Event sent to Meta pixel');
-    }
+  const buy = (opt: BuyOption, ctaRank: CtaRank) => {
+    trackPurchaseClick({ retailer: opt.retailer, format: opt.format, location: LOCATION, ctaRank, offer: opt.offer });
+    window.open(opt.href(links), '_blank');
   };
 
   return (
@@ -104,7 +75,7 @@ export const BookHeroAmazon = () => {
                   </span>
                 </div>
                 <span className="text-slate-700 text-sm">
-                  4,581 ratings
+                  6,396 ratings
                 </span>
               </div>
 
@@ -183,95 +154,56 @@ export const BookHeroAmazon = () => {
                   </div>
                 </div>
 
-                <div className="border-t border-slate-200 pt-4 space-y-4">
-                  {/* Kindle Option */}
-                  <div className="border-b border-slate-200 pb-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <div className="font-semibold text-slate-900">Kindle eBook</div>
-                        <div className="text-sm text-slate-600">Instant download • Read on any device</div>
-                        <div className="mt-1 bg-yellow-100 border border-yellow-300 px-2 py-0.5 inline-block rounded text-xs">
-                          Available on Kindle Unlimited
-                        </div>
-                      </div>
-                    </div>
+                <div className="border-t border-slate-200 pt-4">
+                  {/* Primary CTA — read free in Kindle Unlimited (lowest-friction yes) */}
+                  <div className="mb-4">
                     <Button
-                      className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
-                      onClick={() => {
-                        trackPurchaseClick('Amazon', 'Kindle');
-                        window.open(links.amazon.kindleUrl, '_blank');
-                      }}
+                      className="w-full h-auto py-2.5 bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 shadow-sm border border-[#FCD200]"
+                      onClick={() => buy(PRIMARY_CTA, 'primary')}
                     >
-                      Buy Kindle Edition
-                      <ExternalLink className="w-4 h-4" />
+                      <span className="flex flex-col items-center leading-tight">
+                        <span className="font-bold text-base">{PRIMARY_CTA.ctaLine1}</span>
+                        <span className="text-[11px] font-medium opacity-80">{PRIMARY_CTA.ctaLine2}</span>
+                      </span>
                     </Button>
+                    <p className="text-xs text-slate-500 mt-2 leading-snug">{PRIMARY_CTA.subLabel}</p>
                   </div>
 
-                  {/* Paperback Option */}
-                  <div className="border-b border-slate-200 pb-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <div className="font-semibold text-slate-900">Paperback</div>
-                        <div className="text-sm text-slate-600">Physical book • Free delivery options</div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
+                  {/* Secondary — other formats, demoted */}
+                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
+                    Prefer another format?
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {SECONDARY.map((opt) => (
                       <Button
-                        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
-                        onClick={() => {
-                          trackPurchaseClick('Amazon', 'Paperback');
-                          window.open(links.amazon.paperbackUrl, '_blank');
-                        }}
-                      >
-                        Buy Paperback (Amazon)
-                        <ExternalLink className="w-4 h-4" />
-                      </Button>
-                      <Button
+                        key={opt.id}
                         variant="outline"
                         className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
-                        onClick={() => {
-                          trackPurchaseClick('Barnes & Noble', 'Paperback');
-                          window.open(links.barnesAndNoble.paperbackUrl, '_blank');
-                        }}
+                        onClick={() => buy(opt, 'secondary')}
                       >
-                        Buy Paperback (Barnes & Noble)
-                        <ExternalLink className="w-4 h-4" />
+                        {opt.label}
                       </Button>
-                    </div>
+                    ))}
                   </div>
 
-                  {/* Audiobook Option */}
-                  <div>
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <div className="font-semibold text-slate-900">Audiobook</div>
-                        <div className="text-sm text-slate-600">Listen anywhere • Professional narration</div>
-                      </div>
+                  {/* More — long tail (B&N, direct Kindle buy) tucked away */}
+                  <details className="mt-3">
+                    <summary className="cursor-pointer text-sm text-blue-700 hover:text-blue-900 select-none">
+                      More formats &amp; stores
+                    </summary>
+                    <div className="mt-2 space-y-1.5">
+                      {MORE.map((opt) => (
+                        <button
+                          key={opt.id}
+                          className="w-full text-left text-sm text-slate-600 hover:text-blue-700 hover:underline flex items-center gap-1"
+                          onClick={() => buy(opt, 'more')}
+                        >
+                          {opt.label}
+                          <ExternalLink className="w-3 h-3 shrink-0" />
+                        </button>
+                      ))}
                     </div>
-                    <div className="space-y-2">
-                      <Button
-                        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 font-semibold shadow-sm border border-[#FCD200]"
-                        onClick={() => {
-                          trackPurchaseClick('Amazon', 'Audible');
-                          window.open(links.amazon.audiobookUrl, '_blank');
-                        }}
-                      >
-                        Buy on Audible
-                        <ExternalLink className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
-                        onClick={() => {
-                          trackPurchaseClick('Barnes & Noble', 'Audiobook');
-                          window.open(links.barnesAndNoble.audiobookUrl, '_blank');
-                        }}
-                      >
-                        Buy on B&N Audiobooks
-                        <ExternalLink className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
+                  </details>
                 </div>
               </div>
 
