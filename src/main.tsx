@@ -1,5 +1,8 @@
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { ViteReactSSG } from "vite-react-ssg";
+import { routes } from "./App";
+import "./index.css";
 
-createRoot(document.getElementById("root")!).render(<App />);
+// vite-react-ssg renders each route to static HTML at build time, then
+// hydrates on the client. First paint shows real content (cover, headline,
+// buy buttons) before the JS bundle finishes — critical for ad traffic.
+export const createRoot = ViteReactSSG({ routes });
