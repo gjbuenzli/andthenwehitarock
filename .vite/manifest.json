@@ -1,0 +1,30 @@
+{
+  "_client-I3B4gUDe.js": {
+    "file": "assets/client-I3B4gUDe.js",
+    "name": "client",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  },
+  "index.html": {
+    "file": "assets/app-DjvOkXE-.js",
+    "name": "app",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "_client-I3B4gUDe.js",
+      "_client-I3B4gUDe.js"
+    ],
+    "css": [
+      "assets/app-MagEcO8p.css"
+    ],
+    "assets": [
+      "assets/actual-book-cover-D3r30XXl.jpg"
+    ]
+  },
+  "src/assets/actual-book-cover.jpg": {
+    "file": "assets/actual-book-cover-D3r30XXl.jpg",
+    "src": "src/assets/actual-book-cover.jpg"
+  }
+}
