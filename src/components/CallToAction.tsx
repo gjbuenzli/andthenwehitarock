@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackPurchaseClick, type CtaRank } from '@/lib/track';
-import { PRIMARY_CTA, SECONDARY, MORE, type BuyOption } from '@/config/buyOptions';
+import { OTHER_STORES, type BuyOption } from '@/config/buyOptions';
+import { FormatButtons } from '@/components/FormatButtons';
 
 const LOCATION = 'cta_section';
 
@@ -26,49 +26,19 @@ export const CallToAction = () => {
             <p className="text-xl lg:text-2xl opacity-90 leading-relaxed">Join tens of thousands of readers who've fallen in love with this hilarious sailing saga. Perfect for anyone who loves adventure, family stories, or just needs a good laugh!</p>
           </div>
 
-          {/* Purchase Options — one primary action, rest demoted */}
+          {/* Purchase Options — three equal formats, icon buttons in a row */}
           <div className="max-w-xl mx-auto mb-12">
-            {/* Primary CTA — read free in Kindle Unlimited */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 ring-1 ring-white/15">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <img src="/lovable-uploads/ku.png" alt="Kindle Unlimited" className="h-5 object-contain bg-white rounded px-2 py-1" />
-              </div>
-              <Button
-                size="xl"
-                className="w-full h-auto py-3 bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 border border-[#FCD200]"
-                onClick={() => buy(PRIMARY_CTA, 'primary')}
-              >
-                <span className="flex flex-col items-center leading-tight">
-                  <span className="font-bold text-lg">{PRIMARY_CTA.ctaLine1}</span>
-                  <span className="text-xs font-medium opacity-80">{PRIMARY_CTA.ctaLine2}</span>
-                </span>
-              </Button>
-              <p className="text-sm text-white/75 mt-3">{PRIMARY_CTA.subLabel}</p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 sm:p-6 ring-1 ring-white/15">
+              <FormatButtons onPick={(o) => buy(o, 'primary')} variant="full" />
             </div>
 
-            {/* Secondary — other formats */}
-            <div className="grid grid-cols-2 gap-3 mt-4">
-              {SECONDARY.map((opt) => (
-                <Button
-                  key={opt.id}
-                  variant="outline"
-                  size="xl"
-                  className="w-full border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 hover:border-white"
-                  onClick={() => buy(opt, 'secondary')}
-                >
-                  {opt.label}
-                  <ExternalLink className="w-4 h-4 shrink-0" />
-                </Button>
-              ))}
-            </div>
-
-            {/* More — long tail */}
+            {/* Other stores (Barnes & Noble) */}
             <details className="mt-4 text-center">
               <summary className="cursor-pointer text-sm text-white/80 hover:text-white select-none">
-                More formats &amp; stores
+                Other stores
               </summary>
               <div className="mt-3 flex flex-col items-center gap-2">
-                {MORE.map((opt) => (
+                {OTHER_STORES.map((opt) => (
                   <button
                     key={opt.id}
                     className="text-sm text-white/80 hover:text-white hover:underline flex items-center gap-1"

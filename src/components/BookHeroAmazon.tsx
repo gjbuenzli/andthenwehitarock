@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackPurchaseClick, type CtaRank } from '@/lib/track';
-import { PRIMARY_CTA, SECONDARY, MORE, type BuyOption } from '@/config/buyOptions';
+import { OTHER_STORES, type BuyOption } from '@/config/buyOptions';
+import { FormatButtons } from '@/components/FormatButtons';
 
 const LOCATION = 'amazon_hero_section';
 
@@ -155,44 +155,18 @@ export const BookHeroAmazon = () => {
                 </div>
 
                 <div className="border-t border-slate-200 pt-4">
-                  {/* Primary CTA — read free in Kindle Unlimited (lowest-friction yes) */}
-                  <div className="mb-4">
-                    <Button
-                      className="w-full h-auto py-2.5 bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 shadow-sm border border-[#FCD200]"
-                      onClick={() => buy(PRIMARY_CTA, 'primary')}
-                    >
-                      <span className="flex flex-col items-center leading-tight">
-                        <span className="font-bold text-base">{PRIMARY_CTA.ctaLine1}</span>
-                        <span className="text-[11px] font-medium opacity-80">{PRIMARY_CTA.ctaLine2}</span>
-                      </span>
-                    </Button>
-                    <p className="text-xs text-slate-500 mt-2 leading-snug">{PRIMARY_CTA.subLabel}</p>
-                  </div>
+                  {/* Three equal formats — paperback (majority), Kindle (free on
+                      KU), and audiobook — as icon buttons in a row. */}
+                  <div className="text-sm font-semibold text-slate-900 mb-2">Get your copy</div>
+                  <FormatButtons onPick={(o) => buy(o, 'primary')} variant="full" />
 
-                  {/* Secondary — other formats, demoted */}
-                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                    Prefer another format?
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {SECONDARY.map((opt) => (
-                      <Button
-                        key={opt.id}
-                        variant="outline"
-                        className="w-full border-slate-300 text-slate-700 hover:bg-slate-100"
-                        onClick={() => buy(opt, 'secondary')}
-                      >
-                        {opt.label}
-                      </Button>
-                    ))}
-                  </div>
-
-                  {/* More — long tail (B&N, direct Kindle buy) tucked away */}
+                  {/* Other stores (Barnes & Noble) tucked away */}
                   <details className="mt-3">
                     <summary className="cursor-pointer text-sm text-blue-700 hover:text-blue-900 select-none">
-                      More formats &amp; stores
+                      Other stores
                     </summary>
                     <div className="mt-2 space-y-1.5">
-                      {MORE.map((opt) => (
+                      {OTHER_STORES.map((opt) => (
                         <button
                           key={opt.id}
                           className="w-full text-left text-sm text-slate-600 hover:text-blue-700 hover:underline flex items-center gap-1"
@@ -233,16 +207,8 @@ export const BookHeroAmazon = () => {
           purchase box sits below a long description. This guarantees a clear,
           always-visible CTA on the initial screen so visitors can act without
           hunting for a buy button. Hidden on desktop (right rail is visible). */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 shadow-[0_-2px_12px_rgba(0,0,0,0.12)] px-4 py-2.5">
-        <Button
-          className="w-full h-auto py-2 bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 shadow-sm border border-[#FCD200]"
-          onClick={() => buy(PRIMARY_CTA, 'primary', 'mobile_sticky_bar')}
-        >
-          <span className="flex flex-col items-center leading-tight">
-            <span className="font-bold text-base">{PRIMARY_CTA.ctaLine1}</span>
-            <span className="text-[11px] font-medium opacity-80">{PRIMARY_CTA.ctaLine2}</span>
-          </span>
-        </Button>
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 shadow-[0_-2px_12px_rgba(0,0,0,0.12)] px-3 py-2.5">
+        <FormatButtons onPick={(o) => buy(o, 'primary', 'mobile_sticky_bar')} variant="compact" />
       </div>
     </section>
   );

@@ -5,45 +5,30 @@ type Links = ReturnType<typeof useAmazonLinks>;
 
 export interface BuyOption {
   id: string;
-  /** Button / link text. */
   label: string;
+  /** Small supporting note shown under the label (full variant only). */
+  perk?: string;
+  /** Tiny corner pill, e.g. "FREE" on the Kindle Unlimited option. */
+  badge?: string;
   retailer: string; // 'Amazon' | 'Barnes & Noble'
-  format: string;   // 'Kindle' | 'Paperback' | 'Audible' | 'Audiobook'
+  format: string;   // 'Paperback' | 'Kindle' | 'Audible' | 'Audiobook'
   offer?: OfferKind;
-  /** Resolves the destination URL from the (override-aware) links hook. */
   href: (l: Links) => string;
 }
 
 /**
- * Single source of truth for the buy hierarchy. Both the hero and the bottom
- * CTA render from this, so the primary offer can be swapped (or A/B-tested) in
- * one place instead of across ~11 hardcoded buttons.
- *
- * The primary is the lowest-friction "yes" for cold ad traffic: read FREE in
- * Kindle Unlimited (KU page-reads still pay royalties). Everything else is
- * demoted so a first-time visitor faces one obvious action, not a wall of
- * format × retailer choices.
+ * The three formats, surfaced EQUALLY. Paperback is the majority of sales so it
+ * is never demoted, audiobook is always visible, and Kindle simply notes the
+ * Kindle-Unlimited "read free" perk rather than dominating the whole CTA.
+ * Default retailer = Amazon; Barnes & Noble lives under "Other stores".
  */
-export const PRIMARY_CTA: BuyOption & { ctaLine1: string; ctaLine2: string; subLabel: string } = {
-  id: 'kindle-ku',
-  label: 'Read FREE with Kindle Unlimited',
-  // Rendered as a tidy two-line button (big top line, small sub-line) — Amazon-style.
-  ctaLine1: 'Read FREE',
-  ctaLine2: 'in Kindle Unlimited',
-  subLabel: 'Free for Kindle Unlimited members — not a member? Start a free trial.',
-  retailer: 'Amazon',
-  format: 'Kindle',
-  offer: 'ku_free',
-  href: (l) => l.amazon.kindleUrl,
-};
-
-export const SECONDARY: BuyOption[] = [
-  { id: 'paperback-amazon', label: 'Paperback', retailer: 'Amazon', format: 'Paperback', href: (l) => l.amazon.paperbackUrl },
-  { id: 'audible', label: 'Audiobook', retailer: 'Amazon', format: 'Audible', href: (l) => l.amazon.audiobookUrl },
+export const FORMATS: BuyOption[] = [
+  { id: 'paperback', label: 'Paperback', perk: 'Physical book', retailer: 'Amazon', format: 'Paperback', href: (l) => l.amazon.paperbackUrl },
+  { id: 'kindle', label: 'Kindle', perk: 'Kindle Unlimited', badge: 'FREE', retailer: 'Amazon', format: 'Kindle', offer: 'ku_free', href: (l) => l.amazon.kindleUrl },
+  { id: 'audiobook', label: 'Audiobook', perk: 'On Audible', retailer: 'Amazon', format: 'Audible', href: (l) => l.amazon.audiobookUrl },
 ];
 
-export const MORE: BuyOption[] = [
-  { id: 'kindle-buy', label: 'Buy the Kindle edition', retailer: 'Amazon', format: 'Kindle', href: (l) => l.amazon.kindleUrl },
+export const OTHER_STORES: BuyOption[] = [
   { id: 'paperback-bn', label: 'Paperback at Barnes & Noble', retailer: 'Barnes & Noble', format: 'Paperback', href: (l) => l.barnesAndNoble.paperbackUrl },
   { id: 'audiobook-bn', label: 'Audiobook at Barnes & Noble', retailer: 'Barnes & Noble', format: 'Audiobook', href: (l) => l.barnesAndNoble.audiobookUrl },
 ];

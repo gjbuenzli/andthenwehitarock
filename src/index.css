@@ -134,3 +134,31 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+/* Lively buy buttons — gold gradient, warm glow, and a slow shine sweep so the
+   CTAs actually draw the eye on mobile (where there is no hover state). */
+.buy-cta {
+  background-image: linear-gradient(180deg, #FFE259 0%, #FFC01E 55%, #FFB300 100%);
+  box-shadow: 0 6px 18px -4px rgba(245, 158, 11, 0.55);
+}
+.buy-cta:hover {
+  background-image: linear-gradient(180deg, #FFE780 0%, #FFC93A 55%, #FFBE1A 100%);
+}
+.buy-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 35%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: translateX(-150%) skewX(-18deg);
+  animation: buy-shine 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes buy-shine {
+  0% { transform: translateX(-150%) skewX(-18deg); }
+  55%, 100% { transform: translateX(380%) skewX(-18deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .buy-cta::after { display: none; }
+}
