@@ -6,7 +6,7 @@
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/client.js?commonjs-exports": [
-    "./assets/client-BgMYY7Mz.js"
+    "./assets/client-BMudtHwR.js"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/index.js?commonjs-module": [
     "./assets/actual-book-cover-D3r30XXl.jpg"
@@ -80,7 +80,13 @@
   "node_modules/lucide-react/dist/esm/icons/arrow-right.js": [
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
+  "node_modules/lucide-react/dist/esm/icons/book.js": [
+    "./assets/actual-book-cover-D3r30XXl.jpg"
+  ],
   "node_modules/lucide-react/dist/esm/icons/external-link.js": [
+    "./assets/actual-book-cover-D3r30XXl.jpg"
+  ],
+  "node_modules/lucide-react/dist/esm/icons/headphones.js": [
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/lucide-react/dist/esm/icons/heart.js": [
@@ -90,6 +96,9 @@
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/lucide-react/dist/esm/icons/star.js": [
+    "./assets/actual-book-cover-D3r30XXl.jpg"
+  ],
+  "node_modules/lucide-react/dist/esm/icons/tablet.js": [
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/lucide-react/dist/esm/icons/users.js": [
@@ -114,7 +123,7 @@
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/react-dom/client.js": [
-    "./assets/client-BgMYY7Mz.js"
+    "./assets/client-BMudtHwR.js"
   ],
   "node_modules/react-dom/index.js": [
     "./assets/actual-book-cover-D3r30XXl.jpg"
@@ -177,6 +186,9 @@
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/components/CallToAction.tsx": [
+    "./assets/actual-book-cover-D3r30XXl.jpg"
+  ],
+  "src/components/FormatButtons.tsx": [
     "./assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/components/ReviewsCarousel.tsx": [
