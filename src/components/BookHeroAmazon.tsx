@@ -1,9 +1,8 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
-import { trackPurchaseClick, type CtaRank } from '@/lib/track';
-import { OTHER_STORES, type BuyOption } from '@/config/buyOptions';
+import { trackPurchaseClick } from '@/lib/track';
+import { type Format, type Retailer } from '@/config/buyOptions';
 import { FormatButtons } from '@/components/FormatButtons';
 
 const LOCATION = 'amazon_hero_section';
@@ -15,9 +14,9 @@ const LOCATION = 'amazon_hero_section';
 export const BookHeroAmazon = () => {
   const links = useAmazonLinks();
 
-  const buy = (opt: BuyOption, ctaRank: CtaRank, location: string = LOCATION) => {
-    trackPurchaseClick({ retailer: opt.retailer, format: opt.format, location, ctaRank, offer: opt.offer });
-    window.open(opt.href(links), '_blank');
+  const onBuy = (format: Format, retailer: Retailer, location: string = LOCATION) => {
+    trackPurchaseClick({ retailer: retailer.name, format: format.format, location, ctaRank: 'primary', offer: retailer.offer });
+    window.open(retailer.href(links), '_blank');
   };
 
   return (
@@ -155,29 +154,10 @@ export const BookHeroAmazon = () => {
                 </div>
 
                 <div className="border-t border-slate-200 pt-4">
-                  {/* Three equal formats — paperback (majority), Kindle (free on
-                      KU), and audiobook — as icon buttons in a row. */}
+                  {/* Three equal formats. Paperback & audiobook open a retailer
+                      chooser (Amazon / B&N); Kindle goes straight to Amazon. */}
                   <div className="text-sm font-semibold text-slate-900 mb-2">Get your copy</div>
-                  <FormatButtons onPick={(o) => buy(o, 'primary')} variant="full" />
-
-                  {/* Other stores (Barnes & Noble) tucked away */}
-                  <details className="mt-3">
-                    <summary className="cursor-pointer text-sm text-blue-700 hover:text-blue-900 select-none">
-                      Other stores
-                    </summary>
-                    <div className="mt-2 space-y-1.5">
-                      {OTHER_STORES.map((opt) => (
-                        <button
-                          key={opt.id}
-                          className="w-full text-left text-sm text-slate-600 hover:text-blue-700 hover:underline flex items-center gap-1"
-                          onClick={() => buy(opt, 'more')}
-                        >
-                          {opt.label}
-                          <ExternalLink className="w-3 h-3 shrink-0" />
-                        </button>
-                      ))}
-                    </div>
-                  </details>
+                  <FormatButtons onBuy={(f, r) => onBuy(f, r)} variant="full" />
                 </div>
               </div>
 
@@ -208,7 +188,7 @@ export const BookHeroAmazon = () => {
           always-visible CTA on the initial screen so visitors can act without
           hunting for a buy button. Hidden on desktop (right rail is visible). */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 shadow-[0_-2px_12px_rgba(0,0,0,0.12)] px-3 py-2.5">
-        <FormatButtons onPick={(o) => buy(o, 'primary', 'mobile_sticky_bar')} variant="compact" />
+        <FormatButtons onBuy={(f, r) => onBuy(f, r, 'mobile_sticky_bar')} variant="compact" choiceAbove />
       </div>
     </section>
   );

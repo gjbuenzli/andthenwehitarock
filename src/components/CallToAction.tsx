@@ -1,8 +1,7 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
-import { trackPurchaseClick, type CtaRank } from '@/lib/track';
-import { OTHER_STORES, type BuyOption } from '@/config/buyOptions';
+import { trackPurchaseClick } from '@/lib/track';
+import { type Format, type Retailer } from '@/config/buyOptions';
 import { FormatButtons } from '@/components/FormatButtons';
 
 const LOCATION = 'cta_section';
@@ -10,9 +9,9 @@ const LOCATION = 'cta_section';
 export const CallToAction = () => {
   const links = useAmazonLinks();
 
-  const buy = (opt: BuyOption, ctaRank: CtaRank) => {
-    trackPurchaseClick({ retailer: opt.retailer, format: opt.format, location: LOCATION, ctaRank, offer: opt.offer });
-    window.open(opt.href(links), '_blank');
+  const onBuy = (format: Format, retailer: Retailer) => {
+    trackPurchaseClick({ retailer: retailer.name, format: format.format, location: LOCATION, ctaRank: 'primary', offer: retailer.offer });
+    window.open(retailer.href(links), '_blank');
   };
 
   return <section className="py-20 bg-gradient-ocean text-primary-foreground">
@@ -26,30 +25,12 @@ export const CallToAction = () => {
             <p className="text-xl lg:text-2xl opacity-90 leading-relaxed">Join tens of thousands of readers who've fallen in love with this hilarious sailing saga. Perfect for anyone who loves adventure, family stories, or just needs a good laugh!</p>
           </div>
 
-          {/* Purchase Options — three equal formats, icon buttons in a row */}
+          {/* Purchase Options — three formats; paperback/audiobook open a
+              retailer chooser (Amazon / B&N), Kindle goes straight to Amazon */}
           <div className="max-w-xl mx-auto mb-12">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 sm:p-6 ring-1 ring-white/15">
-              <FormatButtons onPick={(o) => buy(o, 'primary')} variant="full" />
+              <FormatButtons onBuy={(f, r) => onBuy(f, r)} variant="full" />
             </div>
-
-            {/* Other stores (Barnes & Noble) */}
-            <details className="mt-4 text-center">
-              <summary className="cursor-pointer text-sm text-white/80 hover:text-white select-none">
-                Other stores
-              </summary>
-              <div className="mt-3 flex flex-col items-center gap-2">
-                {OTHER_STORES.map((opt) => (
-                  <button
-                    key={opt.id}
-                    className="text-sm text-white/80 hover:text-white hover:underline flex items-center gap-1"
-                    onClick={() => buy(opt, 'more')}
-                  >
-                    {opt.label}
-                    <ExternalLink className="w-3 h-3 shrink-0" />
-                  </button>
-                ))}
-              </div>
-            </details>
           </div>
 
           {/* Social Proof */}
