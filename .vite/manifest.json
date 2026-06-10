@@ -1,6 +1,6 @@
 {
-  "_client-BMudtHwR.js": {
-    "file": "assets/client-BMudtHwR.js",
+  "_client-CuRnHMkc.js": {
+    "file": "assets/client-CuRnHMkc.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,23 +8,28 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-DsbVgGW5.js",
+    "file": "assets/app-Dl3Qh8vA.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-BMudtHwR.js",
-      "_client-BMudtHwR.js"
+      "_client-CuRnHMkc.js",
+      "_client-CuRnHMkc.js"
     ],
     "css": [
-      "assets/app-CFu4d4TI.css"
+      "assets/app-BDjHfniC.css"
     ],
     "assets": [
-      "assets/actual-book-cover-D3r30XXl.jpg"
+      "assets/actual-book-cover-D3r30XXl.jpg",
+      "assets/kindle-unlimited-logo-fAYQg9UB.png"
     ]
   },
   "src/assets/actual-book-cover.jpg": {
     "file": "assets/actual-book-cover-D3r30XXl.jpg",
     "src": "src/assets/actual-book-cover.jpg"
+  },
+  "src/assets/kindle-unlimited-logo.png": {
+    "file": "assets/kindle-unlimited-logo-fAYQg9UB.png",
+    "src": "src/assets/kindle-unlimited-logo.png"
   }
 }
