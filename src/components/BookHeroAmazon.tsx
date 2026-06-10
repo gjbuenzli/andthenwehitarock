@@ -15,8 +15,8 @@ const LOCATION = 'amazon_hero_section';
 export const BookHeroAmazon = () => {
   const links = useAmazonLinks();
 
-  const buy = (opt: BuyOption, ctaRank: CtaRank) => {
-    trackPurchaseClick({ retailer: opt.retailer, format: opt.format, location: LOCATION, ctaRank, offer: opt.offer });
+  const buy = (opt: BuyOption, ctaRank: CtaRank, location: string = LOCATION) => {
+    trackPurchaseClick({ retailer: opt.retailer, format: opt.format, location, ctaRank, offer: opt.offer });
     window.open(opt.href(links), '_blank');
   };
 
@@ -227,6 +227,22 @@ export const BookHeroAmazon = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Sticky mobile buy bar — ~99% of ad traffic is mobile in-app, where the
+          purchase box sits below a long description. This guarantees a clear,
+          always-visible CTA on the initial screen so visitors can act without
+          hunting for a buy button. Hidden on desktop (right rail is visible). */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 shadow-[0_-2px_12px_rgba(0,0,0,0.12)] px-4 py-2.5">
+        <Button
+          className="w-full h-auto py-2 bg-[#FFD814] hover:bg-[#F7CA00] text-slate-900 shadow-sm border border-[#FCD200]"
+          onClick={() => buy(PRIMARY_CTA, 'primary', 'mobile_sticky_bar')}
+        >
+          <span className="flex flex-col items-center leading-tight">
+            <span className="font-bold text-base">{PRIMARY_CTA.ctaLine1}</span>
+            <span className="text-[11px] font-medium opacity-80">{PRIMARY_CTA.ctaLine2}</span>
+          </span>
+        </Button>
       </div>
     </section>
   );

@@ -14,7 +14,7 @@ import { CallToAction } from '@/components/CallToAction';
  * prerendered per variant — not random client assignment.
  */
 const Index = () => (
-  <div className="min-h-screen bg-white">
+  <div className="min-h-screen bg-white pb-24 lg:pb-0">
     <BookHeroAmazon />
     <ReviewsCarousel />
     <AboutBook />
