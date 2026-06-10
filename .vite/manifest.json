@@ -1,6 +1,6 @@
 {
-  "_client-BAwbxeto.js": {
-    "file": "assets/client-BAwbxeto.js",
+  "_client-BajL00Wp.js": {
+    "file": "assets/client-BajL00Wp.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,13 +8,13 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-CN3EAsVk.js",
+    "file": "assets/app-DdD4WcGR.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-BAwbxeto.js",
-      "_client-BAwbxeto.js"
+      "_client-BajL00Wp.js",
+      "_client-BajL00Wp.js"
     ],
     "css": [
       "assets/app-D-3DUc3U.css"
