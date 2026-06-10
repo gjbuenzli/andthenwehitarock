@@ -9,9 +9,9 @@ const LOCATION = 'cta_section';
 export const CallToAction = () => {
   const links = useAmazonLinks();
 
-  const onBuy = (format: Format, retailer: Retailer) => {
+  // Track only — the buy buttons are real <a> links that do the navigation.
+  const track = (format: Format, retailer: Retailer) => {
     trackPurchaseClick({ retailer: retailer.name, format: format.format, location: LOCATION, ctaRank: 'primary', offer: retailer.offer });
-    window.open(retailer.href(links), '_blank');
   };
 
   return <section className="py-20 bg-gradient-ocean text-primary-foreground">
@@ -29,7 +29,7 @@ export const CallToAction = () => {
               retailer chooser (Amazon / B&N), Kindle goes straight to Amazon */}
           <div className="max-w-xl mx-auto mb-12">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 sm:p-6 ring-1 ring-white/15">
-              <FormatButtons onBuy={(f, r) => onBuy(f, r)} variant="full" />
+              <FormatButtons links={links} onTrack={(f, r) => track(f, r)} variant="full" />
             </div>
           </div>
 

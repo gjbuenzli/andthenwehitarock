@@ -14,9 +14,9 @@ const LOCATION = 'amazon_hero_section';
 export const BookHeroAmazon = () => {
   const links = useAmazonLinks();
 
-  const onBuy = (format: Format, retailer: Retailer, location: string = LOCATION) => {
+  // Track only — the buy buttons are real <a> links that do the navigation.
+  const track = (format: Format, retailer: Retailer, location: string = LOCATION) => {
     trackPurchaseClick({ retailer: retailer.name, format: format.format, location, ctaRank: 'primary', offer: retailer.offer });
-    window.open(retailer.href(links), '_blank');
   };
 
   return (
@@ -157,7 +157,7 @@ export const BookHeroAmazon = () => {
                   {/* Three equal formats. Paperback & audiobook open a retailer
                       chooser (Amazon / B&N); Kindle goes straight to Amazon. */}
                   <div className="text-sm font-semibold text-slate-900 mb-2">Get your copy</div>
-                  <FormatButtons onBuy={(f, r) => onBuy(f, r)} variant="full" />
+                  <FormatButtons links={links} onTrack={(f, r) => track(f, r)} variant="full" />
                 </div>
               </div>
 
@@ -188,7 +188,7 @@ export const BookHeroAmazon = () => {
           always-visible CTA on the initial screen so visitors can act without
           hunting for a buy button. Hidden on desktop (right rail is visible). */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 shadow-[0_-2px_12px_rgba(0,0,0,0.12)] px-3 py-2.5">
-        <FormatButtons onBuy={(f, r) => onBuy(f, r, 'mobile_sticky_bar')} variant="compact" choiceAbove />
+        <FormatButtons links={links} onTrack={(f, r) => track(f, r, 'mobile_sticky_bar')} variant="compact" choiceAbove />
       </div>
     </section>
   );
