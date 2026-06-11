@@ -74,10 +74,10 @@ export function FormatButtons({
               href={r.href(links)}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => {
-                onTrack(openFmt, r);
-                setOpenId(null);
-              }}
+              // Fire the pixel on pointer-down (a beat before the click
+              // navigates) so the beacon reliably sends in in-app browsers.
+              onPointerDown={() => onTrack(openFmt, r)}
+              onClick={() => setOpenId(null)}
             >
               <BrandMark brand={r.brand} />
               <span className="font-bold text-xs">{r.name}</span>
@@ -99,7 +99,7 @@ export function FormatButtons({
                 href={f.retailers[0].href(links)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => onTrack(f, f.retailers[0])}
+                onPointerDown={() => onTrack(f, f.retailers[0])}
               >
                 {fmtContent(f)}
               </a>
