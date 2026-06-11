@@ -43,9 +43,20 @@ export function trackPurchaseClick({
     console.warn('⚠️ Google Analytics (gtag) not found');
   }
 
-  // High-intent buy signal the Meta campaign optimizes toward (the pixel only
-  // sees PageView otherwise). Fires for any retailer/format with the params.
   if (window.fbq) {
+    // Standard Meta event — first-class "conversion event" that Meta fully
+    // supports for optimization + auto event configuration (clears the
+    // "no conversion events set up" warning a custom event can't). Clicking a
+    // buy button = initiating the purchase at the retailer.
+    window.fbq('track', 'InitiateCheckout', {
+      content_name: 'And Then We Hit a Rock',
+      content_category: format,
+      content_type: 'product',
+      retailer,
+    });
+
+    // Custom event — carries the richer retailer/format/cta_rank/offer detail
+    // the on-site funnel dashboard breaks down by.
     window.fbq('trackCustom', 'PurchaseClick', payload);
   }
 }
