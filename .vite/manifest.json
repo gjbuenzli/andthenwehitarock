@@ -1,6 +1,6 @@
 {
-  "_client-CxZX5jo0.js": {
-    "file": "assets/client-CxZX5jo0.js",
+  "_client-i3erePvP.js": {
+    "file": "assets/client-i3erePvP.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,13 +8,13 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-D-1cWoCE.js",
+    "file": "assets/app-B6mv5vv8.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-CxZX5jo0.js",
-      "_client-CxZX5jo0.js"
+      "_client-i3erePvP.js",
+      "_client-i3erePvP.js"
     ],
     "css": [
       "assets/app-D-3DUc3U.css"
