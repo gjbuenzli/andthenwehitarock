@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { Head } from 'vite-react-ssg';
 import { Link } from 'react-router-dom';
 import { SiteHeader } from './SiteHeader';
+import { MobileBuyBar } from './MobileBuyBar';
 
 /**
  * Wrapper for the explorable content pages (chapters, future gear/photos/blog).
@@ -28,9 +29,10 @@ export function SiteLayout({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-white flex flex-col pb-24 lg:pb-0">
         <SiteHeader />
         <main className="flex-1">{children}</main>
+        <MobileBuyBar />
         <footer className="border-t border-slate-200 mt-16">
           <div className="container mx-auto px-4 py-8 text-sm text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span>© {`${new Date().getFullYear()} `}Greg Buenzli · And Then We Hit a Rock</span>
