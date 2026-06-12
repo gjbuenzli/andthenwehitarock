@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { SiteLayout } from '@/components/SiteLayout';
 import { HACKS } from '@/data/hacks';
 import { trackAffiliateClick } from '@/lib/analytics';
@@ -31,15 +32,25 @@ export default function CruisingHacks() {
               key={hack.slug}
               className="flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden transition hover:shadow-md"
             >
-              <img
-                src={hack.image}
-                alt={hack.title}
-                loading="lazy"
-                className="w-full h-44 object-cover bg-slate-100"
-              />
+              <Link to={`/cruising-hacks/${hack.slug}`} className="block">
+                <img
+                  src={hack.image}
+                  alt={hack.title}
+                  loading="lazy"
+                  className="w-full h-44 object-cover bg-slate-100"
+                />
+              </Link>
               <div className="flex flex-col flex-1 p-4">
-                <h3 className="font-bold text-slate-900 mb-1.5">{hack.title}</h3>
+                <Link to={`/cruising-hacks/${hack.slug}`}>
+                  <h3 className="font-bold text-slate-900 mb-1.5 hover:text-blue-700">{hack.title}</h3>
+                </Link>
                 <p className="text-sm text-slate-600 leading-relaxed flex-1">{hack.blurb}</p>
+                <Link
+                  to={`/cruising-hacks/${hack.slug}`}
+                  className="mt-3 text-sm font-semibold text-blue-700 hover:text-blue-900"
+                >
+                  Read more →
+                </Link>
                 {hack.affiliateUrl ? (
                   <a
                     href={hack.affiliateUrl}

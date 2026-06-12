@@ -39,7 +39,7 @@ export default function Chapters() {
           <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 mt-6 text-sm font-semibold text-slate-500">
             <span>{chapterCount} chapters</span>
             <span className="text-slate-300">•</span>
-            <span>337 days at sea</span>
+            <span>337 days afloat</span>
             <span className="text-slate-300">•</span>
             <span>1 sailboat named Twig</span>
           </div>
