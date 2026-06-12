@@ -1,6 +1,6 @@
 {
-  "_client-i3erePvP.js": {
-    "file": "assets/client-i3erePvP.js",
+  "_client-Bexd4fe_.js": {
+    "file": "assets/client-Bexd4fe_.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,16 +8,16 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-B6mv5vv8.js",
+    "file": "assets/app-D2_Y7OzP.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-i3erePvP.js",
-      "_client-i3erePvP.js"
+      "_client-Bexd4fe_.js",
+      "_client-Bexd4fe_.js"
     ],
     "css": [
-      "assets/app-D-3DUc3U.css"
+      "assets/app-Bp0T5nh3.css"
     ],
     "assets": [
       "assets/actual-book-cover-D3r30XXl.jpg"
