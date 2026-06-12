@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackPurchaseClick } from '@/lib/track';
@@ -81,7 +82,7 @@ export const BookHeroAmazon = () => {
               {/* Brief info */}
               <div className="bg-blue-50 border-l-4 border-blue-500 p-3">
                 <div className="text-sm text-slate-700">
-                  <span className="font-semibold">📚 Over 45,000 readers</span> have enjoyed this hilarious sailing adventure
+                  <span className="font-semibold">📚 Over 75,000 readers</span> have enjoyed this hilarious sailing adventure
                 </div>
               </div>
 
@@ -103,41 +104,13 @@ export const BookHeroAmazon = () => {
                   </p>
                 </div>
 
-                {/* Chapter Listing */}
-                <details className="mt-6">
-                  <summary className="cursor-pointer font-bold text-slate-900 hover:text-blue-600 select-none">
-                    📖 View Chapter Listing
-                  </summary>
-                  <div className="mt-4 text-sm text-slate-700 space-y-3 pl-4">
-                    <div>
-                      <h3 className="font-bold text-slate-900 mb-1">Part 1: Damn you Lisa</h3>
-                      <p className="text-xs leading-relaxed">Cocktails and Dreams • The hand of God • Down to the Banana Republics • Panama vs Twig • Christmas Blows • Georgia on my mind • Love and a sailboat</p>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900 mb-1">Part 2: Afloat</h3>
-                      <p className="text-xs leading-relaxed">All Aboard! • There's Vodka in the Boy's Bathroom • Afloat • Hazmat • Things that go bump in the night • Don't Ignore the Bright Red Light • Caulk the Wagon • Perfect Strangers</p>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900 mb-1">Part 3: The Bahamas</h3>
-                      <p className="text-xs leading-relaxed">42 Flushes • The Nut Jiggler • Watch your six • You smell like a pirate • I wet the bed • Twist and Spout • Weather or not</p>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900 mb-1">Part 4: The East Coast</h3>
-                      <p className="text-xs leading-relaxed">What if I have to go Poo? • Dr Jekyll's Island • You say Savannah, I say Banana • Pepperoni is not a fruit • House of Warship • Feeling Crabby • Tot • There's Always Room For Jello • Oh Ophelia</p>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900 mb-1">Part 5: Due South</h3>
-                      <p className="text-xs leading-relaxed">Boat Chill Factor • I lack depth • Wednesday • Anchor(s) Away • Cinderella Lost Her Slipper • Suck it Murphy • And Then We Hit a Rock • What the Fog?!</p>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900 mb-1">Epilogue</h3>
-                      <p className="text-xs leading-relaxed">There's no place like home • Come Monday (Tribute to Jimmy Buffett)</p>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900">Glossary of Ridiculous Nautical Jargon</h3>
-                    </div>
-                  </div>
-                </details>
+                {/* Chapter listing now lives on its own page (richer teasers). */}
+                <Link
+                  to="/chapters"
+                  className="mt-6 inline-flex items-center gap-1.5 font-bold text-slate-900 hover:text-blue-600"
+                >
+                  📖 View the chapter-by-chapter listing →
+                </Link>
               </div>
             </div>
 
@@ -164,7 +137,7 @@ export const BookHeroAmazon = () => {
               {/* Social Proof */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
                 <div className="flex items-center justify-center gap-2 text-blue-900 text-sm">
-                  <span className="font-semibold whitespace-nowrap">45,000+ readers</span>
+                  <span className="font-semibold whitespace-nowrap">75,000+ readers</span>
                   <span className="text-blue-600">•</span>
                   <div className="flex items-center gap-1">
                     <div className="flex text-amber-400">
