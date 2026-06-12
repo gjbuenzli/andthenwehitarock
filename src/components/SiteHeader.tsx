@@ -6,6 +6,7 @@ import { trackNav } from '@/lib/analytics';
 const NAV: { label: string; to: string }[] = [
   { label: 'Home', to: '/' },
   { label: 'Chapters', to: '/chapters' },
+  { label: 'Cruising Hacks', to: '/cruising-hacks' },
 ];
 
 export function SiteHeader() {
