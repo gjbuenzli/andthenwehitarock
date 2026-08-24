@@ -7,6 +7,12 @@
 //
 // Secrets (FB_ACCESS_TOKEN especially) come from Lambda env vars set at deploy,
 // never from the client. No dependencies — Node 20's global fetch + crypto.
+//
+// CORS is handled entirely by the Function URL's Cors config (see template.yaml),
+// which reflects the caller's Origin against the allowed list (apex + www). This
+// code MUST NOT also emit Access-Control-Allow-Origin: two layers both stamping
+// it yields duplicate ACAO headers, which browsers reject — the bug that had the
+// server event silently CORS-blocked in real browsers.
 
 const GRAPH_VERSION = 'v21.0';
 
@@ -15,19 +21,10 @@ const ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN;
 // Optional: paste a code from Events Manager → Test Events to see events land
 // in the test view without affecting live optimization. Leave unset in prod.
 const TEST_EVENT_CODE = process.env.TEST_EVENT_CODE || '';
-// The site origin allowed to call this endpoint (CORS). '*' as a fallback.
-const ALLOW_ORIGIN = process.env.ALLOW_ORIGIN || '*';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': ALLOW_ORIGIN,
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Max-Age': '86400',
-};
 
 const json = (status, body) => ({
   statusCode: status,
-  headers: { 'Content-Type': 'application/json', ...corsHeaders },
+  headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(body),
 });
 
@@ -35,8 +32,9 @@ export const handler = async (event) => {
   const method =
     event?.requestContext?.http?.method || event?.httpMethod || 'POST';
 
-  // CORS preflight
-  if (method === 'OPTIONS') return { statusCode: 204, headers: corsHeaders, body: '' };
+  // Preflight is normally answered by the Function URL Cors layer before we run;
+  // handle it defensively anyway. No CORS headers here (see file header).
+  if (method === 'OPTIONS') return { statusCode: 204, body: '' };
   if (method !== 'POST') return json(405, { error: 'method_not_allowed' });
 
   if (!PIXEL_ID || !ACCESS_TOKEN) {

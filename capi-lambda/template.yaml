@@ -15,9 +15,12 @@ Parameters:
     Default: '4291041411181419'
     Description: Meta Pixel ID (must match the browser pixel for dedup).
   AllowOrigin:
-    Type: String
-    Default: 'https://www.andthenwehitarock.com'
-    Description: Site origin allowed to call the endpoint (CORS).
+    Type: CommaDelimitedList
+    Default: 'https://andthenwehitarock.com,https://www.andthenwehitarock.com'
+    Description: >
+      Site origins allowed to call the endpoint (CORS). The site canonicalizes
+      to the apex (andthenwehitarock.com), so the apex MUST be listed or real
+      browsers CORS-block the server event; www is included for safety.
   TestEventCode:
     Type: String
     Default: ''
@@ -44,13 +47,15 @@ Resources:
         Variables:
           PIXEL_ID: !Ref PixelId
           FB_ACCESS_TOKEN: !Ref FbAccessToken
-          ALLOW_ORIGIN: !Ref AllowOrigin
           TEST_EVENT_CODE: !Ref TestEventCode
       FunctionUrlConfig:
         AuthType: NONE
+        # CORS is owned entirely by this layer (NOT the function code, which would
+        # otherwise double-stamp Access-Control-Allow-Origin and get browser-
+        # rejected). AllowOrigins covers the apex + www; the site canonicalizes
+        # to the apex, so the apex MUST be present.
         Cors:
-          AllowOrigins:
-            - !Ref AllowOrigin
+          AllowOrigins: !Ref AllowOrigin
           AllowMethods:
             - POST
           AllowHeaders:
