@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Meta Conversions API relay for andthenwehitarock.com. A single Lambda behind a
+  public Function URL that forwards InitiateCheckout events server-side to Meta.
+  Stays within the AWS always-free tier (Lambda: 1M requests/mo).
+
+Parameters:
+  FbAccessToken:
+    Type: String
+    NoEcho: true
+    Description: Conversions API access token from Events Manager (kept out of git).
+  PixelId:
+    Type: String
+    Default: '4291041411181419'
+    Description: Meta Pixel ID (must match the browser pixel for dedup).
+  AllowOrigin:
+    Type: String
+    Default: 'https://www.andthenwehitarock.com'
+    Description: Site origin allowed to call the endpoint (CORS).
+  TestEventCode:
+    Type: String
+    Default: ''
+    Description: Optional Events Manager → Test Events code. Leave blank in prod.
+  BudgetEmail:
+    Type: String
+    Description: Email to notify if this account's spend approaches $1/month.
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    MemorySize: 128
+    Timeout: 5
+
+Resources:
+  CapiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: meta-capi-relay
+      Handler: src/index.handler
+      CodeUri: ./
+      Description: Forwards InitiateCheckout to the Meta Conversions API.
+      Environment:
+        Variables:
+          PIXEL_ID: !Ref PixelId
+          FB_ACCESS_TOKEN: !Ref FbAccessToken
+          ALLOW_ORIGIN: !Ref AllowOrigin
+          TEST_EVENT_CODE: !Ref TestEventCode
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowOrigins:
+            - !Ref AllowOrigin
+          AllowMethods:
+            - POST
+          AllowHeaders:
+            - content-type
+
+  # Safety net: alert (and give you a chance to react) if the account's monthly
+  # spend nears $1. This tiny function should always be $0 within the free tier.
+  SpendGuardBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: capi-relay-spend-guard
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: '1'
+          Unit: USD
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 80
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref BudgetEmail
+
+Outputs:
+  CapiUrl:
+    Description: Public Function URL — put this in the site's VITE_CAPI_URL.
+    Value: !GetAtt CapiFunctionUrl.FunctionUrl

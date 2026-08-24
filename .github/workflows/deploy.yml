@@ -26,6 +26,12 @@ jobs:
 
       - name: Build Project
         run: npm run build
+        env:
+          # Public Meta Conversions API Function URL (repo Variable, not a
+          # secret). Injected at build time; when unset the site silently
+          # skips the server-side InitiateCheckout and only the browser pixel
+          # fires. Set under Settings → Secrets and variables → Actions → Variables.
+          VITE_CAPI_URL: ${{ vars.VITE_CAPI_URL }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

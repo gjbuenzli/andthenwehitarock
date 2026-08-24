@@ -1,0 +1,11 @@
+{
+  "name": "meta-capi-relay",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AWS Lambda that relays InitiateCheckout to the Meta Conversions API.",
+  "main": "src/index.mjs",
+  "engines": {
+    "node": ">=20"
+  }
+}

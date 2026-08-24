@@ -6,6 +6,15 @@
 //             demoted secondary/"more" link) — so we can measure whether
 //             concentrating attention on one primary CTA actually works.
 //   offer:    'ku_free' for the Kindle-Unlimited framing vs 'buy' otherwise.
+//
+// InitiateCheckout is now sent through TWO channels for redundancy:
+//   1. the browser Meta Pixel (as before), and
+//   2. a server-side copy via the Conversions API (a tiny AWS Lambda — see
+//      /capi-lambda). Both carry the SAME `event_id` so Meta deduplicates them.
+// The server copy recovers clicks the browser pixel loses to ad blockers,
+// iOS/ATT, Safari ITP, and — most relevant here — the redirect race, where the
+// browser navigates to Amazon before the pixel beacon finishes. The fetch uses
+// `keepalive: true` so it survives that navigation.
 
 declare global {
   interface Window {
@@ -23,6 +32,66 @@ export interface PurchaseClickArgs {
   location: string;
   ctaRank?: CtaRank;
   offer?: OfferKind;
+}
+
+// Conversions API endpoint (the Lambda Function URL). Injected at build time as
+// VITE_CAPI_URL; when unset (e.g. local dev) the server copy is silently
+// skipped and only the browser pixel fires.
+const CAPI_URL = (import.meta.env.VITE_CAPI_URL as string | undefined) || '';
+
+const BOOK_TITLE = 'And Then We Hit a Rock';
+
+/** Read a browser cookie by name, or undefined. */
+function getCookie(name: string): string | undefined {
+  if (typeof document === 'undefined') return undefined;
+  const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
+/**
+ * Meta's click identifier. The Pixel normally writes `_fbc` after a visit that
+ * carries an `fbclid` query param; if the cookie isn't there yet we synthesize
+ * it from the current URL's `fbclid` in Meta's required `fb.1.<ts>.<fbclid>`
+ * format so the very first landing click still matches.
+ */
+function getFbc(): string | undefined {
+  const cookie = getCookie('_fbc');
+  if (cookie) return cookie;
+  if (typeof window === 'undefined') return undefined;
+  const fbclid = new URLSearchParams(window.location.search).get('fbclid');
+  if (!fbclid) return undefined;
+  return `fb.1.${Date.now()}.${fbclid}`;
+}
+
+/** A per-event id shared by the pixel and the server event for dedup. */
+function newEventId(): string {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID();
+  return `ic-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+/**
+ * Fire-and-forget server-side InitiateCheckout. `keepalive` lets the request
+ * outlive the page navigating to the retailer. Never throws — tracking must
+ * never block or break a buy click.
+ */
+function sendServerEvent(eventId: string, custom: Record<string, unknown>): void {
+  if (!CAPI_URL) return;
+  try {
+    void fetch(CAPI_URL, {
+      method: 'POST',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: eventId,
+        event_source_url: window.location.href,
+        fbp: getCookie('_fbp'),
+        fbc: getFbc(),
+        custom_data: custom,
+      }),
+    }).catch(() => {});
+  } catch {
+    /* ignore — the browser pixel still fired */
+  }
 }
 
 export function trackPurchaseClick({
@@ -43,20 +112,30 @@ export function trackPurchaseClick({
     console.warn('⚠️ Google Analytics (gtag) not found');
   }
 
+  // One id ties the browser pixel event to its server-side twin for dedup.
+  const eventId = newEventId();
+
+  const icData = {
+    content_name: BOOK_TITLE,
+    content_category: format,
+    content_type: 'product',
+    retailer,
+  };
+
   if (window.fbq) {
     // Standard Meta event — first-class "conversion event" that Meta fully
     // supports for optimization + auto event configuration (clears the
     // "no conversion events set up" warning a custom event can't). Clicking a
-    // buy button = initiating the purchase at the retailer.
-    window.fbq('track', 'InitiateCheckout', {
-      content_name: 'And Then We Hit a Rock',
-      content_category: format,
-      content_type: 'product',
-      retailer,
-    });
+    // buy button = initiating the purchase at the retailer. The 4th arg pins
+    // the eventID so Meta dedupes this against the server copy below.
+    window.fbq('track', 'InitiateCheckout', icData, { eventID: eventId });
 
     // Custom event — carries the richer retailer/format/cta_rank/offer detail
-    // the on-site funnel dashboard breaks down by.
+    // the on-site funnel dashboard breaks down by. Browser-only (not optimized
+    // toward, so no server copy needed).
     window.fbq('trackCustom', 'PurchaseClick', payload);
   }
+
+  // Server-side copy of the standard InitiateCheckout via the Conversions API.
+  sendServerEvent(eventId, icData);
 }
