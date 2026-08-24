@@ -42,7 +42,7 @@ Resources:
       FunctionName: meta-capi-relay
       Handler: src/index.handler
       CodeUri: ./
-      Description: Forwards InitiateCheckout to the Meta Conversions API.
+      Description: Forwards InitiateCheckout to the Meta Conversions API (CORS owned by the Function URL layer).
       Environment:
         Variables:
           PIXEL_ID: !Ref PixelId
