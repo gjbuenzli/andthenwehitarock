@@ -41,16 +41,14 @@ const CAPI_URL = (import.meta.env.VITE_CAPI_URL as string | undefined) || '';
 
 const BOOK_TITLE = 'And Then We Hit a Rock';
 
-// Per-format InitiateCheckout value (USD). Meta's "send higher quality price &
-// currency data" action wants value+currency on the conversion event to enable
-// value-based optimization. Left empty until real numbers are set — a WRONG
-// value biases optimization worse than none, so we only attach value+currency
-// for formats present in this map. Keys match Format.format in config/buyOptions.ts.
-const FORMAT_VALUE_USD: Record<string, number> = {
-  // Paperback: 0,
-  // Kindle: 0,
-  // Audiobook: 0,
-};
+// Per-format InitiateCheckout value (USD). DELIBERATELY EMPTY — do not fill.
+// Meta's "send higher quality price & currency data" action wants value+currency,
+// but this is an affiliate model: real revenue is Associates commission + KDP
+// royalty, not retail price, so a per-click retail value would bias optimization.
+// Decision (2026-08-25): send no value/currency. The plumbing below stays so a
+// real per-format value can be turned on later if the model changes — attaching
+// value+currency only for formats present in this map (keys = Format.format).
+const FORMAT_VALUE_USD: Record<string, number> = {};
 
 /** Read a browser cookie by name, or undefined. */
 function getCookie(name: string): string | undefined {
