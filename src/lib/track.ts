@@ -41,6 +41,17 @@ const CAPI_URL = (import.meta.env.VITE_CAPI_URL as string | undefined) || '';
 
 const BOOK_TITLE = 'And Then We Hit a Rock';
 
+// Per-format InitiateCheckout value (USD). Meta's "send higher quality price &
+// currency data" action wants value+currency on the conversion event to enable
+// value-based optimization. Left empty until real numbers are set — a WRONG
+// value biases optimization worse than none, so we only attach value+currency
+// for formats present in this map. Keys match Format.format in config/buyOptions.ts.
+const FORMAT_VALUE_USD: Record<string, number> = {
+  // Paperback: 0,
+  // Kindle: 0,
+  // Audiobook: 0,
+};
+
 /** Read a browser cookie by name, or undefined. */
 function getCookie(name: string): string | undefined {
   if (typeof document === 'undefined') return undefined;
@@ -70,6 +81,16 @@ function newEventId(): string {
 }
 
 /**
+ * The stable first-party id set at pixel init (see index.html). Sent with the
+ * server event as `external_id` so browser + server share one identifier —
+ * raises Event Match Quality and helps Meta pair the two channels for dedup.
+ * Not PII: an opaque random UUID.
+ */
+function getExternalId(): string | undefined {
+  return getCookie('_bmid');
+}
+
+/**
  * Fire-and-forget server-side InitiateCheckout. `keepalive` lets the request
  * outlive the page navigating to the retailer. Never throws — tracking must
  * never block or break a buy click.
@@ -86,6 +107,7 @@ function sendServerEvent(eventId: string, custom: Record<string, unknown>): void
         event_source_url: window.location.href,
         fbp: getCookie('_fbp'),
         fbc: getFbc(),
+        external_id: getExternalId(),
         custom_data: custom,
       }),
     }).catch(() => {});
@@ -115,12 +137,21 @@ export function trackPurchaseClick({
   // One id ties the browser pixel event to its server-side twin for dedup.
   const eventId = newEventId();
 
-  const icData = {
+  const icData: Record<string, unknown> = {
     content_name: BOOK_TITLE,
     content_category: format,
     content_type: 'product',
     retailer,
   };
+
+  // Attach value + currency only when a real per-format value is configured
+  // (see FORMAT_VALUE_USD). Sent on both the browser pixel and the server copy
+  // so the deduped event carries consistent value data for value optimization.
+  const value = FORMAT_VALUE_USD[format];
+  if (typeof value === 'number') {
+    icData.value = value;
+    icData.currency = 'USD';
+  }
 
   if (window.fbq) {
     // Standard Meta event — first-class "conversion event" that Meta fully

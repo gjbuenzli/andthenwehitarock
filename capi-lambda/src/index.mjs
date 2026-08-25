@@ -58,12 +58,16 @@ export const handler = async (event) => {
   const userAgent = headers['user-agent'] || headers['User-Agent'] || undefined;
 
   // Build the user_data block. fbp/fbc/ip/ua are NOT hashed per Meta's spec;
-  // we collect no email/phone, so there's nothing to SHA-256 here.
+  // we collect no email/phone, so there's nothing to SHA-256 here. external_id
+  // is an opaque first-party id (see index.html / track.ts) sent raw — Meta
+  // hashes it, matching the pixel's advanced-matching hash of the same value,
+  // so browser and server events pair up (better match quality + dedup).
   const user_data = {};
   if (ip) user_data.client_ip_address = ip;
   if (userAgent) user_data.client_user_agent = userAgent;
   if (payload.fbp) user_data.fbp = payload.fbp;
   if (payload.fbc) user_data.fbc = payload.fbc;
+  if (payload.external_id) user_data.external_id = String(payload.external_id);
 
   const serverEvent = {
     event_name: 'InitiateCheckout',

@@ -33,9 +33,27 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '4291041411181419');
+  // Stable first-party id (not PII — a random UUID persisted in a 1st-party
+  // cookie). Passed to the pixel as advanced-matching `external_id` AND sent
+  // with the server Conversions API event (see src/lib/track.ts), so browser
+  // and server events carry the SAME identifier. This lifts Event Match Quality
+  // and lets Meta pair the two channels (better dedup) even when no fbc/fbp is
+  // present. Meta hashes external_id on both sides, so we pass it raw.
+  (function () {
+    try {
+      var m = document.cookie.match(/(?:^|; )_bmid=([^;]*)/);
+      var id = m ? decodeURIComponent(m[1])
+        : (crypto && crypto.randomUUID ? crypto.randomUUID()
+          : 'bm-' + Date.now() + '-' + Math.random().toString(16).slice(2));
+      if (!m) document.cookie = '_bmid=' + encodeURIComponent(id) +
+        '; max-age=31536000; path=/; SameSite=Lax';
+      fbq('init', '4291041411181419', { external_id: id });
+    } catch (e) {
+      fbq('init', '4291041411181419');
+    }
+  })();
   fbq('track', 'PageView');
-  </script>
+</script>
   <!-- End Meta Pixel Code -->
 
   <script type="text/javascript">
