@@ -1,6 +1,6 @@
 {
-  "_client-Dhby_6Qi.js": {
-    "file": "assets/client-Dhby_6Qi.js",
+  "_client-6X3ZrRbp.js": {
+    "file": "assets/client-6X3ZrRbp.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,13 +8,13 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-CMLrRWhu.js",
+    "file": "assets/app-DjYQM4It.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-Dhby_6Qi.js",
-      "_client-Dhby_6Qi.js"
+      "_client-6X3ZrRbp.js",
+      "_client-6X3ZrRbp.js"
     ],
     "css": [
       "assets/app-mE5VDAW_.css"
