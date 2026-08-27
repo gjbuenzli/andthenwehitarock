@@ -6,7 +6,7 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/client.js?commonjs-exports": [
-    "/assets/client-6X3ZrRbp.js"
+    "/assets/client-Fbvj1aI3.js"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/index.js?commonjs-module": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
@@ -114,7 +114,7 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/react-dom/client.js": [
-    "/assets/client-6X3ZrRbp.js"
+    "/assets/client-Fbvj1aI3.js"
   ],
   "node_modules/react-dom/index.js": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
@@ -221,10 +221,19 @@
   "src/config/buyOptions.ts": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
+  "src/config/experiments.ts": [
+    "/assets/actual-book-cover-D3r30XXl.jpg"
+  ],
   "src/data/chapters.ts": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/data/hacks.ts": [
+    "/assets/actual-book-cover-D3r30XXl.jpg"
+  ],
+  "src/features/experiments/Variant.tsx": [
+    "/assets/actual-book-cover-D3r30XXl.jpg"
+  ],
+  "src/features/experiments/useVariant.ts": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/hooks/useAmazonLinks.ts": [
