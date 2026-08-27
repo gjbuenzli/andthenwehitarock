@@ -3,6 +3,7 @@ import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackPurchaseClick } from '@/lib/track';
 import { type Format, type Retailer } from '@/config/buyOptions';
 import { FormatButtons } from '@/components/FormatButtons';
+import { Variant } from '@/features/experiments';
 
 const LOCATION = 'cta_section';
 
@@ -18,11 +19,28 @@ export const CallToAction = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           
+          {/* A/B/n test surface — only the headline + subhead differ per variant.
+              All three are prerendered; the active one is shown via CSS (see the
+              experiment engine in vite.config.ts / src/features/experiments). */}
           <div className="mb-12">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-              Ready for Adventure?
-            </h2>
-            <p className="text-xl lg:text-2xl opacity-90 leading-relaxed">Join tens of thousands of readers who've fallen in love with this hilarious sailing saga. Perfect for anyone who loves adventure, family stories, or just needs a good laugh!</p>
+            <Variant when="control">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                Ready for Adventure?
+              </h2>
+              <p className="text-xl lg:text-2xl opacity-90 leading-relaxed">Join tens of thousands of readers who've fallen in love with this hilarious sailing saga. Perfect for anyone who loves adventure, family stories, or just needs a good laugh!</p>
+            </Variant>
+            <Variant when="urgency">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                Start Reading in 60 Seconds — Free in Kindle Unlimited
+              </h2>
+              <p className="text-xl lg:text-2xl opacity-90 leading-relaxed">One tap and you're aboard. Dive into the funniest true sailing story you'll read all year — no waiting, no shipping, just laughs.</p>
+            </Variant>
+            <Variant when="social">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                75,000+ Readers. 4.2★. One Ridiculous Voyage.
+              </h2>
+              <p className="text-xl lg:text-2xl opacity-90 leading-relaxed">Join the tens of thousands who couldn't put it down — a hilarious, heartwarming, and utterly true family-at-sea adventure.</p>
+            </Variant>
           </div>
 
           {/* Purchase Options — three formats; paperback/audiobook open a

@@ -16,6 +16,8 @@
 // browser navigates to Amazon before the pixel beacon finishes. The fetch uses
 // `keepalive: true` so it survives that navigation.
 
+import { getResolvedVariant } from '@/features/experiments/useVariant';
+
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
@@ -93,7 +95,11 @@ function getExternalId(): string | undefined {
  * outlive the page navigating to the retailer. Never throws — tracking must
  * never block or break a buy click.
  */
-function sendServerEvent(eventId: string, custom: Record<string, unknown>): void {
+function sendServerEvent(
+  eventId: string,
+  custom: Record<string, unknown>,
+  exp: { experiment: string; variant: string },
+): void {
   if (!CAPI_URL) return;
   try {
     void fetch(CAPI_URL, {
@@ -101,6 +107,12 @@ function sendServerEvent(eventId: string, custom: Record<string, unknown>): void
       keepalive: true,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        // `type` lets the CAPI relay both forward to Meta AND log a first-party
+        // per-variant conversion row (see /capi-lambda). Top-level experiment/
+        // variant so the relay can index without parsing custom_data.
+        type: 'initiate_checkout',
+        experiment: exp.experiment,
+        variant: exp.variant,
         event_id: eventId,
         event_source_url: window.location.href,
         fbp: getCookie('_fbp'),
@@ -114,6 +126,46 @@ function sendServerEvent(eventId: string, custom: Record<string, unknown>): void
   }
 }
 
+/**
+ * Fire once per session when a visitor is bucketed into an experiment variant.
+ * Sends a lightweight first-party "exposure" beacon to the CAPI relay (logged
+ * to DynamoDB, NOT forwarded to Meta) so BookManager can compute per-variant
+ * conversion RATES, and tags GA so behavior is segmentable there too.
+ */
+export function trackExperimentExposure(): void {
+  if (typeof window === 'undefined') return;
+  const { experiment, variant } = getResolvedVariant();
+
+  if (window.gtag) {
+    window.gtag('event', 'experiment_exposure', { experiment, variant });
+  }
+
+  if (!CAPI_URL) return;
+  try {
+    const key = `abx:${experiment}:${variant}`;
+    if (sessionStorage.getItem(key)) return; // one exposure per session
+    sessionStorage.setItem(key, '1');
+  } catch {
+    /* sessionStorage unavailable — still beacon at least once */
+  }
+  try {
+    void fetch(CAPI_URL, {
+      method: 'POST',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'exposure',
+        experiment,
+        variant,
+        external_id: getExternalId(),
+        event_source_url: window.location.href,
+      }),
+    }).catch(() => {});
+  } catch {
+    /* ignore */
+  }
+}
+
 export function trackPurchaseClick({
   retailer,
   format,
@@ -123,7 +175,11 @@ export function trackPurchaseClick({
 }: PurchaseClickArgs): void {
   if (typeof window === 'undefined') return;
 
-  const payload = { retailer, format, location, cta_rank: ctaRank, offer };
+  const exp = getResolvedVariant();
+  const payload = {
+    retailer, format, location, cta_rank: ctaRank, offer,
+    experiment: exp.experiment, variant: exp.variant,
+  };
   console.log('🎯 Purchase button clicked:', payload);
 
   if (window.gtag) {
@@ -140,6 +196,8 @@ export function trackPurchaseClick({
     content_category: format,
     content_type: 'product',
     retailer,
+    variant: exp.variant,
+    experiment: exp.experiment,
   };
 
   // Attach value + currency only when a real per-format value is configured
@@ -166,5 +224,5 @@ export function trackPurchaseClick({
   }
 
   // Server-side copy of the standard InitiateCheckout via the Conversions API.
-  sendServerEvent(eventId, icData);
+  sendServerEvent(eventId, icData, exp);
 }
