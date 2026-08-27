@@ -1,11 +1,14 @@
 {
   "name": "meta-capi-relay",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
-  "description": "AWS Lambda that relays InitiateCheckout to the Meta Conversions API.",
+  "description": "AWS Lambda that relays InitiateCheckout to the Meta Conversions API and logs A/B events to DynamoDB.",
   "main": "src/index.mjs",
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.658.0"
   }
 }

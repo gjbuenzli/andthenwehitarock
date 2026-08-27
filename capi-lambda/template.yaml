@@ -48,6 +48,10 @@ Resources:
           PIXEL_ID: !Ref PixelId
           FB_ACCESS_TOKEN: !Ref FbAccessToken
           TEST_EVENT_CODE: !Ref TestEventCode
+          DDB_TABLE: !Ref AbEventsTable
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref AbEventsTable
       FunctionUrlConfig:
         AuthType: NONE
         # CORS is owned entirely by this layer (NOT the function code, which would
@@ -60,6 +64,33 @@ Resources:
             - POST
           AllowHeaders:
             - content-type
+
+  # First-party A/B event log. One item per (experiment, date, variant, dedupe):
+  # exposures keyed by external_id (→ unique visitors), buy clicks keyed by
+  # event_id. PROVISIONED 25/25 keeps it in the DynamoDB always-free tier; a TTL
+  # on `expires_at` auto-expires raw rows after ~60 days (BookManager rolls the
+  # aggregates into Postgres). BookManager reads this table on a schedule.
+  AbEventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ab-events
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 25
+        WriteCapacityUnits: 25
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
 
   # Safety net: alert (and give you a chance to react) if the account's monthly
   # spend nears $1. This tiny function should always be $0 within the free tier.
@@ -87,3 +118,6 @@ Outputs:
   CapiUrl:
     Description: Public Function URL — put this in the site's VITE_CAPI_URL.
     Value: !GetAtt CapiFunctionUrl.FunctionUrl
+  AbEventsTableName:
+    Description: DynamoDB table BookManager reads for per-variant A/B events.
+    Value: !Ref AbEventsTable

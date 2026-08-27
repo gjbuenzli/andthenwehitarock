@@ -1,26 +1,33 @@
-// Meta Conversions API relay — a single-purpose AWS Lambda behind a public
-// Function URL. The static landing page (GitHub Pages, no backend of its own)
-// POSTs an InitiateCheckout here on every buy-button click; we forward it to
-// Meta server-side so the event survives ad blockers / iOS / ITP / the redirect
-// race that drops the browser pixel. The browser and this server event share an
-// `event_id`, so Meta deduplicates them (no double counting).
+// Meta Conversions API relay + first-party A/B event log.
 //
-// Secrets (FB_ACCESS_TOKEN especially) come from Lambda env vars set at deploy,
-// never from the client. No dependencies — Node 20's global fetch + crypto.
+// A single-purpose AWS Lambda behind a public Function URL. The static landing
+// page POSTs here for two things:
+//   1. Buy clicks (`type:'initiate_checkout'`, or no type for old clients) —
+//      forwarded to Meta's Conversions API server-side so the event survives ad
+//      blockers / iOS / ITP / the redirect race; deduped with the browser pixel
+//      via a shared `event_id`.
+//   2. Experiment exposures (`type:'exposure'`) — NOT sent to Meta, only logged.
 //
-// CORS is handled entirely by the Function URL's Cors config (see template.yaml),
-// which reflects the caller's Origin against the allowed list (apex + www). This
-// code MUST NOT also emit Access-Control-Allow-Origin: two layers both stamping
-// it yields duplicate ACAO headers, which browsers reject — the bug that had the
-// server event silently CORS-blocked in real browsers.
+// Every event is also logged to a DynamoDB table (`DDB_TABLE`) so BookManager
+// can build a per-variant conversion funnel (unique visitors → buy clicks).
+// The DynamoDB write is best-effort and never blocks/breaks the Meta forward.
+//
+// Secrets (FB_ACCESS_TOKEN) come from Lambda env vars, never the client. CORS is
+// owned entirely by the Function URL Cors config (see template.yaml) — this code
+// must not emit Access-Control-Allow-Origin (double ACAO breaks browsers).
+
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { PutItemCommand } from '@aws-sdk/client-dynamodb';
 
 const GRAPH_VERSION = 'v21.0';
 
 const PIXEL_ID = process.env.PIXEL_ID;
 const ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN;
-// Optional: paste a code from Events Manager → Test Events to see events land
-// in the test view without affecting live optimization. Leave unset in prod.
 const TEST_EVENT_CODE = process.env.TEST_EVENT_CODE || '';
+const DDB_TABLE = process.env.DDB_TABLE || '';
+
+// Reused across warm invocations. Region comes from the Lambda runtime env.
+const ddb = DDB_TABLE ? new DynamoDBClient({}) : null;
 
 const json = (status, body) => ({
   statusCode: status,
@@ -28,19 +35,49 @@ const json = (status, body) => ({
   body: JSON.stringify(body),
 });
 
+const TTL_DAYS = 60;
+
+/**
+ * Best-effort append to the A/B event log. One item per (experiment, date,
+ * variant, dedupe-key). Exposures are keyed by external_id so repeat visits in
+ * a day collapse to one item → BookManager counts items = unique visitors.
+ * Conversions are keyed by event_id (one row per buy click).
+ */
+async function logAbEvent({ type, experiment, variant, externalId, eventId, sourceUrl }) {
+  if (!ddb || !experiment || !variant) return;
+  const now = new Date();
+  const date = now.toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
+  const dedupe =
+    type === 'exposure'
+      ? externalId || `anon-${now.getTime()}-${Math.random().toString(16).slice(2)}`
+      : eventId || `${now.getTime()}-${Math.random().toString(16).slice(2)}`;
+  const shortType = type === 'exposure' ? 'exp' : 'ic';
+  const item = {
+    pk: { S: `${experiment}#${date}` },
+    sk: { S: `${variant}#${shortType}#${dedupe}` },
+    experiment: { S: experiment },
+    variant: { S: variant },
+    type: { S: type },
+    date: { S: date },
+    ts: { N: String(now.getTime()) },
+    expires_at: { N: String(Math.floor(now.getTime() / 1000) + TTL_DAYS * 86400) },
+  };
+  if (externalId) item.external_id = { S: String(externalId) };
+  if (sourceUrl) item.event_source_url = { S: String(sourceUrl) };
+  try {
+    await ddb.send(new PutItemCommand({ TableName: DDB_TABLE, Item: item }));
+  } catch (err) {
+    console.error('DDB log failed', err?.name || err);
+  }
+}
+
 export const handler = async (event) => {
   const method =
     event?.requestContext?.http?.method || event?.httpMethod || 'POST';
 
-  // Preflight is normally answered by the Function URL Cors layer before we run;
-  // handle it defensively anyway. No CORS headers here (see file header).
+  // Preflight is normally answered by the Function URL Cors layer before we run.
   if (method === 'OPTIONS') return { statusCode: 204, body: '' };
   if (method !== 'POST') return json(405, { error: 'method_not_allowed' });
-
-  if (!PIXEL_ID || !ACCESS_TOKEN) {
-    console.error('Missing PIXEL_ID or FB_ACCESS_TOKEN env var');
-    return json(500, { error: 'server_misconfigured' });
-  }
 
   let payload;
   try {
@@ -48,6 +85,34 @@ export const handler = async (event) => {
   } catch {
     return json(400, { error: 'invalid_json' });
   }
+
+  const type = payload.type || 'initiate_checkout';
+  const experiment = payload.experiment ? String(payload.experiment) : '';
+  const variant = payload.variant ? String(payload.variant) : '';
+  const externalId = payload.external_id ? String(payload.external_id) : '';
+
+  // --- Exposure: log only, never forward to Meta. ---
+  if (type === 'exposure') {
+    await logAbEvent({ type, experiment, variant, externalId, sourceUrl: payload.event_source_url });
+    return json(200, { ok: true, logged: true });
+  }
+
+  // --- Conversion (InitiateCheckout): log + forward to Meta. ---
+  if (!PIXEL_ID || !ACCESS_TOKEN) {
+    console.error('Missing PIXEL_ID or FB_ACCESS_TOKEN env var');
+    return json(500, { error: 'server_misconfigured' });
+  }
+
+  // Log first-party (best-effort) so the funnel has this conversion even if Meta
+  // is slow/erroring.
+  await logAbEvent({
+    type: 'initiate_checkout',
+    experiment,
+    variant,
+    externalId,
+    eventId: payload.event_id,
+    sourceUrl: payload.event_source_url,
+  });
 
   // Real end-user IP + UA come from the browser's direct call to this URL.
   const headers = event.headers || {};
@@ -57,11 +122,6 @@ export const handler = async (event) => {
     undefined;
   const userAgent = headers['user-agent'] || headers['User-Agent'] || undefined;
 
-  // Build the user_data block. fbp/fbc/ip/ua are NOT hashed per Meta's spec;
-  // we collect no email/phone, so there's nothing to SHA-256 here. external_id
-  // is an opaque first-party id (see index.html / track.ts) sent raw — Meta
-  // hashes it, matching the pixel's advanced-matching hash of the same value,
-  // so browser and server events pair up (better match quality + dedup).
   const user_data = {};
   if (ip) user_data.client_ip_address = ip;
   if (userAgent) user_data.client_user_agent = userAgent;
