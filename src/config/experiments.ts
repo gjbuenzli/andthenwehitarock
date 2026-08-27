@@ -27,13 +27,19 @@ export interface Experiment {
 }
 
 export const ACTIVE_EXPERIMENT: Experiment = {
-  id: 'home_cta_v1',
-  name: 'Homepage CTA framing v1',
+  id: 'hero_hook_v1',
+  name: 'Hero subhead hook v1',
   enabled: true,
+  // Surface: the tagline directly under the hero title — the first line of copy
+  // ~99% of (mobile) ad traffic sees above the fold, before they ever reach the
+  // CTA. home_cta_v1 proved the "free in Kindle Unlimited / instant" framing
+  // crushed it at the CTA (+126%); this tests whether surfacing that same
+  // value-prop at the very top of the page lifts conversion further, vs. a
+  // pure curiosity hook, vs. the current flat "Hilarious true story!" control.
   variants: [
-    { id: 'control', name: 'Control', weight: 34 },
-    { id: 'urgency', name: 'Urgency CTA', weight: 33 },
-    { id: 'social', name: 'Social-proof led', weight: 33 },
+    { id: 'control', name: 'Control ("Hilarious true story!")', weight: 34 },
+    { id: 'free_ku', name: 'Free in Kindle Unlimited', weight: 33 },
+    { id: 'curiosity', name: 'Curiosity hook', weight: 33 },
   ],
 };
 
