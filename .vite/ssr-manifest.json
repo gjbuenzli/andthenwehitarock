@@ -6,7 +6,7 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/client.js?commonjs-exports": [
-    "/assets/client-Ba0m8ull.js"
+    "/assets/client-aM3tEuin.js"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/index.js?commonjs-module": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
@@ -114,7 +114,7 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/react-dom/client.js": [
-    "/assets/client-Ba0m8ull.js"
+    "/assets/client-aM3tEuin.js"
   ],
   "node_modules/react-dom/index.js": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
@@ -195,6 +195,9 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/components/FormatButtons.tsx": [
+    "/assets/actual-book-cover-D3r30XXl.jpg"
+  ],
+  "src/components/MinimalBridge.tsx": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/components/MobileBuyBar.tsx": [

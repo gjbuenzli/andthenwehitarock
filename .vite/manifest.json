@@ -1,6 +1,6 @@
 {
-  "_client-Ba0m8ull.js": {
-    "file": "assets/client-Ba0m8ull.js",
+  "_client-aM3tEuin.js": {
+    "file": "assets/client-aM3tEuin.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,16 +8,16 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-Bo0gXfQ9.js",
+    "file": "assets/app-CLXXMhIA.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-Ba0m8ull.js",
-      "_client-Ba0m8ull.js"
+      "_client-aM3tEuin.js",
+      "_client-aM3tEuin.js"
     ],
     "css": [
-      "assets/app-mE5VDAW_.css"
+      "assets/app-BxQ918WC.css"
     ],
     "assets": [
       "assets/actual-book-cover-D3r30XXl.jpg"
