@@ -72,7 +72,6 @@ export function MinimalBridge({ target }: { target: 'listing' | 'ku' }) {
             {MINIMAL_HOOK}
           </h1>
           <LearnMore className="mt-7 w-full sm:w-auto" />
-          <p className="mt-3 text-sm text-gray-400">Opens Amazon in a new tab</p>
         </div>
 
         {/* Description column — the ad's own copy. Below the hero on mobile. */}
