@@ -1,6 +1,6 @@
 {
-  "_client-C1_THpmy.js": {
-    "file": "assets/client-C1_THpmy.js",
+  "_client-tqLcaQ42.js": {
+    "file": "assets/client-tqLcaQ42.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,16 +8,16 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-Bq2FEWGe.js",
+    "file": "assets/app-B30iGqkH.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-C1_THpmy.js",
-      "_client-C1_THpmy.js"
+      "_client-tqLcaQ42.js",
+      "_client-tqLcaQ42.js"
     ],
     "css": [
-      "assets/app-CRQFYbHA.css"
+      "assets/app-BHjl1B0H.css"
     ],
     "assets": [
       "assets/actual-book-cover-D3r30XXl.jpg"
