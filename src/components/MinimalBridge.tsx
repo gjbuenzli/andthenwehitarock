@@ -29,7 +29,10 @@ import { MINIMAL_HOOK, MINIMAL_DESCRIPTION } from '@/config/experiments';
 export function MinimalBridge({ target }: { target: 'listing' | 'ku' }) {
   const links = useAmazonLinks();
   const href = target === 'ku' ? links.amazon.kindleUrl : links.amazon.paperbackUrl;
-  const label = target === 'ku' ? 'Read FREE in Kindle Unlimited' : 'Learn More on Amazon';
+  // Same label on both minimal variants — they differ ONLY by where 'Learn More'
+  // points (Amazon listing vs Kindle Unlimited), so the test isn't confounded by
+  // different button copy.
+  const label = 'Learn More';
 
   const track = () =>
     trackPurchaseClick({
@@ -54,7 +57,7 @@ export function MinimalBridge({ target }: { target: 'listing' | 'ku' }) {
   );
 
   return (
-    <main className="min-h-screen bg-white pb-24 lg:pb-0">
+    <main className="min-h-screen bg-white">
       <section className="max-w-5xl mx-auto px-5 py-8 lg:py-12 grid lg:grid-cols-2 lg:gap-14 lg:items-center lg:min-h-[80vh]">
         {/* Hero column — cover, hook, CTA. On mobile this is the first screen. */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -79,12 +82,6 @@ export function MinimalBridge({ target }: { target: 'listing' | 'ku' }) {
           ))}
         </div>
       </section>
-
-      {/* Sticky CTA — guarantees the button is on the first screen on mobile
-          regardless of scroll. Hidden on desktop where the hero CTA is visible. */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur-sm px-4 py-3">
-        <LearnMore className="w-full" />
-      </div>
     </main>
   );
 }
