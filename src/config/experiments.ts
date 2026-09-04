@@ -27,19 +27,21 @@ export interface Experiment {
 }
 
 export const ACTIVE_EXPERIMENT: Experiment = {
-  id: 'hero_hook_v1',
-  name: 'Hero subhead hook v1',
+  id: 'minimal_bridge_v1',
+  name: 'Minimal bridge page vs full landing',
   enabled: true,
-  // Surface: the tagline directly under the hero title — the first line of copy
-  // ~99% of (mobile) ad traffic sees above the fold, before they ever reach the
-  // CTA. home_cta_v1 proved the "free in Kindle Unlimited / instant" framing
-  // crushed it at the CTA (+126%); this tests whether surfacing that same
-  // value-prop at the very top of the page lifts conversion further, vs. a
-  // pure curiosity hook, vs. the current flat "Hilarious true story!" control.
+  // hero_hook_v1 settled: neither hero subhead beat the flat control (both
+  // challengers lost), so the current full landing page is retained as control.
+  // This test asks a bigger question: does a dead-simple "bridge" page — just the
+  // cover, the ad's own description, and ONE 'Learn More' link straight to Amazon
+  // — convert cold ad traffic better than the full multi-section landing page?
+  // Two minimal flavours differ only in where 'Learn More' points:
+  //   minimal_listing → the book's Amazon listing (main /dp, print)
+  //   minimal_ku      → Read FREE in Kindle Unlimited (Kindle edition)
   variants: [
-    { id: 'control', name: 'Control ("Hilarious true story!")', weight: 34 },
-    { id: 'free_ku', name: 'Free in Kindle Unlimited', weight: 33 },
-    { id: 'curiosity', name: 'Curiosity hook', weight: 33 },
+    { id: 'control', name: 'Full landing page', weight: 34 },
+    { id: 'minimal_listing', name: 'Minimal → Amazon listing', weight: 33 },
+    { id: 'minimal_ku', name: 'Minimal → Kindle Unlimited', weight: 33 },
   ],
 };
 
@@ -48,3 +50,20 @@ export const VARIANT_IDS: string[] = ACTIVE_EXPERIMENT.variants.map((v) => v.id)
 
 /** The control / fallback variant id (first in the list). */
 export const CONTROL_VARIANT_ID: string = VARIANT_IDS[0] ?? 'control';
+
+// ---- Minimal bridge-page copy ------------------------------------------------
+// Sourced from the current top-spending ad ("Growth Ad 2 - Advantage") so the
+// landing message matches what the visitor just clicked (message-match). Edit
+// freely — this is the single place the minimal variants read their text from.
+
+/** One-line hook, shown large under the cover. */
+export const MINIMAL_HOOK =
+  'A family of five, a dog, and a cat move onto a sailboat. A hilarious true story.';
+
+/** The book description, verbatim-ish from the ad (typo cleaned). */
+export const MINIMAL_DESCRIPTION: string[] = [
+  "Did you know that the remora fish will try to swim up a whale shark's butt when they poop? The crew of Twig didn't. It turns out there was an awful lot the family of five didn't know when they decided to move aboard and set off for adventure on the high seas.",
+  'After decades of dreaming the explorers finally sailed off into the sunset. Yes, they found the palm trees and coconuts they had longed for, but they also glimpsed the other side of paradise. They ran from waterspouts, dodged hurricanes, got (sort of) robbed by pirates, and played chicken with naval warships. They also found themselves making emergency calls to the Coast Guard in the dead of night and learning the exact purpose of a nut jiggler during a late-night beach bonfire.',
+  'Laugh at the captain’s intimate misfortunes with marine toilets, taste what a pirate smells like, and discover how not to get crabs in this page-turning journey of the East Coast. You are invited to follow along with the frustration and joy of a life newly discovered afloat a 46-foot catamaran.',
+  "Remember: if everything had gone exactly as planned… it wouldn't have been much of an adventure.",
+];

@@ -5,7 +5,6 @@ import { useAmazonLinks } from '@/hooks/useAmazonLinks';
 import { trackPurchaseClick } from '@/lib/track';
 import { type Format, type Retailer } from '@/config/buyOptions';
 import { FormatButtons } from '@/components/FormatButtons';
-import { Variant } from '@/features/experiments';
 
 const LOCATION = 'amazon_hero_section';
 
@@ -53,18 +52,9 @@ export const BookHeroAmazon = () => {
                 <h1 className="text-2xl lg:text-3xl font-normal text-slate-900 mb-2">
                   And Then We Hit a Rock: A family of 5, a dog, and a cat move onto a sailboat
                 </h1>
-                {/* A/B/n test surface (hero_hook_v1) — only this tagline line
-                    differs per variant. All three are prerendered; the active one
-                    is shown via CSS (see src/features/experiments + vite.config.ts). */}
-                <Variant when="control">
-                  <p className="text-base lg:text-lg text-slate-700">Hilarious true story!</p>
-                </Variant>
-                <Variant when="free_ku">
-                  <p className="text-base lg:text-lg text-slate-700">📖 Read <span className="font-semibold text-slate-900">FREE in Kindle Unlimited</span> — the funniest true sailing story of the year.</p>
-                </Variant>
-                <Variant when="curiosity">
-                  <p className="text-base lg:text-lg text-slate-700">Waterspouts, pirates, and a marine toilet with a grudge — the true story of everything that could go wrong at sea.</p>
-                </Variant>
+                {/* hero_hook_v1 concluded: neither hook beat the flat control,
+                    so the control tagline is retained as the base. */}
+                <p className="text-base lg:text-lg text-slate-700">Hilarious true story!</p>
               </div>
 
               {/* Author */}
