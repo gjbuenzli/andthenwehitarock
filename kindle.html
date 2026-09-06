@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="en"><head>
+    <style id="exp-gate">[data-v]{display:none}
+html[data-variant="control"] [data-v~="control"]{display:contents}
+html[data-variant="minimal_listing"] [data-v~="minimal_listing"]{display:contents}
+html[data-variant="minimal_ku"] [data-v~="minimal_ku"]{display:contents}
+html:not([data-variant]) [data-v~="control"]{display:contents}</style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="facebook-domain-verification" content="u7a2y1p7xvp7c2m9maqku0j94i0b0j">
+    <title>And Then We Hit a Rock (Book)</title>
+    <meta name="description" content="And Then We Hit a Rock">
+    <meta name="author" content="And Then We Hit a Rock">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" href="/favicon.ico">
+
+    <meta property="og:title" content="And Then We Hit a Rock">
+    <meta property="og:description" content="And Then We Hit a Rock">
+    <meta property="og:type" content="website">
+
+  <!-- Google tag (gtag.js) -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-Y61YB7H1PM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y61YB7H1PM');
+  </script>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  // Stable first-party id (not PII — a random UUID persisted in a 1st-party
+  // cookie). Passed to the pixel as advanced-matching `external_id` AND sent
+  // with the server Conversions API event (see src/lib/track.ts), so browser
+  // and server events carry the SAME identifier. This lifts Event Match Quality
+  // and lets Meta pair the two channels (better dedup) even when no fbc/fbp is
+  // present. Meta hashes external_id on both sides, so we pass it raw.
+  (function () {
+    try {
+      var m = document.cookie.match(/(?:^|; )_bmid=([^;]*)/);
+      var id = m ? decodeURIComponent(m[1])
+        : (crypto && crypto.randomUUID ? crypto.randomUUID()
+          : 'bm-' + Date.now() + '-' + Math.random().toString(16).slice(2));
+      if (!m) document.cookie = '_bmid=' + encodeURIComponent(id) +
+        '; max-age=31536000; path=/; SameSite=Lax';
+      fbq('init', '4291041411181419', { external_id: id });
+    } catch (e) {
+      fbq('init', '4291041411181419');
+    }
+  })();
+  fbq('track', 'PageView');
+</script>
+  <!-- End Meta Pixel Code -->
+
+  <script type="text/javascript">
+  (function (l) {
+    if (l.search[1] === "/") {
+      var decoded = l.search
+        .slice(1)
+        .split("&")
+        .map(function (s) {
+          return s.replace(/~and~/g, "&");
+        })
+        .join("?");
+      window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+    }
+  })(window.location);
+</script>
+    <script type="module" crossorigin="" src="/assets/app-CHPwCFPX.js"></script>
+    <link rel="stylesheet" crossorigin="" href="/assets/app-BHjl1B0H.css">
+    <script id="exp-assign">window.__EXP__={"id":"minimal_bridge_v1","enabled":true,"variants":[{"id":"control","weight":34},{"id":"minimal_listing","weight":33},{"id":"minimal_ku","weight":33}]};
+(function(){
+  var EXP = window.__EXP__ || {};
+  var html = document.documentElement;
+  var vs = EXP.variants || [];
+  var ids = []; for (var i=0;i<vs.length;i++){ ids.push(vs[i].id); }
+  var control = ids[0] || 'control';
+  function done(v){ html.setAttribute('data-variant', v); html.setAttribute('data-experiment', EXP.id || ''); window.__ABV__ = { experiment: EXP.id || '', variant: v }; }
+  if (!EXP.enabled || !ids.length) { done(control); return; }
+  function readCookie(n){ var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
+  function setCookie(n, val){ try { document.cookie = n + '=' + encodeURIComponent(val) + '; max-age=31536000; path=/; SameSite=Lax'; } catch (e) {} }
+  var COOKIE = '_abv', chosen = null;
+  try { var q = new URLSearchParams(location.search).get('variant'); if (q && ids.indexOf(q) >= 0) { chosen = q; } } catch (e) {}
+  if (!chosen) { var c = readCookie(COOKIE); if (c) { var p = c.split(':'); if (p[0] === EXP.id && ids.indexOf(p[1]) >= 0) { chosen = p[1]; } } }
+  if (!chosen) {
+    var total = 0; for (var j=0;j<vs.length;j++){ total += Math.max(0, vs[j].weight || 0); }
+    if (total <= 0) { chosen = ids[Math.floor(Math.random() * ids.length)]; }
+    else { var r = Math.random() * total, acc = 0; chosen = ids[0]; for (var k=0;k<vs.length;k++){ acc += Math.max(0, vs[k].weight || 0); if (r < acc) { chosen = vs[k].id; break; } } }
+  }
+  setCookie(COOKIE, EXP.id + ':' + chosen);
+  done(chosen);
+})();</script>
+  </head>
+
+  <body>
+    <!-- Meta Pixel noscript -->
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4291041411181419&amp;ev=PageView&amp;noscript=1"></noscript>
+
+    <div id="root" data-server-rendered="true"><main class="min-h-screen bg-white"><section class="max-w-5xl mx-auto px-5 py-8 lg:py-12 grid lg:grid-cols-2 lg:gap-14 lg:items-center lg:min-h-[80vh]"><div class="flex flex-col items-center text-center lg:items-start lg:text-left"><img src="/assets/actual-book-cover-D3r30XXl.jpg" alt="And Then We Hit a Rock — book cover" class="w-40 sm:w-44 lg:w-60 rounded-lg shadow-xl" width="240" height="360"><h1 class="mt-6 text-2xl sm:text-3xl font-bold leading-snug text-gray-900">A family of five, a dog, and a cat move onto a sailboat. A hilarious true story — free in Kindle Unlimited.</h1><a href="https://www.amazon.com/dp/B0DHR9FKV9?tag=kindle077d-20&amp;ascsubtag=lp_kindle" target="_blank" rel="noopener noreferrer" class="mt-7 w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-xl bg-[#febd69] hover:bg-[#f3a847] text-gray-900 text-lg font-semibold shadow-md transition-colors">Read FREE in Kindle Unlimited</a></div><div class="mt-10 lg:mt-0 space-y-4 text-left text-[15px] sm:text-base leading-relaxed text-gray-700"><p>Did you know that the remora fish will try to swim up a whale shark's butt when they poop? The crew of Twig didn't. It turns out there was an awful lot the family of five didn't know when they decided to move aboard and set off for adventure on the high seas.</p><p>After decades of dreaming the explorers finally sailed off into the sunset. Yes, they found the palm trees and coconuts they had longed for, but they also glimpsed the other side of paradise. They ran from waterspouts, dodged hurricanes, got (sort of) robbed by pirates, and played chicken with naval warships.</p><p>Remember: if everything had gone exactly as planned… it wouldn't have been much of an adventure.</p></div></section></main><script>window.__staticRouterHydrationData = JSON.parse("{\"loaderData\":{\"5\":null},\"actionData\":null,\"errors\":null}");</script></div>
+<script>window.__VITE_REACT_SSG_HASH__ = 'qyx3twoncr'</script>
+  
+
+</body></html>
