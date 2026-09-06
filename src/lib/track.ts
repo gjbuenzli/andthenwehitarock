@@ -34,6 +34,13 @@ export interface PurchaseClickArgs {
   location: string;
   ctaRank?: CtaRank;
   offer?: OfferKind;
+  /**
+   * Explicit experiment/variant attribution. Used by permanent landing pages so
+   * their clicks log under their own bucket (e.g. `lp_kindle`) instead of being
+   * folded into the home A/B. Omit on the home page — the resolved variant is used.
+   */
+  experiment?: string;
+  variant?: string;
 }
 
 // Conversions API endpoint (the Lambda Function URL). Injected at build time as
@@ -132,9 +139,9 @@ function sendServerEvent(
  * to DynamoDB, NOT forwarded to Meta) so BookManager can compute per-variant
  * conversion RATES, and tags GA so behavior is segmentable there too.
  */
-export function trackExperimentExposure(): void {
+export function trackExperimentExposure(override?: { experiment: string; variant: string }): void {
   if (typeof window === 'undefined') return;
-  const { experiment, variant } = getResolvedVariant();
+  const { experiment, variant } = override ?? getResolvedVariant();
 
   if (window.gtag) {
     window.gtag('event', 'experiment_exposure', { experiment, variant });
@@ -172,10 +179,12 @@ export function trackPurchaseClick({
   location,
   ctaRank = 'secondary',
   offer = 'buy',
+  experiment,
+  variant,
 }: PurchaseClickArgs): void {
   if (typeof window === 'undefined') return;
 
-  const exp = getResolvedVariant();
+  const exp = experiment && variant ? { experiment, variant } : getResolvedVariant();
   const payload = {
     retailer, format, location, cta_rank: ctaRank, offer,
     experiment: exp.experiment, variant: exp.variant,

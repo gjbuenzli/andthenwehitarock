@@ -1,36 +1,36 @@
 import { useMemo } from 'react';
+import { amazonUrl, DEFAULT_TAG } from '@/config/landing';
 
-export const useAmazonLinks = () => {
-  const { paperbackCode, kindleCode, audiobookCode } = useMemo(() => {
-    // `window` is undefined during the static prerender (Node) pass — fall back
-    // to the default short codes there; the real query string is read on the
-    // client at hydration, so ?pb=/?kn=/?ab= overrides still work for ads.
-    const search = typeof window !== 'undefined' ? window.location.search : '';
-    const urlParams = new URLSearchParams(search);
-    const pb = urlParams.get('pb');
-    const kn = urlParams.get('kn');
-    const ab = urlParams.get('ab');
-
-    return {
-      paperbackCode: pb || '3U4m4uO',
-      kindleCode: kn || '3IoEvb9',
-      audiobookCode: ab || '4qOwiOZ'
+/**
+ * Build the Amazon buy links for a given Associates tracking `tag`.
+ *
+ * Full `amazon.com/dp/<ASIN>?tag=` URLs (not `amzn.to` short links) so the tag
+ * is set PER landing experience — that's what lets Amazon report sales per
+ * variant / per targeted page. Callers pass the tag for their experience:
+ *   - control components → VARIANT_TAGS.control
+ *   - a permanent page   → that page's tag
+ * Defaults to DEFAULT_TAG when omitted.
+ */
+export const useAmazonLinks = (tag: string = DEFAULT_TAG) => {
+  return useMemo(() => {
+    const amazon = {
+      paperbackUrl: amazonUrl('paperback', tag),
+      kindleUrl: amazonUrl('kindle', tag),
+      audiobookUrl: amazonUrl('audiobook', tag),
     };
-  }, []);
-
-  return {
-    amazon: {
-      paperbackUrl: `https://amzn.to/${paperbackCode}`,
-      kindleUrl: `https://amzn.to/${kindleCode}`,
-      audiobookUrl: `https://amzn.to/${audiobookCode}`
-    },
-    barnesAndNoble: {
-      paperbackUrl: 'https://www.barnesandnoble.com/w/and-then-we-hit-a-rock-greg-buenzli/1146629184?ean=9798218789398',
-      audiobookUrl: 'https://www.barnesandnoble.com/w/and-then-we-hit-a-rock-greg-buenzli/1148249612?ean=2940203322081'
-    },
-    // Legacy support - keep old format for backward compatibility
-    paperbackUrl: `https://amzn.to/${paperbackCode}`,
-    kindleUrl: `https://amzn.to/${kindleCode}`,
-    audiobookUrl: `https://amzn.to/${audiobookCode}`
-  };
+    return {
+      tag,
+      amazon,
+      barnesAndNoble: {
+        paperbackUrl:
+          'https://www.barnesandnoble.com/w/and-then-we-hit-a-rock-greg-buenzli/1146629184?ean=9798218789398',
+        audiobookUrl:
+          'https://www.barnesandnoble.com/w/and-then-we-hit-a-rock-greg-buenzli/1148249612?ean=2940203322081',
+      },
+      // Legacy flat accessors (kept for backward compatibility).
+      paperbackUrl: amazon.paperbackUrl,
+      kindleUrl: amazon.kindleUrl,
+      audiobookUrl: amazon.audiobookUrl,
+    };
+  }, [tag]);
 };

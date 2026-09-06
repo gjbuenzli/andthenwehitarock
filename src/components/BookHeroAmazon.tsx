@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import bookCover from '@/assets/actual-book-cover.jpg';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
+import { VARIANT_TAGS } from '@/config/landing';
 import { trackPurchaseClick } from '@/lib/track';
 import { type Format, type Retailer } from '@/config/buyOptions';
 import { FormatButtons } from '@/components/FormatButtons';
@@ -13,7 +14,7 @@ const LOCATION = 'amazon_hero_section';
  * Mimics Amazon's book listing page layout with left-side cover and right-side details
  */
 export const BookHeroAmazon = () => {
-  const links = useAmazonLinks();
+  const links = useAmazonLinks(VARIANT_TAGS.control);
 
   // Track only — the buy buttons are real <a> links that do the navigation.
   const track = (format: Format, retailer: Retailer, location: string = LOCATION) => {

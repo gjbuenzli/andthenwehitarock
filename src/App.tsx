@@ -4,6 +4,8 @@ import Chapters from "./pages/Chapters";
 import CruisingHacks from "./pages/CruisingHacks";
 import CruisingHackDetail from "./pages/CruisingHackDetail";
 import NotFound from "./pages/NotFound";
+import { LandingPageView } from "./components/LandingPageView";
+import { LANDING_PAGES } from "./config/landing";
 
 // Routes as data (not <BrowserRouter> JSX) so vite-react-ssg can statically
 // prerender each path to HTML at build time. Static landing page → React
@@ -15,6 +17,12 @@ export const routes: RouteRecord[] = [
   { path: "/chapters", element: <Chapters /> },
   { path: "/cruising-hacks", element: <CruisingHacks /> },
   { path: "/cruising-hacks/:slug", element: <CruisingHackDetail /> },
+  // Permanent, ad-addressable audience pages (generated from the registry):
+  // /kindle, /paperback, /audiobook — each with its own Associates tag.
+  ...LANDING_PAGES.map((page) => ({
+    path: `/${page.slug}`,
+    element: <LandingPageView page={page} />,
+  })),
   // ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE
   { path: "*", element: <NotFound /> },
 ];

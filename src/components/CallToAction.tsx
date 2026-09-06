@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
+import { VARIANT_TAGS } from '@/config/landing';
 import { trackPurchaseClick } from '@/lib/track';
 import { type Format, type Retailer } from '@/config/buyOptions';
 import { FormatButtons } from '@/components/FormatButtons';
@@ -7,7 +8,7 @@ import { FormatButtons } from '@/components/FormatButtons';
 const LOCATION = 'cta_section';
 
 export const CallToAction = () => {
-  const links = useAmazonLinks();
+  const links = useAmazonLinks(VARIANT_TAGS.control);
 
   // Track only — the buy buttons are real <a> links that do the navigation.
   const track = (format: Format, retailer: Retailer) => {
