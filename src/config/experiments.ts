@@ -27,21 +27,27 @@ export interface Experiment {
 }
 
 export const ACTIVE_EXPERIMENT: Experiment = {
-  id: 'minimal_bridge_v1',
-  name: 'Minimal bridge page vs full landing',
+  id: 'cta_copy_v1',
+  name: 'Bridge CTA button copy',
   enabled: true,
-  // hero_hook_v1 settled: neither hero subhead beat the flat control (both
-  // challengers lost), so the current full landing page is retained as control.
-  // This test asks a bigger question: does a dead-simple "bridge" page — just the
-  // cover, the ad's own description, and ONE 'Learn More' link straight to Amazon
-  // — convert cold ad traffic better than the full multi-section landing page?
-  // Two minimal flavours differ only in where 'Learn More' points:
-  //   minimal_listing → the book's Amazon listing (main /dp, print)
-  //   minimal_ku      → Read FREE in Kindle Unlimited (Kindle edition)
+  // minimal_bridge_v1 settled decisively: the dead-simple bridge page pointing to
+  // Kindle Unlimited (minimal_ku) beat the full landing page by +96% conversion
+  // (p≈0). It is now the promoted base for EVERY visitor (see MinimalBridge +
+  // pages/Index).
+  //
+  // With the page structure locked, the next-highest-leverage variable on a
+  // one-CTA bridge is the CTA label itself. The winner used a soft, curiosity-led
+  // "Learn More". Hypothesis: naming the concrete, zero-risk offer ("free", "start
+  // reading now") converts cold ad traffic better by removing the price objection
+  // up front. All variants point to the SAME Kindle Unlimited target — only the
+  // button words change:
+  //   control        → "Learn More" (the promoted winner's label)
+  //   ku_free        → "Read FREE in Kindle Unlimited" (benefit + zero price)
+  //   start_reading  → "Start Reading Free" (instant-gratification action)
   variants: [
-    { id: 'control', name: 'Full landing page', weight: 34 },
-    { id: 'minimal_listing', name: 'Minimal → Amazon listing', weight: 33 },
-    { id: 'minimal_ku', name: 'Minimal → Kindle Unlimited', weight: 33 },
+    { id: 'control', name: 'Learn More (winner)', weight: 34 },
+    { id: 'ku_free', name: 'Read FREE in Kindle Unlimited', weight: 33 },
+    { id: 'start_reading', name: 'Start Reading Free', weight: 33 },
   ],
 };
 
@@ -51,10 +57,13 @@ export const VARIANT_IDS: string[] = ACTIVE_EXPERIMENT.variants.map((v) => v.id)
 /** The control / fallback variant id (first in the list). */
 export const CONTROL_VARIANT_ID: string = VARIANT_IDS[0] ?? 'control';
 
-// ---- Minimal bridge-page copy ------------------------------------------------
-// Sourced from the current top-spending ad ("Growth Ad 2 - Advantage") so the
-// landing message matches what the visitor just clicked (message-match). Edit
-// freely — this is the single place the minimal variants read their text from.
+// ---- Home bridge-page copy ---------------------------------------------------
+// The promoted minimal bridge page's cover hook + description (winner of
+// minimal_bridge_v1). Sourced from the top-spending ad ("Growth Ad 2 -
+// Advantage") so the landing message matches what the visitor just clicked
+// (message-match). Edit freely — this is the single place the home bridge reads
+// its text from. (The active cta_copy_v1 test varies only the button label, not
+// this copy — see MinimalBridge.)
 
 /** One-line hook, shown large under the cover. */
 export const MINIMAL_HOOK =
