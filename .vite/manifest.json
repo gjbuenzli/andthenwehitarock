@@ -1,6 +1,6 @@
 {
-  "_client-BHHJ-VfD.js": {
-    "file": "assets/client-BHHJ-VfD.js",
+  "_client-CPNVBaUn.js": {
+    "file": "assets/client-CPNVBaUn.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,13 +8,13 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-CHPwCFPX.js",
+    "file": "assets/app-Btw9fi6V.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-BHHJ-VfD.js",
-      "_client-BHHJ-VfD.js"
+      "_client-CPNVBaUn.js",
+      "_client-CPNVBaUn.js"
     ],
     "css": [
       "assets/app-BHjl1B0H.css"

@@ -6,7 +6,7 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/client.js?commonjs-exports": [
-    "/assets/client-BHHJ-VfD.js"
+    "/assets/client-CPNVBaUn.js"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/index.js?commonjs-module": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
@@ -56,49 +56,7 @@
   "node_modules/clsx/dist/clsx.mjs": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
-  "node_modules/embla-carousel-react/esm/embla-carousel-react.esm.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/embla-carousel-reactive-utils/esm/embla-carousel-reactive-utils.esm.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/embla-carousel/esm/embla-carousel.esm.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
   "node_modules/invariant/browser.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/Icon.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/createLucideIcon.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/defaultAttributes.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/icons/arrow-left.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/icons/arrow-right.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/icons/heart.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/icons/navigation.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/icons/star.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/icons/users.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/icons/waves.js": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "node_modules/lucide-react/dist/esm/shared/src/utils.js": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/prop-types/factoryWithThrowingShims.js": [
@@ -114,7 +72,7 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "node_modules/react-dom/client.js": [
-    "/assets/client-BHHJ-VfD.js"
+    "/assets/client-CPNVBaUn.js"
   ],
   "node_modules/react-dom/index.js": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
@@ -185,16 +143,7 @@
   "src/assets/actual-book-cover.jpg": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
-  "src/components/AboutBook.tsx": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "src/components/BookHeroAmazon.tsx": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
   "src/components/BridgeLanding.tsx": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "src/components/CallToAction.tsx": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/components/FormatButtons.tsx": [
@@ -209,9 +158,6 @@
   "src/components/MobileBuyBar.tsx": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
-  "src/components/ReviewsCarousel.tsx": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
   "src/components/SiteHeader.tsx": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
@@ -219,12 +165,6 @@
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/components/ui/button.tsx": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "src/components/ui/card.tsx": [
-    "/assets/actual-book-cover-D3r30XXl.jpg"
-  ],
-  "src/components/ui/carousel.tsx": [
     "/assets/actual-book-cover-D3r30XXl.jpg"
   ],
   "src/config/buyOptions.ts": [
