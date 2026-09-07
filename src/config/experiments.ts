@@ -27,17 +27,16 @@ export interface Experiment {
 }
 
 export const ACTIVE_EXPERIMENT: Experiment = {
-  id: 'minimal_bridge_v1',
-  name: 'Minimal bridge page vs full landing',
+  id: 'minimal_bridge_v2',
+  name: 'Minimal bridge page vs full landing (v2, clean)',
   enabled: true,
-  // hero_hook_v1 settled: neither hero subhead beat the flat control (both
-  // challengers lost), so the current full landing page is retained as control.
-  // This test asks a bigger question: does a dead-simple "bridge" page — just the
-  // cover, the ad's own description, and ONE 'Learn More' link straight to Amazon
-  // — convert cold ad traffic better than the full multi-section landing page?
-  // Two minimal flavours differ only in where 'Learn More' points:
-  //   minimal_listing → the book's Amazon listing (main /dp, print)
-  //   minimal_ku      → Read FREE in Kindle Unlimited (Kindle edition)
+  // v2 = a clean restart of minimal_bridge_v1. v1's numbers were invalid: the
+  // bridge CTA double-counted buy clicks (onPointerDown + onClick) vs the
+  // control's single-fire, inflating the minimal variants ~2x and producing a
+  // bogus "+96%". Fixed 2026-09-07 (fire once); new id re-buckets everyone so we
+  // measure only post-fix, single-count data. Same variants + tags as v1.
+  //   minimal_listing → the book's Amazon listing (main /dp, print) [atwhar01-20]
+  //   minimal_ku      → Read FREE in Kindle Unlimited (Kindle edition) [atwhar03-20]
   variants: [
     { id: 'control', name: 'Full landing page', weight: 34 },
     { id: 'minimal_listing', name: 'Minimal → Amazon listing', weight: 33 },
