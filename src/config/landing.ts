@@ -11,9 +11,9 @@
 // ⚠️ TAG MAP — decode the cryptic Amazon tracking-id names here. All belong to
 // the same Associates account; each is a separate reporting bucket.
 //   atwhar-20      → default / fallback
-//   atwhar00-20    → retired: old full-landing control (minimal_bridge_v1)
-//   atwhar01-20    → retired: old minimal → paperback listing (minimal_bridge_v1)
-//   atwhar03-20    → PROMOTED home bridge → Kindle Unlimited (all cta_copy_v1 variants)
+//   atwhar00-20    → home A/B: control (full landing page)
+//   atwhar01-20    → home A/B: minimal_listing (minimal → paperback listing)
+//   atwhar03-20    → home A/B: minimal_ku (minimal → Kindle Unlimited)
 //   paperback067-20→ permanent /paperback audience page
 //   kindle077d-20  → permanent /kindle audience page
 //   atwhar05-20    → permanent /audiobook audience page
@@ -43,15 +43,11 @@ export function amazonUrl(format: BookFormat, tag: string, subtag?: string): str
 }
 
 // ---- Home A/B variant → tag ------------------------------------------------
-// The home page now runs cta_copy_v1: every variant is the promoted KU bridge
-// (winner of minimal_bridge_v1) and points to the SAME Kindle listing, so they
-// share the KU tag (atwhar03-20). Per-variant conversion is measured by the
-// exposure/click beacons keyed by variant id — not the Amazon tag.
 
 export const VARIANT_TAGS: Record<string, string> = {
-  control: 'atwhar03-20',
-  ku_free: 'atwhar03-20',
-  start_reading: 'atwhar03-20',
+  control: 'atwhar00-20',
+  minimal_listing: 'atwhar01-20',
+  minimal_ku: 'atwhar03-20',
 };
 
 /** Tag for an A/B variant id, falling back to the default tag. */

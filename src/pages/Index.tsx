@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
+import { BookHeroAmazon } from '@/components/BookHeroAmazon';
+import { AboutBook } from '@/components/AboutBook';
+import { ReviewsCarousel } from '@/components/ReviewsCarousel';
+import { CallToAction } from '@/components/CallToAction';
 import { MinimalBridge } from '@/components/MinimalBridge';
+import { Variant } from '@/features/experiments';
 import { trackExperimentExposure } from '@/lib/track';
 
 /**
- * Landing page — a single buy-focused layout for ad traffic.
+ * Landing page — single buy-focused layout for ad traffic.
  *
- * minimal_bridge_v1 concluded: the minimal bridge → Kindle Unlimited won by
- * +96% conversion and is now the PROMOTED base every visitor sees (MinimalBridge).
- * The old full landing page (hero + reviews + about + CTA sections) is retired.
- *
- * The live test is now cta_copy_v1, which varies only the CTA button label
- * inside MinimalBridge — so there are no top-level variant branches here. Every
- * variant is prerendered; the inline head script sets html[data-variant] and CSS
- * shows the active label (SSG-safe, no flash, no hydration mismatch).
+ * The homespun client-side A/B framework (random localStorage assignment +
+ * a "Loading…" gate) was removed: it forced a blank render before content
+ * painted (a conversion killer on paid traffic) and was incompatible with
+ * static prerendering. When behavior testing returns for the fuller site,
+ * do it the SSG-safe way — variants resolved by URL/path or at the edge and
+ * prerendered per variant — not random client assignment.
  */
 const Index = () => {
   // Log the variant exposure once on the client (SSG-safe; guarded inside).
@@ -20,7 +23,26 @@ const Index = () => {
     trackExperimentExposure();
   }, []);
 
-  return <MinimalBridge />;
+  // Every variant is prerendered; the inline head script sets html[data-variant]
+  // and CSS shows only the active one (SSG-safe, no flash, no hydration mismatch).
+  return (
+    <>
+      <Variant when="control">
+        <div className="min-h-screen bg-white pb-24 lg:pb-0">
+          <BookHeroAmazon />
+          <ReviewsCarousel />
+          <AboutBook />
+          <CallToAction />
+        </div>
+      </Variant>
+      <Variant when="minimal_listing">
+        <MinimalBridge target="listing" />
+      </Variant>
+      <Variant when="minimal_ku">
+        <MinimalBridge target="ku" />
+      </Variant>
+    </>
+  );
 };
 
 export default Index;

@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import React from 'react';
 import bookCover from '@/assets/actual-book-cover.jpg';
 
 /**
@@ -23,8 +23,7 @@ export function BridgeLanding({
 }: {
   hook: string;
   description: string[];
-  /** CTA label — a plain string, or Variant-gated nodes for a copy A/B test. */
-  cta: ReactNode;
+  cta: string;
   href: string;
   onActivate: () => void;
 }) {
