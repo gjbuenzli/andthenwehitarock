@@ -27,20 +27,23 @@ export interface Experiment {
 }
 
 export const ACTIVE_EXPERIMENT: Experiment = {
-  id: 'minimal_bridge_v2',
-  name: 'Minimal bridge page vs full landing (v2, clean)',
+  id: 'minimal_bridge_v3',
+  name: 'Direct-to-listing by format (+ Kindle buy vs free KU)',
   enabled: true,
-  // v2 = a clean restart of minimal_bridge_v1. v1's numbers were invalid: the
-  // bridge CTA double-counted buy clicks (onPointerDown + onClick) vs the
-  // control's single-fire, inflating the minimal variants ~2x and producing a
-  // bogus "+96%". Fixed 2026-09-07 (fire once); new id re-buckets everyone so we
-  // measure only post-fix, single-count data. Same variants + tags as v1.
-  //   minimal_listing → the book's Amazon listing (main /dp, print) [atwhar01-20]
-  //   minimal_ku      → Read FREE in Kindle Unlimited (Kindle edition) [atwhar03-20]
+  // v3 adds a 4th arm so we can test BUY-Kindle vs FREE-KU head to head. Early
+  // per-tag SALES showed: paperback-direct sold best by revenue; the Kindle arm
+  // (framed "free in KU") sold ZERO — clicks became free KU borrows, not
+  // purchases. So the two Kindle arms now differ ONLY in framing (same Kindle
+  // ASIN): minimal_ku pushes the free KU borrow, kindle_buy pushes the paid buy.
+  //   control          → full landing page                         [atwhar00-20]
+  //   minimal_listing  → paperback /dp listing, "Get the Paperback" [atwhar01-20]
+  //   minimal_ku       → Kindle, "Read FREE in Kindle Unlimited"    [atwhar03-20]
+  //   kindle_buy       → Kindle, "Buy the Kindle Edition"           [atwhar08-20]
   variants: [
-    { id: 'control', name: 'Full landing page', weight: 34 },
-    { id: 'minimal_listing', name: 'Minimal → Amazon listing', weight: 33 },
-    { id: 'minimal_ku', name: 'Minimal → Kindle Unlimited', weight: 33 },
+    { id: 'control', name: 'Full landing page', weight: 25 },
+    { id: 'minimal_listing', name: 'Paperback listing', weight: 25 },
+    { id: 'minimal_ku', name: 'Kindle — free in KU', weight: 25 },
+    { id: 'kindle_buy', name: 'Kindle — buy', weight: 25 },
   ],
 };
 

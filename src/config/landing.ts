@@ -48,6 +48,7 @@ export const VARIANT_TAGS: Record<string, string> = {
   control: 'atwhar00-20',
   minimal_listing: 'atwhar01-20',
   minimal_ku: 'atwhar03-20',
+  kindle_buy: 'atwhar08-20',
 };
 
 /** Tag for an A/B variant id, falling back to the default tag. */

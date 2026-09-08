@@ -36,10 +36,13 @@ const Index = () => {
         </div>
       </Variant>
       <Variant when="minimal_listing">
-        <MinimalBridge target="listing" />
+        <MinimalBridge variant="minimal_listing" />
       </Variant>
       <Variant when="minimal_ku">
-        <MinimalBridge target="ku" />
+        <MinimalBridge variant="minimal_ku" />
+      </Variant>
+      <Variant when="kindle_buy">
+        <MinimalBridge variant="kindle_buy" />
       </Variant>
     </>
   );
