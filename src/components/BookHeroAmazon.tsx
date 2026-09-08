@@ -13,8 +13,8 @@ const LOCATION = 'amazon_hero_section';
  * Amazon-style Book Hero Section
  * Mimics Amazon's book listing page layout with left-side cover and right-side details
  */
-export const BookHeroAmazon = () => {
-  const links = useAmazonLinks(VARIANT_TAGS.control);
+export const BookHeroAmazon = ({ tag = VARIANT_TAGS.control }: { tag?: string } = {}) => {
+  const links = useAmazonLinks(tag);
 
   // Track only — the buy buttons are real <a> links that do the navigation.
   const track = (format: Format, retailer: Retailer, location: string = LOCATION) => {

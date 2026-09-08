@@ -7,8 +7,8 @@ import { FormatButtons } from '@/components/FormatButtons';
 
 const LOCATION = 'cta_section';
 
-export const CallToAction = () => {
-  const links = useAmazonLinks(VARIANT_TAGS.control);
+export const CallToAction = ({ tag = VARIANT_TAGS.control }: { tag?: string } = {}) => {
+  const links = useAmazonLinks(tag);
 
   // Track only — the buy buttons are real <a> links that do the navigation.
   const track = (format: Format, retailer: Retailer) => {
