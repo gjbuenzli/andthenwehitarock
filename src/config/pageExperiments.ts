@@ -57,7 +57,7 @@ export const PAGE_EXPERIMENTS: PageExperiment[] = [
     tag: 'paperback067-20',
     experimentId: 'lp_paperback',
     enabled: true,
-    variants: [{ id: 'control', name: 'Get the Paperback', weight: 100, cta: 'Get the Paperback' }],
+    variants: [{ id: 'control', name: 'Learn More', weight: 100, cta: 'Learn More' }],
   },
   {
     slug: 'kindle-free',
