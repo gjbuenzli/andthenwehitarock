@@ -20,7 +20,7 @@ import { BridgeLanding } from '@/components/BridgeLanding';
 type BridgeVariant = 'minimal_listing' | 'minimal_ku' | 'kindle_buy';
 
 const ARMS: Record<BridgeVariant, { format: BookFormat; label: string; cta: string; offer: OfferKind }> = {
-  minimal_listing: { format: 'paperback', label: 'Paperback', cta: 'Get the Paperback', offer: 'buy' },
+  minimal_listing: { format: 'paperback', label: 'Paperback', cta: 'Learn More', offer: 'buy' },
   minimal_ku: { format: 'kindle', label: 'Kindle', cta: 'Read FREE in Kindle Unlimited', offer: 'ku_free' },
   kindle_buy: { format: 'kindle', label: 'Kindle', cta: 'Buy the Kindle Edition', offer: 'buy' },
 };
