@@ -1,51 +1,24 @@
 import { useEffect } from 'react';
-import { BookHeroAmazon } from '@/components/BookHeroAmazon';
-import { AboutBook } from '@/components/AboutBook';
-import { ReviewsCarousel } from '@/components/ReviewsCarousel';
-import { CallToAction } from '@/components/CallToAction';
 import { MinimalBridge } from '@/components/MinimalBridge';
-import { Variant } from '@/features/experiments';
 import { trackExperimentExposure } from '@/lib/track';
 
 /**
- * Landing page — single buy-focused layout for ad traffic.
+ * Home landing page — the PROMOTED winner of minimal_bridge_v3.
  *
- * The homespun client-side A/B framework (random localStorage assignment +
- * a "Loading…" gate) was removed: it forced a blank render before content
- * painted (a conversion killer on paid traffic) and was incompatible with
- * static prerendering. When behavior testing returns for the fuller site,
- * do it the SSG-safe way — variants resolved by URL/path or at the edge and
- * prerendered per variant — not random client assignment.
+ * That A/B concluded: minimal_listing (minimal bridge → paperback listing,
+ * "Learn More") won on click rate, sales conversion, and orders. The home is now
+ * that single promoted experience (experiment `home_promoted_v1`, one control) —
+ * no A/B on `/` for now. The full landing page + the other minimal arms are
+ * retired here (the format-specific designs live on as the /paperback,
+ * /kindle-free, /kindle-buy, /audiobook ad-target pages).
  */
 const Index = () => {
-  // Log the variant exposure once on the client (SSG-safe; guarded inside).
+  // Log the exposure once (experiment/variant resolved by the inline engine).
   useEffect(() => {
     trackExperimentExposure();
   }, []);
 
-  // Every variant is prerendered; the inline head script sets html[data-variant]
-  // and CSS shows only the active one (SSG-safe, no flash, no hydration mismatch).
-  return (
-    <>
-      <Variant when="control">
-        <div className="min-h-screen bg-white pb-24 lg:pb-0">
-          <BookHeroAmazon />
-          <ReviewsCarousel />
-          <AboutBook />
-          <CallToAction />
-        </div>
-      </Variant>
-      <Variant when="minimal_listing">
-        <MinimalBridge variant="minimal_listing" />
-      </Variant>
-      <Variant when="minimal_ku">
-        <MinimalBridge variant="minimal_ku" />
-      </Variant>
-      <Variant when="kindle_buy">
-        <MinimalBridge variant="kindle_buy" />
-      </Variant>
-    </>
-  );
+  return <MinimalBridge variant="control" />;
 };
 
 export default Index;

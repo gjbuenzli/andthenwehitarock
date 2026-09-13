@@ -17,9 +17,13 @@ import { BridgeLanding } from '@/components/BridgeLanding';
  * Fires ONCE on pointer-down (see BridgeLanding) — no double-count. Static
  * per-variant tag (no document read) → SSG-safe, no hydration mismatch.
  */
-type BridgeVariant = 'minimal_listing' | 'minimal_ku' | 'kindle_buy';
+type BridgeVariant = 'control' | 'minimal_listing' | 'minimal_ku' | 'kindle_buy';
 
 const ARMS: Record<BridgeVariant, { format: BookFormat; label: string; cta: string; offer: OfferKind }> = {
+  // Promoted home main: minimal_bridge_v3 concluded — minimal_listing (minimal
+  // bridge → paperback, "Learn More") won on click rate (+38.9%), sales
+  // conversion (5.5%), and orders. It's now what every home visitor sees.
+  control: { format: 'paperback', label: 'Paperback', cta: 'Learn More', offer: 'buy' },
   minimal_listing: { format: 'paperback', label: 'Paperback', cta: 'Learn More', offer: 'buy' },
   minimal_ku: { format: 'kindle', label: 'Kindle', cta: 'Read FREE in Kindle Unlimited', offer: 'ku_free' },
   kindle_buy: { format: 'kindle', label: 'Kindle', cta: 'Buy the Kindle Edition', offer: 'buy' },
