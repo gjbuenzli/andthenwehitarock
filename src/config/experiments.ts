@@ -27,17 +27,23 @@ export interface Experiment {
 }
 
 export const ACTIVE_EXPERIMENT: Experiment = {
-  id: 'home_promoted_v1',
-  name: 'Home — promoted winner (minimal → paperback)',
+  id: 'minimal_bridge_v3',
+  name: 'Direct-to-listing by format (+ Kindle buy vs free KU)',
   enabled: true,
-  // minimal_bridge_v3 concluded: minimal_listing (minimal bridge → paperback,
-  // "Learn More") won decisively — top click rate (41.3%, +38.9%), top sales
-  // conversion (5.5%), and most orders. It is now the promoted home base every
-  // visitor sees (single control; the home is no longer an A/B). Add variants
-  // here later to test AGAINST this new baseline.
-  //   control → minimal bridge → paperback, "Learn More"  [atwhar00-20 = home main]
+  // v3 adds a 4th arm so we can test BUY-Kindle vs FREE-KU head to head. Early
+  // per-tag SALES showed: paperback-direct sold best by revenue; the Kindle arm
+  // (framed "free in KU") sold ZERO — clicks became free KU borrows, not
+  // purchases. So the two Kindle arms now differ ONLY in framing (same Kindle
+  // ASIN): minimal_ku pushes the free KU borrow, kindle_buy pushes the paid buy.
+  //   control          → full landing page                         [atwhar00-20]
+  //   minimal_listing  → paperback /dp listing, "Get the Paperback" [atwhar01-20]
+  //   minimal_ku       → Kindle, "Read FREE in Kindle Unlimited"    [atwhar03-20]
+  //   kindle_buy       → Kindle, "Buy the Kindle Edition"           [atwhar08-20]
   variants: [
-    { id: 'control', name: 'Minimal → paperback (winner)', weight: 100 },
+    { id: 'control', name: 'Full landing page', weight: 25 },
+    { id: 'minimal_listing', name: 'Paperback listing', weight: 25 },
+    { id: 'minimal_ku', name: 'Kindle — free in KU', weight: 25 },
+    { id: 'kindle_buy', name: 'Kindle — buy', weight: 25 },
   ],
 };
 
