@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { FaAmazon, FaAudible } from 'react-icons/fa6';
 import { useAmazonLinks } from '@/hooks/useAmazonLinks';
+import { handleBuyClick } from '@/lib/track';
 import { FORMATS, type Brand, type Format, type Retailer } from '@/config/buyOptions';
 
 type Links = ReturnType<typeof useAmazonLinks>;
@@ -84,10 +85,12 @@ export function FormatButtons({
               href={r.href(links)}
               target="_blank"
               rel="noopener noreferrer"
-              // Fire the pixel on pointer-down (a beat before the click
-              // navigates) so the beacon reliably sends in in-app browsers.
-              onPointerDown={() => onTrack(openFmt, r)}
-              onClick={() => setOpenId(null)}
+              // Fire on the real click (keepalive CAPI survives nav; in-app gets a
+              // forced same-tab nav). Pointer-down over-counted touches as buys.
+              onClick={(e) => {
+                handleBuyClick(r.href(links), () => onTrack(openFmt, r))(e);
+                setOpenId(null);
+              }}
             >
               <BrandMark brand={r.brand} />
               <span className="font-bold text-xs">{r.name}</span>
@@ -109,7 +112,7 @@ export function FormatButtons({
                 href={f.retailers[0].href(links)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onPointerDown={() => onTrack(f, f.retailers[0])}
+                onClick={handleBuyClick(f.retailers[0].href(links), () => onTrack(f, f.retailers[0]))}
               >
                 {fmtContent(f)}
               </a>
@@ -137,7 +140,7 @@ export function FormatButtons({
               href={r.href(links)}
               target="_blank"
               rel="noopener noreferrer"
-              onPointerDown={() => onTrack(f, r)}
+              onClick={handleBuyClick(r.href(links), () => onTrack(f, r))}
               className="inline-flex items-center gap-1.5 text-xs text-slate-600 underline underline-offset-2 hover:text-slate-900"
             >
               <BrandMark brand={r.brand} />

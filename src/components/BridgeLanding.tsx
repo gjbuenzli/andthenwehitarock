@@ -1,5 +1,6 @@
 import React from 'react';
 import bookCover from '@/assets/actual-book-cover.jpg';
+import { handleBuyClick } from '@/lib/track';
 
 /**
  * Shared presentational layout for the stripped-down "bridge" experiences —
@@ -44,11 +45,11 @@ export function BridgeLanding({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            // Fire ONCE on pointer-down (beacon survives navigation). Do NOT also
-            // fire onClick — that double-counted every tap and inflated these
-            // variants ~2x vs the control's single-fire FormatButtons, which
-            // biased the whole A/B.
-            onPointerDown={onActivate}
+            // Fire ONCE on the real click (keepalive CAPI survives the nav). NOT
+            // pointer-down: that counted scroll-starts / cancelled taps as buy
+            // clicks and inflated InitiateCheckout ~2–3× over real Amazon arrivals.
+            // In-app browsers get a forced same-tab nav so the click actually lands.
+            onClick={handleBuyClick(href, onActivate)}
             className="mt-7 w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-xl bg-[#febd69] hover:bg-[#f3a847] text-gray-900 text-lg font-semibold shadow-md transition-colors"
           >
             {cta}

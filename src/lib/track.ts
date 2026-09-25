@@ -28,6 +28,36 @@ declare global {
 export type CtaRank = 'primary' | 'secondary' | 'more';
 export type OfferKind = 'ku_free' | 'buy';
 
+/**
+ * Facebook / Instagram (and other) in-app browsers routinely swallow
+ * `target="_blank"` navigations — the buy beacon fires but the retailer page
+ * never opens, so the click is counted yet the visitor never reaches Amazon.
+ * Detect them so buy links can navigate IN-PLACE instead of trying a new tab.
+ */
+export function isInAppBrowser(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent || '';
+  return /FBAN|FBAV|FB_IAB|Instagram|Line\/|Twitter|TikTok|musical_ly|BytedanceWebview|Snapchat/i.test(ua);
+}
+
+/**
+ * onClick handler for every buy link. Fires purchase tracking on the REAL click
+ * — deliberately not pointer-down, which counted scroll-starts and cancelled
+ * taps as buy clicks and inflated InitiateCheckout ~2–3× over actual Amazon
+ * arrivals (Meta then optimized toward button-touchers, not buyers). The CAPI
+ * copy uses keepalive, so the event survives the navigation. In in-app browsers
+ * we also force a same-tab navigation so the click actually lands on the retailer.
+ */
+export function handleBuyClick(href: string, fire: () => void) {
+  return (e: { preventDefault: () => void }) => {
+    fire();
+    if (isInAppBrowser()) {
+      e.preventDefault();
+      if (typeof window !== 'undefined') window.location.href = href;
+    }
+  };
+}
+
 export interface PurchaseClickArgs {
   retailer: string;
   format: string;
