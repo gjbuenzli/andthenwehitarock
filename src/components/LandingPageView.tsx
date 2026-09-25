@@ -9,6 +9,7 @@ import { trackExperimentExposure, trackPurchaseClick } from '@/lib/track';
 import { amazonUrl } from '@/config/landing';
 import { MINIMAL_HOOK, MINIMAL_DESCRIPTION } from '@/config/experiments';
 import type { PageExperiment, PageVariant } from '@/config/pageExperiments';
+import kindleUnlimitedFreeBadge from '@/assets/kindle-unlimited-free-badge.png';
 
 /**
  * A persistent, ad-addressable landing PAGE that is its own A/B experiment.
@@ -40,6 +41,9 @@ function BridgeVariantBlock({ page, v }: { page: PageExperiment; v: PageVariant 
       cta={v.cta ?? page.name}
       href={href}
       onActivate={onActivate}
+      // KU-free pages use the "Free on Kindle Unlimited" badge as the CTA
+      // (matches the ad); everything else keeps the text button.
+      badgeSrc={isFreeKu ? kindleUnlimitedFreeBadge : undefined}
     />
   );
 }

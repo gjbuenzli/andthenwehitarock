@@ -21,12 +21,16 @@ export function BridgeLanding({
   cta,
   href,
   onActivate,
+  badgeSrc,
 }: {
   hook: string;
   description: string[];
   cta: string;
   href: string;
   onActivate: () => void;
+  /** Optional image CTA (e.g. the "Free on Kindle Unlimited" badge). When set it
+   *  REPLACES the text button and the whole badge is the clickable buy link. */
+  badgeSrc?: string;
 }) {
   return (
     <main className="min-h-screen bg-white">
@@ -41,19 +45,32 @@ export function BridgeLanding({
             height={360}
           />
           <h1 className="mt-6 text-2xl sm:text-3xl font-bold leading-snug text-gray-900">{hook}</h1>
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            // Fire ONCE on the real click (keepalive CAPI survives the nav). NOT
-            // pointer-down: that counted scroll-starts / cancelled taps as buy
-            // clicks and inflated InitiateCheckout ~2–3× over real Amazon arrivals.
-            // In-app browsers get a forced same-tab nav so the click actually lands.
-            onClick={handleBuyClick(href, onActivate)}
-            className="mt-7 w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-xl bg-[#febd69] hover:bg-[#f3a847] text-gray-900 text-lg font-semibold shadow-md transition-colors"
-          >
-            {cta}
-          </a>
+          {/* Fire ONCE on the real click (keepalive CAPI survives the nav). NOT
+              pointer-down: that counted scroll-starts / cancelled taps as buy clicks
+              and inflated InitiateCheckout ~2–3× over real Amazon arrivals. In-app
+              browsers get a forced same-tab nav so the click actually lands. */}
+          {badgeSrc ? (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={cta}
+              onClick={handleBuyClick(href, onActivate)}
+              className="mt-7 inline-block w-full max-w-[340px] rounded-2xl transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            >
+              <img src={badgeSrc} alt={cta} className="w-full h-auto" width={580} height={440} />
+            </a>
+          ) : (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleBuyClick(href, onActivate)}
+              className="mt-7 w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-xl bg-[#febd69] hover:bg-[#f3a847] text-gray-900 text-lg font-semibold shadow-md transition-colors"
+            >
+              {cta}
+            </a>
+          )}
         </div>
 
         {/* Description column — the pitch. Below the hero on mobile. */}
