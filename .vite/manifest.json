@@ -1,6 +1,6 @@
 {
-  "_client-DptKPvya.js": {
-    "file": "assets/client-DptKPvya.js",
+  "_client-CROp--Oq.js": {
+    "file": "assets/client-CROp--Oq.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,13 +8,13 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-BoZrupkV.js",
+    "file": "assets/app-BoPyQ9YM.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-DptKPvya.js",
-      "_client-DptKPvya.js"
+      "_client-CROp--Oq.js",
+      "_client-CROp--Oq.js"
     ],
     "css": [
       "assets/app-CIBFpKft.css"
