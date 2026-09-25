@@ -37,6 +37,14 @@ export function FormatButtons({
   const [openId, setOpenId] = useState<string | null>(null);
   const openFmt = FORMATS.find((f) => f.id === openId) || null;
 
+  // A format links directly (no chooser) when it has one retailer OR opts into
+  // directPrimary — then only its FIRST retailer is the button and the rest drop
+  // to small links below the grid.
+  const isDirect = (f: Format) => f.retailers.length === 1 || Boolean(f.directPrimary);
+  const secondaryLinks = FORMATS.filter((f) => f.directPrimary && f.retailers.length > 1).flatMap((f) =>
+    f.retailers.slice(1).map((r) => ({ f, r })),
+  );
+
   const fmtClasses = (active: boolean) =>
     `buy-cta relative overflow-hidden flex-col h-auto text-slate-900 [&_svg]:size-5 ${
       active ? 'border-2 border-amber-600 ring-2 ring-amber-400' : 'border border-amber-400'
@@ -50,7 +58,9 @@ export function FormatButtons({
         </span>
       )}
       <span className="flex items-center justify-center gap-1.5 h-5">
-        {f.retailers.map((r) => (
+        {/* Direct formats show only their primary retailer's mark (it's where the
+            one click goes); chooser formats show every retailer's mark. */}
+        {(isDirect(f) ? f.retailers.slice(0, 1) : f.retailers).map((r) => (
           <BrandMark key={r.id} brand={r.brand} />
         ))}
       </span>
@@ -93,7 +103,7 @@ export function FormatButtons({
       {choiceAbove && chooser}
       <div className="grid grid-cols-3 gap-2">
         {FORMATS.map((f) =>
-          f.retailers.length === 1 ? (
+          isDirect(f) ? (
             <Button key={f.id} asChild className={fmtClasses(false)}>
               <a
                 href={f.retailers[0].href(links)}
@@ -117,6 +127,27 @@ export function FormatButtons({
           )
         )}
       </div>
+      {/* Secondary retailers for direct formats (e.g. paperback on B&N) — a small
+          link below the grid instead of a second-click chooser. */}
+      {secondaryLinks.length > 0 && (
+        <div className="flex flex-col items-center gap-1">
+          {secondaryLinks.map(({ f, r }) => (
+            <a
+              key={`${f.id}-${r.id}`}
+              href={r.href(links)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onPointerDown={() => onTrack(f, r)}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-600 underline underline-offset-2 hover:text-slate-900"
+            >
+              <BrandMark brand={r.brand} />
+              <span>
+                {f.label} on {r.name}
+              </span>
+            </a>
+          ))}
+        </div>
+      )}
       {!choiceAbove && chooser}
     </div>
   );

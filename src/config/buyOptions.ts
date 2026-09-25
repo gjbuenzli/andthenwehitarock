@@ -21,7 +21,12 @@ export interface Format {
   format: string;
   /** Tiny corner pill, e.g. "FREE" on Kindle (Kindle Unlimited). */
   badge?: string;
-  /** One retailer → opens directly; multiple → opens a retailer chooser. */
+  /**
+   * One retailer → opens directly; multiple → opens a retailer chooser. Set
+   * `directPrimary` to skip the chooser: the button links straight to the FIRST
+   * retailer (one click) and the rest become small links below the grid.
+   */
+  directPrimary?: boolean;
   retailers: Retailer[];
 }
 
@@ -36,6 +41,9 @@ export const FORMATS: Format[] = [
     id: 'paperback',
     label: 'Paperback',
     format: 'Paperback',
+    // One click straight to Amazon (the primary paperback destination); B&N drops
+    // to a small link below the grid instead of a second-click chooser.
+    directPrimary: true,
     retailers: [
       { id: 'amazon', name: 'Amazon', brand: 'amazon', href: (l) => l.amazon.paperbackUrl },
       { id: 'bn', name: 'Barnes & Noble', brand: 'bn', href: (l) => l.barnesAndNoble.paperbackUrl },
