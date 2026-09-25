@@ -39,18 +39,23 @@ export const ACTIVE_EXPERIMENT: Experiment = {
   //   minimal_listing  → paperback /dp listing, "Get the Paperback" [atwhar01-20]
   //   minimal_ku       → Kindle, "Read FREE in Kindle Unlimited"    [atwhar03-20]
   //   kindle_buy       → Kindle, "Buy the Kindle Edition"           [atwhar08-20]
-  // WEIGHTS (2026-09-24): reweighted away from the confirmed losers on 30d prod
-  // data (buy-click rate: minimal_listing 38.9% = winner/baseline; minimal_ku
-  // 36.3% −6.8%; kindle_buy 31.9% −18%; full page 23.6% −39%, all losing @95%).
-  // Push traffic to the winner, starve the full page (worst) + kindle_buy; keep
-  // both Kindle arms alive to monitor. The lift BASELINE (minimal_listing) is set
-  // separately in the dashboard (ab_experiments.control_variant), independent of
-  // these weights. Relative weights → 45/25/20/10.
+  // WEIGHTS (2026-09-25): FORMAT-NEUTRAL rebalance. The 45%-paperback tilt was a
+  // NET LOSS on real KDP units, not a mix shift: forcing paperback left paperback
+  // orders FLAT (20/day) while Kindle orders fell −22% and KENP −24% and total
+  // orders −12% — the Kindle/KU readers we redirected didn't switch, they left.
+  // On-site buy-click rate LIED (paperback "won" clicks, lost revenue). So stop
+  // forcing a format: weight the full-page CHOOSER (lets the reader pick any
+  // format, incl. KU) + keep KU forward. control(chooser) 40 / minimal_ku 25 /
+  // minimal_listing 20 / kindle_buy 15. Judge on KDP units+royalty, NOT clicks.
+  //   control          → full landing page (all-format chooser)      [atwhar00-20]
+  //   minimal_listing  → paperback /dp listing                       [atwhar01-20]
+  //   minimal_ku       → Kindle, "Read FREE in Kindle Unlimited"     [atwhar03-20]
+  //   kindle_buy       → Kindle, "Buy the Kindle Edition"            [atwhar08-20]
   variants: [
-    { id: 'control', name: 'Full landing page', weight: 10 },
-    { id: 'minimal_listing', name: 'Paperback listing', weight: 45 },
+    { id: 'control', name: 'Full landing page', weight: 40 },
+    { id: 'minimal_listing', name: 'Paperback listing', weight: 20 },
     { id: 'minimal_ku', name: 'Kindle — free in KU', weight: 25 },
-    { id: 'kindle_buy', name: 'Kindle — buy', weight: 20 },
+    { id: 'kindle_buy', name: 'Kindle — buy', weight: 15 },
   ],
 };
 
