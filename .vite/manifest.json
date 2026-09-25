@@ -1,6 +1,6 @@
 {
-  "_client-CROp--Oq.js": {
-    "file": "assets/client-CROp--Oq.js",
+  "_client-BuRxBn_G.js": {
+    "file": "assets/client-BuRxBn_G.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,23 +8,28 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-BoPyQ9YM.js",
+    "file": "assets/app-BoR-o8a3.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-CROp--Oq.js",
-      "_client-CROp--Oq.js"
+      "_client-BuRxBn_G.js",
+      "_client-BuRxBn_G.js"
     ],
     "css": [
-      "assets/app-CIBFpKft.css"
+      "assets/app-BnQLYNGM.css"
     ],
     "assets": [
-      "assets/actual-book-cover-D3r30XXl.jpg"
+      "assets/actual-book-cover-D3r30XXl.jpg",
+      "assets/kindle-unlimited-free-badge-tWTjJi2V.png"
     ]
   },
   "src/assets/actual-book-cover.jpg": {
     "file": "assets/actual-book-cover-D3r30XXl.jpg",
     "src": "src/assets/actual-book-cover.jpg"
+  },
+  "src/assets/kindle-unlimited-free-badge.png": {
+    "file": "assets/kindle-unlimited-free-badge-tWTjJi2V.png",
+    "src": "src/assets/kindle-unlimited-free-badge.png"
   }
 }
