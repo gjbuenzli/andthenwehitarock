@@ -8,7 +8,7 @@
     "/assets/kindle-unlimited-free-badge-tWTjJi2V.png"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/client.js?commonjs-exports": [
-    "/assets/client-DpW_oCzx.js"
+    "/assets/client-Dzy0t1oN.js"
   ],
   "\u0000/home/runner/work/andthenwehitarock/andthenwehitarock/node_modules/react-dom/index.js?commonjs-module": [
     "/assets/actual-book-cover-D3r30XXl.jpg",
@@ -151,7 +151,7 @@
     "/assets/kindle-unlimited-free-badge-tWTjJi2V.png"
   ],
   "node_modules/react-dom/client.js": [
-    "/assets/client-DpW_oCzx.js"
+    "/assets/client-Dzy0t1oN.js"
   ],
   "node_modules/react-dom/index.js": [
     "/assets/actual-book-cover-D3r30XXl.jpg",
@@ -265,15 +265,15 @@
     "/assets/actual-book-cover-D3r30XXl.jpg",
     "/assets/kindle-unlimited-free-badge-tWTjJi2V.png"
   ],
+  "src/components/ComboLanding.tsx": [
+    "/assets/actual-book-cover-D3r30XXl.jpg",
+    "/assets/kindle-unlimited-free-badge-tWTjJi2V.png"
+  ],
   "src/components/FormatButtons.tsx": [
     "/assets/actual-book-cover-D3r30XXl.jpg",
     "/assets/kindle-unlimited-free-badge-tWTjJi2V.png"
   ],
   "src/components/LandingPageView.tsx": [
-    "/assets/actual-book-cover-D3r30XXl.jpg",
-    "/assets/kindle-unlimited-free-badge-tWTjJi2V.png"
-  ],
-  "src/components/MinimalBridge.tsx": [
     "/assets/actual-book-cover-D3r30XXl.jpg",
     "/assets/kindle-unlimited-free-badge-tWTjJi2V.png"
   ],
