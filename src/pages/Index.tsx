@@ -1,48 +1,36 @@
 import { useEffect } from 'react';
-import { BookHeroAmazon } from '@/components/BookHeroAmazon';
-import { AboutBook } from '@/components/AboutBook';
-import { ReviewsCarousel } from '@/components/ReviewsCarousel';
-import { CallToAction } from '@/components/CallToAction';
-import { MinimalBridge } from '@/components/MinimalBridge';
+import { ComboLanding } from '@/components/ComboLanding';
 import { Variant } from '@/features/experiments';
 import { trackExperimentExposure } from '@/lib/track';
+import { VARIANT_TAGS } from '@/config/landing';
 
 /**
- * Landing page — single buy-focused layout for ad traffic.
- *
- * The homespun client-side A/B framework (random localStorage assignment +
- * a "Loading…" gate) was removed: it forced a blank render before content
- * painted (a conversion killer on paid traffic) and was incompatible with
- * static prerendering. When behavior testing returns for the fuller site,
- * do it the SSG-safe way — variants resolved by URL/path or at the edge and
- * prerendered per variant — not random client assignment.
+ * Home — the "combo" landing (ComboLanding), run as the home_combo_v1 experiment.
+ * The control is the current combo; variants test badge/CTA styling. Every variant
+ * is prerendered; the inline head script sets html[data-variant] and CSS shows the
+ * active one (SSG-safe, no flash, no hydration mismatch).
  */
 const Index = () => {
-  // Log the variant exposure once on the client (SSG-safe; guarded inside).
   useEffect(() => {
     trackExperimentExposure();
   }, []);
 
-  // Every variant is prerendered; the inline head script sets html[data-variant]
-  // and CSS shows only the active one (SSG-safe, no flash, no hydration mismatch).
   return (
     <>
       <Variant when="control">
-        <div className="min-h-screen bg-white pb-24 lg:pb-0">
-          <BookHeroAmazon />
-          <ReviewsCarousel />
-          <AboutBook />
-          <CallToAction />
-        </div>
+        <ComboLanding tag={VARIANT_TAGS.control} />
       </Variant>
-      <Variant when="minimal_listing">
-        <MinimalBridge variant="minimal_listing" />
+      <Variant when="kindle_burst">
+        {/* Remove the KU corner badge; put the FREE starburst on the Kindle button. */}
+        <ComboLanding tag={VARIANT_TAGS.minimal_ku} showKuCorner={false} kindleBadge="starburst" />
       </Variant>
-      <Variant when="minimal_ku">
-        <MinimalBridge variant="minimal_ku" />
+      <Variant when="readers_burst">
+        {/* 85K readers as a starburst instead of the circular seal. */}
+        <ComboLanding tag={VARIANT_TAGS.minimal_listing} readersStyle="starburst" />
       </Variant>
-      <Variant when="kindle_buy">
-        <MinimalBridge variant="kindle_buy" />
+      <Variant when="ku_lead">
+        {/* Lead with a prominent "Read FREE on Kindle Unlimited" button. */}
+        <ComboLanding tag={VARIANT_TAGS.kindle_buy} kuLeadCta />
       </Variant>
     </>
   );

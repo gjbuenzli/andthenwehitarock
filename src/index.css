@@ -134,11 +134,15 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
-/* Buy buttons — Amazon-yellow gradient + soft shadow for depth. No animation. */
+/* Buy buttons — clean warm cards (professional; matches the KU badge's palette). */
 .buy-cta {
-  background-image: linear-gradient(180deg, #FFE07A 0%, #FFD000 60%, #FFC400 100%);
-  box-shadow: 0 4px 10px -3px rgba(0, 0, 0, 0.18);
+  background: #fffaf1; /* soft warm cream */
+  border: 1px solid #f6c98a; /* warm amber border */
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 .buy-cta:hover {
-  background-image: linear-gradient(180deg, #FFE998 0%, #FFD933 60%, #FFCE1A 100%);
+  border-color: #f3a847; /* KU orange accent on hover */
+  box-shadow: 0 6px 16px -6px rgba(245, 130, 31, 0.28);
+  transform: translateY(-1px);
 }

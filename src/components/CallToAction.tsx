@@ -47,10 +47,10 @@ export const CallToAction = ({ tag = VARIANT_TAGS.control }: { tag?: string } = 
                   <span className="absolute left-0 top-0 overflow-hidden w-[50%] text-yellow-400">⭐</span>
                 </span>
               </div>
-              <div className="text-sm">4.2/5 • 6,396 ratings</div>
+              <div className="text-sm">4.2/5 • 7,689 ratings</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">75,000+</div>
+              <div className="text-2xl font-bold">85,000+</div>
               <div className="text-sm">Happy Readers</div>
             </div>
             <div className="text-center">

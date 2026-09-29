@@ -27,35 +27,21 @@ export interface Experiment {
 }
 
 export const ACTIVE_EXPERIMENT: Experiment = {
-  id: 'minimal_bridge_v3',
-  name: 'Direct-to-listing by format (+ Kindle buy vs free KU)',
+  id: 'home_combo_v1',
+  name: 'Combo home — badge & CTA styling',
   enabled: true,
-  // v3 adds a 4th arm so we can test BUY-Kindle vs FREE-KU head to head. Early
-  // per-tag SALES showed: paperback-direct sold best by revenue; the Kindle arm
-  // (framed "free in KU") sold ZERO — clicks became free KU borrows, not
-  // purchases. So the two Kindle arms now differ ONLY in framing (same Kindle
-  // ASIN): minimal_ku pushes the free KU borrow, kindle_buy pushes the paid buy.
-  //   control          → full landing page                         [atwhar00-20]
-  //   minimal_listing  → paperback /dp listing, "Get the Paperback" [atwhar01-20]
-  //   minimal_ku       → Kindle, "Read FREE in Kindle Unlimited"    [atwhar03-20]
-  //   kindle_buy       → Kindle, "Buy the Kindle Edition"           [atwhar08-20]
-  // WEIGHTS (2026-09-25): FORMAT-NEUTRAL rebalance. The 45%-paperback tilt was a
-  // NET LOSS on real KDP units, not a mix shift: forcing paperback left paperback
-  // orders FLAT (20/day) while Kindle orders fell −22% and KENP −24% and total
-  // orders −12% — the Kindle/KU readers we redirected didn't switch, they left.
-  // On-site buy-click rate LIED (paperback "won" clicks, lost revenue). So stop
-  // forcing a format: weight the full-page CHOOSER (lets the reader pick any
-  // format, incl. KU) + keep KU forward. control(chooser) 40 / minimal_ku 25 /
-  // minimal_listing 20 / kindle_buy 15. Judge on KDP units+royalty, NOT clicks.
-  //   control          → full landing page (all-format chooser)      [atwhar00-20]
-  //   minimal_listing  → paperback /dp listing                       [atwhar01-20]
-  //   minimal_ku       → Kindle, "Read FREE in Kindle Unlimited"     [atwhar03-20]
-  //   kindle_buy       → Kindle, "Buy the Kindle Edition"            [atwhar08-20]
+  // The combo home (ComboLanding: title → byline → cover w/ corner badges → stars
+  // → 3 format buttons → description → repeat CTA) is the control. Variants test
+  // badge/CTA styling. Each arm carries its own tag for per-variant sales.
+  //   control        → KU-corner badge + FREE pill on Kindle + readers seal  [atwhar00-20]
+  //   kindle_burst   → NO KU corner; FREE starburst on the Kindle button      [atwhar03-20]
+  //   readers_burst  → readers badge as a starburst (else = control)          [atwhar01-20]
+  //   ku_lead        → lead with a "Read FREE on Kindle Unlimited" button     [atwhar08-20]
   variants: [
-    { id: 'control', name: 'Full landing page', weight: 40 },
-    { id: 'minimal_listing', name: 'Paperback listing', weight: 20 },
-    { id: 'minimal_ku', name: 'Kindle — free in KU', weight: 25 },
-    { id: 'kindle_buy', name: 'Kindle — buy', weight: 15 },
+    { id: 'control', name: 'Combo (KU corner + FREE pill + readers seal)', weight: 25 },
+    { id: 'kindle_burst', name: 'No KU corner; FREE starburst on Kindle CTA', weight: 25 },
+    { id: 'readers_burst', name: 'Readers badge as a starburst', weight: 25 },
+    { id: 'ku_lead', name: 'Lead with Read-FREE-on-KU button', weight: 25 },
   ],
 };
 

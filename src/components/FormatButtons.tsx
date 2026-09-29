@@ -29,11 +29,14 @@ export function FormatButtons({
   onTrack,
   variant = 'full',
   choiceAbove = false,
+  badgeStyle = 'pill',
 }: {
   links: Links;
   onTrack: (format: Format, retailer: Retailer) => void;
   variant?: 'full' | 'compact';
   choiceAbove?: boolean;
+  /** How a format's corner badge (e.g. Kindle "FREE") renders. */
+  badgeStyle?: 'pill' | 'starburst';
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const openFmt = FORMATS.find((f) => f.id === openId) || null;
@@ -47,25 +50,47 @@ export function FormatButtons({
   );
 
   const fmtClasses = (active: boolean) =>
-    `buy-cta relative overflow-hidden flex-col h-auto text-slate-900 [&_svg]:size-5 ${
-      active ? 'border-2 border-amber-600 ring-2 ring-amber-400' : 'border border-amber-400'
-    } ${variant === 'full' ? 'py-3 gap-1.5' : 'py-2 gap-1'}`;
+    `buy-cta relative flex-col h-auto rounded-xl text-slate-800 [&_svg]:size-5 ${
+      active ? 'ring-2 ring-[#f3a847] ring-offset-1' : ''
+    } ${variant === 'full' ? 'py-3.5 gap-1.5' : 'py-2.5 gap-1'}`;
+
+  // Mini starburst (spikey) points for the "FREE" badge starburst option.
+  const miniBurst = (() => {
+    const pts: string[] = [];
+    const spikes = 11;
+    for (let i = 0; i < spikes * 2; i++) {
+      const r = i % 2 === 0 ? 29 : 22;
+      const a = (Math.PI / spikes) * i - Math.PI / 2;
+      pts.push(`${(30 + r * Math.cos(a)).toFixed(1)},${(30 + r * Math.sin(a)).toFixed(1)}`);
+    }
+    return pts.join(' ');
+  })();
 
   const fmtContent = (f: Format) => (
     <>
-      {f.badge && (
-        <span className="absolute top-1 right-1 bg-emerald-600 text-white text-[9px] font-extrabold leading-none px-1 py-0.5 rounded">
-          {f.badge}
-        </span>
-      )}
-      <span className="flex items-center justify-center gap-1.5 h-5">
+      {f.badge &&
+        (badgeStyle === 'starburst' ? (
+          <span className="absolute -top-2.5 -right-2.5 z-10 rotate-[8deg] drop-shadow">
+            <svg viewBox="0 0 60 60" className="!h-9 !w-9">
+              <polygon points={miniBurst} fill="#F5821F" stroke="#ffffff" strokeWidth="2.5" strokeLinejoin="round" />
+              <text x="30" y="32" textAnchor="middle" dominantBaseline="middle" fontSize="14" fontStyle="italic" className="fill-white font-extrabold">
+                {f.badge}
+              </text>
+            </svg>
+          </span>
+        ) : (
+          <span className="absolute top-1.5 right-1.5 bg-[#F5821F] text-white text-[9px] font-extrabold leading-none px-1.5 py-0.5 rounded-full">
+            {f.badge}
+          </span>
+        ))}
+      <span className="flex items-center justify-center gap-1.5 h-5 text-slate-900">
         {/* Direct formats show only their primary retailer's mark (it's where the
             one click goes); chooser formats show every retailer's mark. */}
         {(isDirect(f) ? f.retailers.slice(0, 1) : f.retailers).map((r) => (
           <BrandMark key={r.id} brand={r.brand} />
         ))}
       </span>
-      <span className="font-bold text-xs leading-none">{f.label}</span>
+      <span className="font-semibold text-xs leading-none">{f.label}</span>
     </>
   );
 
@@ -130,24 +155,24 @@ export function FormatButtons({
           )
         )}
       </div>
-      {/* Secondary retailers for direct formats (e.g. paperback on B&N) — a small
-          link below the grid instead of a second-click chooser. */}
+      {/* Secondary retailers for direct formats — one compact line (they're all
+          B&N): "Also on Barnes & Noble: Paperback · Audiobook". */}
       {secondaryLinks.length > 0 && (
-        <div className="flex flex-col items-center gap-1">
-          {secondaryLinks.map(({ f, r }) => (
-            <a
-              key={`${f.id}-${r.id}`}
-              href={r.href(links)}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleBuyClick(r.href(links), () => onTrack(f, r))}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-600 underline underline-offset-2 hover:text-slate-900"
-            >
-              <BrandMark brand={r.brand} />
-              <span>
-                {f.label} on {r.name}
-              </span>
-            </a>
+        <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-slate-600">
+          <span className="text-slate-500">Also on Barnes &amp; Noble:</span>
+          {secondaryLinks.map(({ f, r }, i) => (
+            <span key={`${f.id}-${r.id}`} className="inline-flex items-center gap-1.5">
+              {i > 0 && <span className="text-slate-300">·</span>}
+              <a
+                href={r.href(links)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleBuyClick(r.href(links), () => onTrack(f, r))}
+                className="font-medium underline underline-offset-2 hover:text-slate-900"
+              >
+                {f.label}
+              </a>
+            </span>
           ))}
         </div>
       )}

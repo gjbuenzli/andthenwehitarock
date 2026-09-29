@@ -62,8 +62,11 @@ export const FORMATS: Format[] = [
     id: 'audiobook',
     label: 'Audiobook',
     format: 'Audiobook',
+    // One click to Amazon (the audiobook IS on Amazon, not just B&N); B&N drops to
+    // a small link below the grid — same pattern as paperback.
+    directPrimary: true,
     retailers: [
-      { id: 'audible', name: 'Audible', brand: 'audible', href: (l) => l.amazon.audiobookUrl },
+      { id: 'amazon', name: 'Amazon', brand: 'amazon', href: (l) => l.amazon.audiobookUrl },
       { id: 'bn', name: 'Barnes & Noble', brand: 'bn', href: (l) => l.barnesAndNoble.audiobookUrl },
     ],
   },

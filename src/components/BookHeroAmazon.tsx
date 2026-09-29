@@ -78,14 +78,14 @@ export const BookHeroAmazon = ({ tag = VARIANT_TAGS.control }: { tag?: string } 
                   </span>
                 </div>
                 <span className="text-slate-700 text-sm">
-                  6,396 ratings
+                  7,689 ratings
                 </span>
               </div>
 
               {/* Brief info */}
               <div className="bg-blue-50 border-l-4 border-blue-500 p-3">
                 <div className="text-sm text-slate-700">
-                  <span className="font-semibold">📚 Over 75,000 readers</span> have enjoyed this hilarious sailing adventure
+                  <span className="font-semibold">📚 Over 85,000 readers</span> have enjoyed this hilarious sailing adventure
                 </div>
               </div>
 
@@ -140,7 +140,7 @@ export const BookHeroAmazon = ({ tag = VARIANT_TAGS.control }: { tag?: string } 
               {/* Social Proof */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
                 <div className="flex items-center justify-center gap-2 text-blue-900 text-sm">
-                  <span className="font-semibold whitespace-nowrap">75,000+ readers</span>
+                  <span className="font-semibold whitespace-nowrap">85,000+ readers</span>
                   <span className="text-blue-600">•</span>
                   <div className="flex items-center gap-1">
                     <div className="flex text-amber-400">
